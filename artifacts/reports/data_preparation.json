@@ -1,0 +1,64 @@
+{
+  "target_version": "future-inactivity-v1",
+  "feature_version": "customer-behavior-v1",
+  "split_version": "temporal-split-v1",
+  "source_sha256": "572e36277c2390fbfde10664750731e0a86f55e33470d91919085f0408e67bfb",
+  "cleaning": {
+    "raw_rows": 1067371,
+    "exact_duplicates_removed": 34335,
+    "rows_without_usable_identity_or_date": 235151,
+    "normalized_rows": 797885
+  },
+  "splits": {
+    "train": {
+      "cutoffs": [
+        "2010-06-01",
+        "2010-07-01",
+        "2010-08-01",
+        "2010-09-01",
+        "2010-10-01",
+        "2010-11-01",
+        "2010-12-01"
+      ],
+      "rows": 20677,
+      "columns": 30,
+      "sha256": "0995c11aa563037b2b7f4ca2f0b2532cb41a500206ba12abe80782fc4675e695",
+      "inactive_rows": 10004,
+      "inactive_rate": 0.483823
+    },
+    "validation": {
+      "cutoffs": [
+        "2011-03-01"
+      ],
+      "rows": 3349,
+      "columns": 30,
+      "sha256": "da908638da6e5e1ba5809a9b4eb8d2894d2ab041e4855a1f8c1ed8f840ddedf1",
+      "inactive_rows": 1933,
+      "inactive_rate": 0.577187
+    },
+    "calibration": {
+      "cutoffs": [
+        "2011-06-01"
+      ],
+      "rows": 2659,
+      "columns": 30,
+      "sha256": "8e6bf57aeaa8181857e8454772cfb9b66eb5f35f73d8d11c475b886acd8e1ebf",
+      "inactive_rows": 1328,
+      "inactive_rate": 0.499436
+    },
+    "test": {
+      "cutoffs": [
+        "2011-09-01"
+      ],
+      "rows": 2772,
+      "columns": 30,
+      "sha256": "2830e4738acfee8c5561f5eb513874d0cacae32f3b3095c412db62dc2cf78ff6",
+      "label_review_status": "sealed_until_final_evaluation"
+    }
+  },
+  "policy": [
+    "Features use only events strictly before each cutoff.",
+    "Final-test label prevalence and metrics are intentionally not reported here.",
+    "Processed customer identifiers remain in ignored local artifacts only."
+  ]
+}

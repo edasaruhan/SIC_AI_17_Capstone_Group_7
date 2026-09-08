@@ -1,0 +1,66 @@
+{
+  "profile_version": "dataset-profile-v1",
+  "evidence": "project_reproduced_from_external_source",
+  "source": {
+    "dataset": "UCI Online Retail II",
+    "doi": "10.24432/C5CG6D",
+    "license": "CC BY 4.0",
+    "url": "https://archive.ics.uci.edu/static/public/502/online+retail+ii.zip",
+    "sha256": "572e36277c2390fbfde10664750731e0a86f55e33470d91919085f0408e67bfb",
+    "size_bytes": 45622418
+  },
+  "sheets": {
+    "Year 2009-2010": 525461,
+    "Year 2010-2011": 541910
+  },
+  "raw": {
+    "rows": 1067371,
+    "columns": [
+      "invoice",
+      "stock_code",
+      "description",
+      "quantity",
+      "invoice_date",
+      "unit_price",
+      "customer_id",
+      "country"
+    ],
+    "date_min": "2009-12-01T07:45:00",
+    "date_max": "2011-12-09T12:50:00",
+    "missing_customer_rows": 243007,
+    "missing_description_rows": 4382,
+    "invalid_date_rows": 0,
+    "cancellation_rows": 19494,
+    "nonpositive_quantity_rows": 22950,
+    "nonpositive_price_rows": 6207,
+    "exact_duplicate_rows": 34335,
+    "identified_customers": 5942,
+    "invoices": 53628,
+    "countries": 43
+  },
+  "eligible_purchase_lines": 805549,
+  "purchase_events": 37033,
+  "purchase_customers": 5878,
+  "customers_with_2plus_events": 4255,
+  "purchases_per_customer_quantiles": {
+    "0.25": 1.0,
+    "0.5": 3.0,
+    "0.75": 7.0,
+    "0.9": 13.0,
+    "0.95": 21.0
+  },
+  "interpurchase_gap_days_quantiles": {
+    "0.25": 6.969,
+    "0.5": 24.197,
+    "0.75": 61.194,
+    "0.9": 134.134,
+    "0.95": 206.042
+  },
+  "interpurchase_gap_observations": 31155,
+  "notes": [
+    "Eligible purchases are identified, dated, positive quantity/price, non-cancellation invoice lines.",
+    "Same invoice/customer/time is one purchase event; product lines remain available for feature construction.",
+    "Cancellations/returns are retained in raw data and excluded only from purchase-event cadence.",
+    "Profile statistics describe this historical source and are not product or model results."
+  ]
+}

@@ -16,10 +16,13 @@ dependencies = [
   "dramatiq[redis]>=1.17,<3", "boto3>=1.37,<2",
   "openpyxl>=3.1.5,<4", "defusedxml>=0.7,<1",
   "opentelemetry-api>=1.30,<2", "prometheus-client>=0.21,<1",
+  "pandas>=2.2,<3", "polars>=1.30,<2", "pyarrow>=20,<24",
+  "scikit-learn>=1.7,<2", "lightgbm>=4.6,<5", "shap>=0.48,<1",
+  "optuna>=4.4,<5", "mlflow>=3.3,<4", "matplotlib>=3.10,<4", "joblib>=1.5,<2",
 ]
 
 [dependency-groups]
-dev = ["ruff>=0.11,<1", "mypy>=1.15,<2", "pytest>=8.3,<10", "pytest-cov>=6,<8", "pip-audit>=2.8,<3", "types-boto3[s3]>=1.37,<2", "types-openpyxl>=3.1,<4", "types-defusedxml>=0.7,<1"]
+dev = ["ruff>=0.11,<1", "mypy>=1.15,<2", "pytest>=8.3,<10", "pytest-cov>=6,<8", "pip-audit>=2.8,<3", "types-boto3[s3]>=1.37,<2", "types-openpyxl>=3.1,<4", "types-defusedxml>=0.7,<1", "pandas-stubs>=2.3,<3"]
 
 [tool.hatch.build.targets.wheel]
 packages = ["backend/app"]
