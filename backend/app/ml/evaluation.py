@@ -49,3 +49,27 @@ def classification_metrics(target: np.ndarray, probability: np.ndarray) -> dict[
         metrics[f"recall_at_{suffix}"] = float(selected.sum() / positives)
         metrics[f"lift_at_{suffix}"] = precision / base if base else 0.0
     return {name: round(value, 6) for name, value in metrics.items()}
+
+
+def bootstrap_intervals(
+    target: np.ndarray, probability: np.ndarray, *, iterations: int = 1000, seed: int = 17
+) -> dict[str, dict[str, float]]:
+    if iterations < 100:
+        raise ValueError("At least 100 bootstrap iterations are required")
+    generator = np.random.default_rng(seed)
+    values: dict[str, list[float]] = {"pr_auc": [], "roc_auc": [], "brier": []}
+    for _ in range(iterations):
+        indexes = generator.integers(0, len(target), size=len(target))
+        sampled_target, sampled_probability = target[indexes], probability[indexes]
+        if len(np.unique(sampled_target)) < 2:
+            continue
+        values["pr_auc"].append(float(average_precision_score(sampled_target, sampled_probability)))
+        values["roc_auc"].append(float(roc_auc_score(sampled_target, sampled_probability)))
+        values["brier"].append(float(brier_score_loss(sampled_target, sampled_probability)))
+    return {
+        name: {
+            "lower_95": round(float(np.quantile(samples, 0.025)), 6),
+            "upper_95": round(float(np.quantile(samples, 0.975)), 6),
+        }
+        for name, samples in values.items()
+    }

@@ -3,7 +3,7 @@
   "target_version": "future-inactivity-v1",
   "feature_version": "customer-behavior-v1",
   "split_version": "temporal-split-v1",
-  "git_revision": "960b2af234da3943883a369659a09216d3353566",
+  "git_revision": "65a55e9ed038fe3df96c8ca107eaedec55f6c0ca",
   "search": {
     "logistic_trials": 5,
     "random_forest_trials": 6,
@@ -34,7 +34,7 @@
         "recall_at_20": 0.300569,
         "lift_at_20": 1.502397
       },
-      "run_id": "521bcf364d9842dd977c2d4bd72748ad"
+      "run_id": "eb31a6854db34e70891a64dae78804d2"
     },
     {
       "name": "logistic_c_0.05",
@@ -60,7 +60,7 @@
         "recall_at_20": 0.297465,
         "lift_at_20": 1.486881
       },
-      "run_id": "8b457e55861648dd83a0031c5e5c2fe8"
+      "run_id": "9e55e540c0c64f9da60a0eb8076f3485"
     },
     {
       "name": "logistic_c_0.2",
@@ -86,7 +86,7 @@
         "recall_at_20": 0.296948,
         "lift_at_20": 1.484296
       },
-      "run_id": "dd2c4fb2f9e84bd2bd5a66d839b4392f"
+      "run_id": "380a105f05dc41009b794acfd2b56407"
     },
     {
       "name": "logistic_c_1.0",
@@ -112,7 +112,7 @@
         "recall_at_20": 0.294878,
         "lift_at_20": 1.473952
       },
-      "run_id": "186f4190b1014fe1afa4d66239b8ea8e"
+      "run_id": "5e224a1ed3b94fc1b47c43aa8d9949c2"
     },
     {
       "name": "logistic_c_5.0",
@@ -138,7 +138,7 @@
         "recall_at_20": 0.294878,
         "lift_at_20": 1.473952
       },
-      "run_id": "f636aba749d44552afa68632769b66da"
+      "run_id": "cc17826bec7f4cfbb2dca55070e60ed5"
     },
     {
       "name": "forest_leaf_5_depth_8",
@@ -165,7 +165,7 @@
         "recall_at_20": 0.29643,
         "lift_at_20": 1.48171
       },
-      "run_id": "e11b0c9f6aa84021b44fd21f86599927"
+      "run_id": "389290a3916a4d23bac9e9f8114a1e79"
     },
     {
       "name": "forest_leaf_10_depth_8",
@@ -192,7 +192,7 @@
         "recall_at_20": 0.295913,
         "lift_at_20": 1.479124
       },
-      "run_id": "6e2bd736eccc4965bfd9474fcdd97e6b"
+      "run_id": "a2a7e8b319a14c9c9ad7cecdb4b3df4b"
     },
     {
       "name": "forest_leaf_20_depth_8",
@@ -219,7 +219,7 @@
         "recall_at_20": 0.297465,
         "lift_at_20": 1.486881
       },
-      "run_id": "ce720956b0d1453f9589e86007f2ae25"
+      "run_id": "d036da295b5f4256b86b68ae5d2342c3"
     },
     {
       "name": "forest_leaf_5_depth_16",
@@ -246,7 +246,7 @@
         "recall_at_20": 0.295396,
         "lift_at_20": 1.476538
       },
-      "run_id": "9ca3752b50e14d3daadf8423c976bbf8"
+      "run_id": "addceca7b38a4b70915b880a6dd62b5b"
     },
     {
       "name": "forest_leaf_10_depth_16",
@@ -273,7 +273,7 @@
         "recall_at_20": 0.294878,
         "lift_at_20": 1.473952
       },
-      "run_id": "b215cf3ba3804cc39d821f9c96258ffe"
+      "run_id": "f0ef8023d4314a78acc6d372fb78b8c2"
     },
     {
       "name": "forest_leaf_20_depth_16",
@@ -300,7 +300,7 @@
         "recall_at_20": 0.292809,
         "lift_at_20": 1.463608
       },
-      "run_id": "5fb5ae168c5a4d00acb941379381e6fe"
+      "run_id": "cf0b16ad6d8a4773be1d127b97cdb423"
     },
     {
       "name": "lightgbm_trial_0",
@@ -332,7 +332,7 @@
         "recall_at_20": 0.294878,
         "lift_at_20": 1.473952
       },
-      "run_id": "8f58fa627e574bb086c06bb51e17839d"
+      "run_id": "14c85b6365a748afbd5c6cdc446dba03"
     },
     {
       "name": "lightgbm_trial_1",
@@ -364,7 +364,7 @@
         "recall_at_20": 0.294878,
         "lift_at_20": 1.473952
       },
-      "run_id": "0a410a2e41e54381942d67967e3e4418"
+      "run_id": "a0c653c71fb94ea8a388a683d7d59b0f"
     },
     {
       "name": "lightgbm_trial_2",
@@ -396,7 +396,7 @@
         "recall_at_20": 0.295396,
         "lift_at_20": 1.476538
       },
-      "run_id": "07503f001a2642edacf56a230a8f78ba"
+      "run_id": "a0664c3e94014109ac30a316e96d7d98"
     },
     {
       "name": "lightgbm_trial_3",
@@ -428,7 +428,7 @@
         "recall_at_20": 0.294361,
         "lift_at_20": 1.471366
       },
-      "run_id": "3b2fd4f24ae44ae79c529dfd1977ed94"
+      "run_id": "0ce20b6e377542fb920950f15906728d"
     },
     {
       "name": "lightgbm_trial_4",
@@ -460,7 +460,7 @@
         "recall_at_20": 0.295913,
         "lift_at_20": 1.479124
       },
-      "run_id": "f2bb99af66844a0faf9aee9d7ad320f9"
+      "run_id": "9106b2c668f74af992b628c4d9f421ae"
     },
     {
       "name": "lightgbm_trial_5",
@@ -492,7 +492,7 @@
         "recall_at_20": 0.295396,
         "lift_at_20": 1.476538
       },
-      "run_id": "88a132c64e6d4db28b0b191dc3b6c66f"
+      "run_id": "aed54861b4364fb08c0b4908a29efd46"
     },
     {
       "name": "lightgbm_trial_6",
@@ -524,7 +524,7 @@
         "recall_at_20": 0.294361,
         "lift_at_20": 1.471366
       },
-      "run_id": "c9200c9618d044b1841e178889c3fedd"
+      "run_id": "0a113b3892524c398b822866b94c1353"
     },
     {
       "name": "lightgbm_trial_7",
@@ -556,7 +556,7 @@
         "recall_at_20": 0.294878,
         "lift_at_20": 1.473952
       },
-      "run_id": "e8e4fe00230343a4994c4f3866dc36dc"
+      "run_id": "4a1ca777a6b14d6189d32a7b1943af94"
     },
     {
       "name": "lightgbm_trial_8",
@@ -588,7 +588,7 @@
         "recall_at_20": 0.296948,
         "lift_at_20": 1.484296
       },
-      "run_id": "681c043335b44a3f968c7e84bb9a852a"
+      "run_id": "7398b76611b244468468c3d87bbb1229"
     },
     {
       "name": "lightgbm_trial_9",
@@ -620,7 +620,7 @@
         "recall_at_20": 0.29643,
         "lift_at_20": 1.48171
       },
-      "run_id": "6b68a66417a34cc298e4cdcd67f9eb5e"
+      "run_id": "f5b34ee5b9444cfc9a979101ca21ae04"
     },
     {
       "name": "lightgbm_trial_10",
@@ -652,7 +652,7 @@
         "recall_at_20": 0.293326,
         "lift_at_20": 1.466194
       },
-      "run_id": "88d26a989acd4ce493a7d694fc67134a"
+      "run_id": "8c0890bb8b504b7c98a3b05b7bb7de97"
     },
     {
       "name": "lightgbm_trial_11",
@@ -684,7 +684,7 @@
         "recall_at_20": 0.29643,
         "lift_at_20": 1.48171
       },
-      "run_id": "ac50545dec11477d886ab58923273773"
+      "run_id": "76d39fde33bc4462a29713093ef43ccd"
     }
   ],
   "selected_family": "logistic_c_0.01",
@@ -737,7 +737,7 @@
   },
   "calibration_note": "Metrics reuse sigmoid-fit labels and are descriptive, not unbiased.",
   "artifact_sha256": "942d705d66a9469d57494626a99da83c91a9a895a3a2b2d7e977ff3ba56952ad",
-  "mlflow_run_id": "86ec9371ff2545b288e480cba4825995",
+  "mlflow_run_id": "f39712c90301499a992427cc3becb008",
   "final_test_accessed": false,
   "post_test_retuning_permitted": false
 }
