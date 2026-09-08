@@ -30,9 +30,13 @@ Codex owns bounded implementation, repository engineering, source code, schemas,
 
 ## Delivery model
 
-Project Lead decision → bounded task → implementation → test/validation → handoff → Project Lead audit → next task.
+Project Lead authorization → bounded phase → implementation → test/validation →
+documented local review → next phase → final Project Lead audit.
 
-No single autonomous run should attempt the complete Release 1 product.
+The founder's full local execution authorization (2026-09-08) supersedes TASK-000's
+per-task approval pauses and permits the complete 24-phase roadmap locally. It does
+not permit push, final squash, paid deployment or live advertising spend. Consequential
+departures from the accepted architecture still require escalation.
 
 ## Quality principles
 
@@ -49,6 +53,8 @@ No single autonomous run should attempt the complete Release 1 product.
 Original instructor files govern exact assignment wording. Explicit Project Lead decisions and accepted ADRs govern project architecture and methodology. This charter and the other control documents summarize current approved context. Conflicts are logged for review rather than silently reconciled.
 
 ## Current state at TASK-000 completion
+
+Historical snapshot; current implementation progress is in `docs/tasks/` and the task log.
 
 - Product vision and high-level Release 1 scope: defined.
 - Official local Git repository: initialized on `main`; no commits or pushes made.

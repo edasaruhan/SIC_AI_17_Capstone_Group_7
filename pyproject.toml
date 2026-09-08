@@ -1,0 +1,49 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "growthpilot"
+version = "0.1.0"
+description = "GrowthPilot customer operations and marketing intelligence"
+requires-python = ">=3.12,<3.13"
+dependencies = [
+  "fastapi>=0.115,<1", "uvicorn[standard]>=0.34,<1",
+  "pydantic>=2.10,<3", "pydantic-settings>=2.8,<3",
+  "sqlalchemy>=2.0.38,<2.1", "alembic>=1.15,<2",
+  "psycopg[binary]>=3.2,<4", "pyjwt[crypto]>=2.10,<3",
+  "httpx>=0.28,<1", "python-multipart>=0.0.20,<1",
+  "dramatiq[redis]>=1.17,<3", "boto3>=1.37,<2",
+  "openpyxl>=3.1.5,<4", "defusedxml>=0.7,<1",
+  "opentelemetry-api>=1.30,<2", "prometheus-client>=0.21,<1",
+]
+
+[dependency-groups]
+dev = ["ruff>=0.11,<1", "mypy>=1.15,<2", "pytest>=8.3,<10", "pytest-cov>=6,<8", "pip-audit>=2.8,<3", "types-boto3[s3]>=1.37,<2", "types-openpyxl>=3.1,<4", "types-defusedxml>=0.7,<1"]
+
+[tool.hatch.build.targets.wheel]
+packages = ["backend/app"]
+
+[tool.ruff]
+target-version = "py312"
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "S"]
+ignore = ["S101", "B008"]
+
+[tool.ruff.lint.per-file-ignores]
+"backend/tests/**" = ["S105", "S106"]
+"scripts/**" = ["S603", "S607"]
+"backend/migrations/**" = ["E501"]
+
+[tool.mypy]
+python_version = "3.12"
+strict = true
+files = ["backend/app"]
+plugins = ["pydantic.mypy"]
+
+[tool.pytest.ini_options]
+testpaths = ["backend/tests"]
+addopts = "-ra --strict-markers"
+markers = ["integration: requires the dedicated GrowthPilot PostgreSQL test database"]

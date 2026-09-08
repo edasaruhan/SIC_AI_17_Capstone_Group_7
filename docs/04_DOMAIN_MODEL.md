@@ -1,6 +1,18 @@
 # Conceptual Domain Model
 
-Status: Candidate bounded domains and relationships only. No physical database schema, API contract, or aggregate design is approved.
+Status: Approved architecture with progressively implemented canonical contracts.
+The original domain inventory below remains the full-product map, not a claim that
+every entity is implemented. Alembic migrations are the physical schema authority.
+
+Implemented foundation: users/organizations/memberships, customer profiles,
+interactions and append-only consents; categories/products/inventory movements;
+orders/items/payments/partial returns; audit/outbox; staged imports; security-invoker
+analytics view. Money is Decimal(14,2), quantities whole units, stock nonnegative,
+order prices snapshotted. One currency and IANA timezone per organization; no FX,
+tax engine, card processing or multi-location stock is implied. Runtime roles cannot
+own tables or bypass RLS; tenant relationships use composite keys.
+
+Remaining candidate entities and questions are resolved in their roadmap phases.
 
 ## Bounded domains and candidate entities
 
@@ -50,7 +62,8 @@ Owns centralized definitions and reproducible derived analytical results. Attrib
 
 DatasetVersion, TargetDefinitionVersion, FeatureDefinition, CustomerFeatureSnapshot, ExperimentRun, ModelVersion, Prediction, Explanation.
 
-Owns temporal feature/prediction provenance. Candidate entities do not imply a chosen tracking platform or serving design.
+Owns temporal feature/prediction provenance. MLflow tracking/registry and shared
+batch/on-demand feature logic are approved in ADR-005; implementation is tracked separately.
 
 ### Decision and action
 

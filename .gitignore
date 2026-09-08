@@ -27,3 +27,25 @@ htmlcov/
 
 # Local generated diagnostics
 *.log
+
+# Reproducible local environments and generated outputs
+.venv/
+.local/
+node_modules/
+.next/
+.pnpm-store/
+*.tsbuildinfo
+test-results/
+playwright-report/
+dist/
+/tmp/
+/data/raw/
+/data/interim/
+/data/processed/
+/data/external/
+mlruns/
+mlartifacts/
+*.tfstate
+*.tfstate.*
+.terraform/
+*.tfplan

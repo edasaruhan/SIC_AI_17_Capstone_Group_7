@@ -6,6 +6,21 @@ Build one production-oriented GrowthPilot AI product that also produces truthful
 
 Official repository: `https://github.com/edasaruhan/SIC_AI_17_Capstone_Group_7`
 
+## Local execution authorization (2026-09-08)
+
+TASK-000 is accepted. The founder authorized autonomous local delivery of the full
+24-phase roadmap using the architecture in `docs/03_ARCHITECTURE_DECISIONS.md`.
+Proceed through bounded plan/implement/test/validate/document/review phases without
+routine approval pauses. Missing provider credentials block live validation only;
+finish honest boundaries and tests, document the missing validation, and continue
+independent work. Stop for unsafe contradictions, destructive operations, unresolved
+licensing/access, or a material departure from the approved concept.
+
+DO NOT PUSH. Local checkpoint commits are allowed. Do not squash or rewrite history
+yet. Both final squash and publication require explicit final authorization. The
+GitHub write-permission failure is not a local-development blocker. Do not deploy
+paid infrastructure or execute live advertising spend without authorization.
+
 ## Roles
 
 - Product Owner / Founder: Şahin Başcı — commercial priorities, business constraints, and final product approval.

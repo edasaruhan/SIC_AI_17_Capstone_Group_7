@@ -1,6 +1,9 @@
 # Delivery Plan
 
-Status: Internal milestone sequence only. No production architecture or calendar schedule has been approved.
+Status: The founder approved architecture and the full 24-phase local execution
+roadmap on 2026-09-08. `docs/tasks/` is the current execution sequence. The M0–M12
+grouping below is retained as a product-deliverable map, not a contradictory schedule.
+No instructor submission dates have been changed or inferred.
 
 ## Scheduling constraint discovered in TASK-000
 
@@ -64,7 +67,7 @@ Expected evidence: final requirements confirmation, reproducible figures/metrics
 
 ## Delivery controls
 
-- Do not start a milestone because its title exists; Project Lead authorizes bounded tasks.
+- The full local roadmap is authorized; continue through bounded, validated phases.
 - Do not use test data or synthetic fixtures as academic results.
 - A milestone is not complete without stored validation evidence and documentation updates.
 - Dates, team assignments, capacity, and branch/PR policy remain open until confirmed.
