@@ -738,6 +738,7 @@
   "calibration_note": "Metrics reuse sigmoid-fit labels and are descriptive, not unbiased.",
   "artifact_sha256": "942d705d66a9469d57494626a99da83c91a9a895a3a2b2d7e977ff3ba56952ad",
   "mlflow_run_id": "f39712c90301499a992427cc3becb008",
-  "final_test_accessed": false,
-  "post_test_retuning_permitted": false
+  "final_test_accessed": true,
+  "post_test_retuning_permitted": false,
+  "final_evaluation_sha256": "eabffcd818a41c1b705825d573cdd76f282aa8e0180b28c89ca26b738defc37b"
 }

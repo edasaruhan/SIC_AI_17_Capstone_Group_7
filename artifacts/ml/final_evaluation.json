@@ -1,0 +1,64 @@
+{
+  "evidence": "project_executed_untouched_temporal_holdout",
+  "target_version": "future-inactivity-v1",
+  "feature_version": "customer-behavior-v1",
+  "split_version": "temporal-split-v1",
+  "candidate_manifest_sha256_before_access": "387d6f3e56ae1a02da7facfc70118d3e16cc3884a777da23ce4a12fc3f2b5f32",
+  "model_artifact_sha256": "942d705d66a9469d57494626a99da83c91a9a895a3a2b2d7e977ff3ba56952ad",
+  "test_parquet_sha256": "2830e4738acfee8c5561f5eb513874d0cacae32f3b3095c412db62dc2cf78ff6",
+  "rows": 2772,
+  "cutoff": "2011-09-01",
+  "prevalence": 0.392857,
+  "metrics": {
+    "pr_auc": 0.647525,
+    "roc_auc": 0.765878,
+    "log_loss": 0.582761,
+    "brier": 0.199854,
+    "ece_10": 0.095054,
+    "prevalence": 0.392857,
+    "precision_at_5": 0.748201,
+    "recall_at_5": 0.0955,
+    "lift_at_5": 1.904513,
+    "precision_at_10": 0.748201,
+    "recall_at_10": 0.191001,
+    "lift_at_10": 1.904513,
+    "precision_at_20": 0.695495,
+    "recall_at_20": 0.354454,
+    "lift_at_20": 1.770352
+  },
+  "bootstrap_95_intervals": {
+    "pr_auc": {
+      "lower_95": 0.618131,
+      "upper_95": 0.678937
+    },
+    "roc_auc": {
+      "lower_95": 0.748534,
+      "upper_95": 0.782761
+    },
+    "brier": {
+      "lower_95": 0.192598,
+      "upper_95": 0.207125
+    }
+  },
+  "threshold_policy": "top_10_percent_capacity_on_calibration_scores",
+  "threshold": 0.812509305136,
+  "threshold_metrics": {
+    "selected_rows": 302,
+    "selected_share": 0.108947,
+    "precision": 0.735099,
+    "recall": 0.203857,
+    "f1": 0.319195,
+    "confusion_matrix_tn_fp_fn_tp": [
+      1603,
+      80,
+      867,
+      222
+    ]
+  },
+  "interpretation": [
+    "This evaluates future-purchase inactivity, not observed contractual churn.",
+    "Confidence intervals are nonparametric row bootstrap intervals for this one cutoff.",
+    "Repeated-customer temporal design and one retailer limit generalization.",
+    "No post-test model, feature, calibration or threshold change is permitted."
+  ]
+}

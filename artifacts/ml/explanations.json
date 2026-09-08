@@ -1,0 +1,324 @@
+{
+  "evidence": "project_generated_calibration_explanation",
+  "scope": "underlying_logistic_log_odds_not_calibrated_probability",
+  "causal_interpretation_permitted": false,
+  "data_split": "calibration_only",
+  "rows": 2659,
+  "target_version": "future-inactivity-v1",
+  "feature_version": "customer-behavior-v1",
+  "split_version": "temporal-split-v1",
+  "model_sha256": "942d705d66a9469d57494626a99da83c91a9a895a3a2b2d7e977ff3ba56952ad",
+  "method": "linear_shap_log_odds",
+  "max_additivity_error": 8.881784197001252e-16,
+  "global_importance": [
+    {
+      "feature": "numeric__missingindicator_std_gap_days_365",
+      "mean_absolute_log_odds_contribution": 0.13739794
+    },
+    {
+      "feature": "numeric__log1p_purchase_count_observed",
+      "mean_absolute_log_odds_contribution": 0.11079026
+    },
+    {
+      "feature": "numeric__log1p_purchase_count_365",
+      "mean_absolute_log_odds_contribution": 0.09977571
+    },
+    {
+      "feature": "numeric__recency_days",
+      "mean_absolute_log_odds_contribution": 0.08320061
+    },
+    {
+      "feature": "numeric__log1p_purchase_count_90",
+      "mean_absolute_log_odds_contribution": 0.07463898
+    },
+    {
+      "feature": "numeric__log1p_spend_90",
+      "mean_absolute_log_odds_contribution": 0.07206628
+    },
+    {
+      "feature": "numeric__log1p_units_90",
+      "mean_absolute_log_odds_contribution": 0.0696339
+    },
+    {
+      "feature": "numeric__log1p_spend_365",
+      "mean_absolute_log_odds_contribution": 0.0551844
+    },
+    {
+      "feature": "numeric__log1p_unique_products_365",
+      "mean_absolute_log_odds_contribution": 0.05338714
+    },
+    {
+      "feature": "numeric__std_gap_days_365",
+      "mean_absolute_log_odds_contribution": 0.05248117
+    },
+    {
+      "feature": "numeric__missingindicator_last_gap_days",
+      "mean_absolute_log_odds_contribution": 0.05104743
+    },
+    {
+      "feature": "numeric__missingindicator_mean_gap_days_365",
+      "mean_absolute_log_odds_contribution": 0.05104743
+    },
+    {
+      "feature": "numeric__log1p_units_365",
+      "mean_absolute_log_odds_contribution": 0.04985574
+    },
+    {
+      "feature": "numeric__log1p_return_line_count_365",
+      "mean_absolute_log_odds_contribution": 0.04761796
+    },
+    {
+      "feature": "numeric__tenure_days",
+      "mean_absolute_log_odds_contribution": 0.04512508
+    },
+    {
+      "feature": "numeric__log1p_return_value_365",
+      "mean_absolute_log_odds_contribution": 0.04398139
+    },
+    {
+      "feature": "numeric__log1p_return_value_share_365",
+      "mean_absolute_log_odds_contribution": 0.03111814
+    },
+    {
+      "feature": "numeric__mean_gap_days_365",
+      "mean_absolute_log_odds_contribution": 0.02687475
+    },
+    {
+      "feature": "numeric__log1p_avg_products_per_order_365",
+      "mean_absolute_log_odds_contribution": 0.02176163
+    },
+    {
+      "feature": "numeric__log1p_order_value_std_365",
+      "mean_absolute_log_odds_contribution": 0.02111805
+    },
+    {
+      "feature": "numeric__last_gap_days",
+      "mean_absolute_log_odds_contribution": 0.02006368
+    },
+    {
+      "feature": "numeric__log1p_max_order_value_365",
+      "mean_absolute_log_odds_contribution": 0.00979139
+    },
+    {
+      "feature": "numeric__log1p_avg_order_value_365",
+      "mean_absolute_log_odds_contribution": 0.00712289
+    },
+    {
+      "feature": "numeric__log1p_avg_basket_units_365",
+      "mean_absolute_log_odds_contribution": 0.00548618
+    },
+    {
+      "feature": "country__country_France",
+      "mean_absolute_log_odds_contribution": 0.0020156
+    },
+    {
+      "feature": "country__country_United Kingdom",
+      "mean_absolute_log_odds_contribution": 0.00089871
+    },
+    {
+      "feature": "country__country_infrequent_sklearn",
+      "mean_absolute_log_odds_contribution": 0.00040408
+    },
+    {
+      "feature": "country__country_Germany",
+      "mean_absolute_log_odds_contribution": 0.00029232
+    },
+    {
+      "feature": "country__country_Belgium",
+      "mean_absolute_log_odds_contribution": 0.00016772
+    },
+    {
+      "feature": "country__country_Channel Islands",
+      "mean_absolute_log_odds_contribution": 0.00015058
+    },
+    {
+      "feature": "country__country_Spain",
+      "mean_absolute_log_odds_contribution": 0.00011763
+    },
+    {
+      "feature": "country__country_Switzerland",
+      "mean_absolute_log_odds_contribution": 6.87e-05
+    },
+    {
+      "feature": "country__country_Sweden",
+      "mean_absolute_log_odds_contribution": 4.261e-05
+    },
+    {
+      "feature": "country__country_Netherlands",
+      "mean_absolute_log_odds_contribution": 3.298e-05
+    },
+    {
+      "feature": "country__country_Portugal",
+      "mean_absolute_log_odds_contribution": 2.417e-05
+    },
+    {
+      "feature": "country__country_Cyprus",
+      "mean_absolute_log_odds_contribution": 1.929e-05
+    },
+    {
+      "feature": "country__country_Finland",
+      "mean_absolute_log_odds_contribution": 1.469e-05
+    },
+    {
+      "feature": "country__country_Italy",
+      "mean_absolute_log_odds_contribution": 1.021e-05
+    },
+    {
+      "feature": "country__country_Denmark",
+      "mean_absolute_log_odds_contribution": 7.1e-06
+    },
+    {
+      "feature": "country__country_Japan",
+      "mean_absolute_log_odds_contribution": 5.7e-06
+    },
+    {
+      "feature": "country__country_Greece",
+      "mean_absolute_log_odds_contribution": 5.29e-06
+    },
+    {
+      "feature": "country__country_USA",
+      "mean_absolute_log_odds_contribution": 4.47e-06
+    },
+    {
+      "feature": "country__country_Australia",
+      "mean_absolute_log_odds_contribution": 3.39e-06
+    },
+    {
+      "feature": "country__country_Austria",
+      "mean_absolute_log_odds_contribution": 2.43e-06
+    },
+    {
+      "feature": "country__country_EIRE",
+      "mean_absolute_log_odds_contribution": 2.16e-06
+    },
+    {
+      "feature": "numeric__cutoff_month_sin",
+      "mean_absolute_log_odds_contribution": 0.0
+    },
+    {
+      "feature": "numeric__cutoff_month_cos",
+      "mean_absolute_log_odds_contribution": 0.0
+    }
+  ],
+  "anonymous_local_cases": [
+    {
+      "anonymous_case": "calibration-highest-score",
+      "calibrated_probability": 0.98452664,
+      "underlying_log_odds": 3.260532,
+      "base_log_odds": -0.13987741,
+      "top_contributions": [
+        {
+          "feature": "numeric__log1p_return_value_share_365",
+          "feature_value": 12.068055205080087,
+          "log_odds_contribution": 1.55616605,
+          "direction": "higher_inactivity_score"
+        },
+        {
+          "feature": "numeric__log1p_spend_365",
+          "feature_value": -1.3371984560563637,
+          "log_odds_contribution": 0.31323759,
+          "direction": "higher_inactivity_score"
+        },
+        {
+          "feature": "numeric__log1p_units_365",
+          "feature_value": -1.1441638932335176,
+          "log_odds_contribution": 0.24301287,
+          "direction": "higher_inactivity_score"
+        },
+        {
+          "feature": "numeric__log1p_purchase_count_observed",
+          "feature_value": -0.2166175000284133,
+          "log_odds_contribution": 0.19182079,
+          "direction": "higher_inactivity_score"
+        },
+        {
+          "feature": "numeric__missingindicator_std_gap_days_365",
+          "feature_value": 0.0,
+          "log_odds_contribution": 0.18574419,
+          "direction": "higher_inactivity_score"
+        }
+      ]
+    },
+    {
+      "anonymous_case": "calibration-median-score",
+      "calibrated_probability": 0.50196535,
+      "underlying_log_odds": -0.14042807,
+      "base_log_odds": -0.13987741,
+      "top_contributions": [
+        {
+          "feature": "numeric__missingindicator_std_gap_days_365",
+          "feature_value": -1.0,
+          "log_odds_contribution": -0.10908786,
+          "direction": "lower_inactivity_score"
+        },
+        {
+          "feature": "numeric__log1p_units_365",
+          "feature_value": -0.21040751385639345,
+          "log_odds_contribution": 0.05663917,
+          "direction": "higher_inactivity_score"
+        },
+        {
+          "feature": "numeric__mean_gap_days_365",
+          "feature_value": 0.4226797758545616,
+          "log_odds_contribution": 0.04048564,
+          "direction": "higher_inactivity_score"
+        },
+        {
+          "feature": "numeric__log1p_return_line_count_365",
+          "feature_value": 0.45815690999132624,
+          "log_odds_contribution": -0.03601402,
+          "direction": "lower_inactivity_score"
+        },
+        {
+          "feature": "numeric__log1p_purchase_count_365",
+          "feature_value": 0.15369256217448318,
+          "log_odds_contribution": 0.03428521,
+          "direction": "higher_inactivity_score"
+        }
+      ]
+    },
+    {
+      "anonymous_case": "calibration-lowest-score",
+      "calibrated_probability": 0.00850942,
+      "underlying_log_odds": -4.05066268,
+      "base_log_odds": -0.13987741,
+      "top_contributions": [
+        {
+          "feature": "numeric__log1p_purchase_count_observed",
+          "feature_value": 2.38588680671749,
+          "log_odds_contribution": -0.65117825,
+          "direction": "lower_inactivity_score"
+        },
+        {
+          "feature": "numeric__log1p_purchase_count_365",
+          "feature_value": 2.213446900275378,
+          "log_odds_contribution": -0.64132467,
+          "direction": "lower_inactivity_score"
+        },
+        {
+          "feature": "numeric__log1p_purchase_count_90",
+          "feature_value": 1.8613531161467862,
+          "log_odds_contribution": -0.55829289,
+          "direction": "lower_inactivity_score"
+        },
+        {
+          "feature": "numeric__log1p_return_line_count_365",
+          "feature_value": 2.0783253873687366,
+          "log_odds_contribution": -0.28726889,
+          "direction": "lower_inactivity_score"
+        },
+        {
+          "feature": "numeric__log1p_spend_365",
+          "feature_value": 1.3286430371675524,
+          "log_odds_contribution": -0.26871856,
+          "direction": "lower_inactivity_score"
+        }
+      ]
+    }
+  ],
+  "limitations": [
+    "Correlated inputs can divide or redistribute apparent importance.",
+    "Contributions describe model behavior, not causes or intervention effects.",
+    "The outer sigmoid calibrator is monotonic but is not decomposed by this report."
+  ]
+}
