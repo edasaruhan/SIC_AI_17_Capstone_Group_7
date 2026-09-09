@@ -8,6 +8,7 @@ from fastapi import Depends, FastAPI, Request, Response
 from fastapi.exceptions import RequestValidationError
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
+from opentelemetry import trace
 from prometheus_client import CONTENT_TYPE_LATEST, Counter, generate_latest
 from sqlalchemy import select, text
 from sqlalchemy.exc import IntegrityError
@@ -23,6 +24,7 @@ from app.platform.errors import DomainError
 
 requests_total = Counter("growthpilot_http_requests_total", "HTTP requests", ["method", "status"])
 logger = logging.getLogger("growthpilot.http")
+tracer = trace.get_tracer("growthpilot.api")
 
 
 @asynccontextmanager
@@ -38,7 +40,12 @@ def create_app() -> FastAPI:
     from app.catalog.router import router as catalog_router
     from app.commerce.router import router as commerce_router
     from app.crm.router import router as crm_router
+    from app.generation.router import router as generation_router
     from app.imports.router import router as imports_router
+    from app.integrations.router import router as integrations_router
+    from app.intelligence.router import router as intelligence_router
+    from app.marketing.router import router as marketing_router
+    from app.platform.audit_router import router as audit_router
 
     settings = get_settings()
     application = FastAPI(title="GrowthPilot API", version="0.1.0", lifespan=lifespan)
@@ -53,6 +60,7 @@ def create_app() -> FastAPI:
             "X-File-Name",
             "X-Import-Kind",
             "Idempotency-Key",
+            "X-Hub-Signature-256",
         ],
     )
 
@@ -61,11 +69,20 @@ def create_app() -> FastAPI:
         request_id = str(uuid4())
         started = time.perf_counter()
         request.state.request_id = request_id
-        response = await call_next(request)
+        with tracer.start_as_current_span(
+            "http.request", attributes={"http.request.method": request.method}
+        ) as span:
+            response = await call_next(request)
+            span.set_attribute("http.response.status_code", response.status_code)
         response.headers["X-Request-ID"] = request_id
         response.headers["X-Content-Type-Options"] = "nosniff"
         response.headers["Referrer-Policy"] = "no-referrer"
         response.headers["Cache-Control"] = "no-store"
+        response.headers["X-Frame-Options"] = "DENY"
+        response.headers["Permissions-Policy"] = "camera=(), microphone=(), geolocation=()"
+        response.headers["Content-Security-Policy"] = "default-src 'none'; frame-ancestors 'none'"
+        if settings.environment == "production":
+            response.headers["Strict-Transport-Security"] = "max-age=31536000; includeSubDomains"
         requests_total.labels(request.method, str(response.status_code)).inc()
         logger.info(
             "request",
@@ -132,8 +149,13 @@ def create_app() -> FastAPI:
         return Response(generate_latest(), media_type=CONTENT_TYPE_LATEST)
 
     application.include_router(crm_router)
+    application.include_router(generation_router)
     application.include_router(catalog_router)
     application.include_router(commerce_router)
     application.include_router(imports_router)
     application.include_router(analytics_router)
+    application.include_router(intelligence_router)
+    application.include_router(integrations_router)
+    application.include_router(marketing_router)
+    application.include_router(audit_router)
     return application

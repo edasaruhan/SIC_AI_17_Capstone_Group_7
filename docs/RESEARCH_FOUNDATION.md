@@ -14,7 +14,7 @@ in grocery retail; Fader and Hardie's work discusses the transaction-time dropou
 assumption and alternatives. Purchase regularity research also warns that memoryless
 timing assumptions can miss cyclic buying. Sources: [Marketing Science, DOI 10.1287/mksc.1110.0654](https://pubsonline.informs.org/doi/10.1287/mksc.1110.0654),
 [International Journal of Research in Marketing, DOI 10.1016/j.ijresmar.2006.12.005](https://doi.org/10.1016/j.ijresmar.2006.12.005),
-[IJRM purchase regularity study](https://doi.org/10.1016/j.ijresmar.2020.03.011).
+[Marketing Science purchase-regularity study, DOI 10.1287/mksc.2015.0963](https://pubsonline.informs.org/doi/10.1287/mksc.2015.0963).
 
 Consequences for the experiment:
 

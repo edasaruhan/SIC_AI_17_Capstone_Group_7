@@ -1,6 +1,6 @@
 # Capstone Requirements
 
-Status: Source files inventoried and requirements extracted on 2026-09-08. This is a planning matrix, not a completed submission.
+Status: Source files inventoried on 2026-09-08; known deliverables completed and synchronized on 2026-09-09. Instructor submission-channel/date confirmation remains external.
 
 ## Source inventory and precedence
 
@@ -19,24 +19,24 @@ All six known reference files are present under `references/instructor/`. Origin
 
 | Requirement | Source file | Deliverable | Project evidence needed | Status |
 |---|---|---|---|---|
-| Frame the marketing problem, target audience/context, research questions, and value | Literature/Data/Technology guidelines | Literature Review | Cited sources, synthesis, gap linked to GrowthPilot | Not started |
-| Summarize and compare literature rather than listing it | Literature/Data/Technology guidelines | Literature Review | Objective/data/method/findings/strengths/limitations comparison | Not started |
-| Document dataset source, access, format, size, period, granularity, variables, and classification | Literature/Data/Technology guidelines | Data Research | Verified provenance/licence/access and reproducible profiling | Blocked by dataset selection |
-| Assess data quality, bias, representativeness, privacy, and limitations | Literature/Data/Technology guidelines | Data Research | Real validation outputs and documented limitations | Blocked by dataset selection |
-| Provide descriptive statistics, visuals, and marketing insights where possible | Literature/Data/Technology guidelines | Data Research | Reproducible code, inputs, figures, and raw outputs | Blocked by dataset selection |
-| Compare technologies using task-relevant quality, data, interpretability, latency, cost, integration, scalability, privacy, maintenance, and deployment criteria | Literature/Data/Technology guidelines | Technology Review | Current primary documentation, research evidence, decision matrix | Not started |
-| Define overview, objectives, KPIs, background, methodology, evaluation, data, and literature context | Concept Note/Implementation Plan guidelines | Concept Note | Approved product/ML methodology and cited evidence | Not started |
-| Supply a realistic input-to-marketing-action architecture/workflow diagram | Concept Note/Implementation Plan guidelines | Concept Note | Approved architecture at appropriate abstraction; human review/KPI loop | Blocked by architecture review |
-| List a relevant technology stack only after selection | Concept Note/Implementation Plan guidelines | Implementation Plan | Approved decisions/ADRs | Blocked by architecture review |
-| Provide timeline, task ownership, milestones, evidence, risks, mitigations, and fallbacks | Concept Note/Implementation Plan guidelines | Implementation Plan | Approved delivery plan and owners | In planning |
-| Cover privacy, consent, bias/fairness, transparency, explainability, manipulation, brand safety, and human oversight | Concept Note/Implementation Plan guidelines | Implementation Plan | Controls, risk analysis, and traceable design evidence | In planning |
-| Highlight direct AI authorship | Concept Note/Implementation Plan guidelines | Implementation Plan | Visible disclosure in submitted artifact | Mandatory; not yet produced |
-| Document collection, cleaning, missingness/outliers, EDA, features, transformations, and code | Data Preparation/Feature Engineering template | Data Preparation / Feature Engineering | Reproducible pipeline, validations, figures, rationale | Not started |
-| Justify model selection; report training, hyperparameters, cross-validation, metrics, confusion matrix/ROC or relevant visuals, and code | Data Preparation/Feature Engineering template | Model Exploration | Baselines, experiment records, preserved validation artifacts | Not started |
-| Explain evaluation weaknesses, refinement methods, additional tuning, cross-validation changes, and feature selection if used | Model Refinement template | Model Refinement | Pre/post results from validation only and documented experiment lineage | Not started |
-| Prepare untouched test data, apply the selected model, compare train/validation/test metrics, discuss deployment if applicable, and provide code | Model Refinement template | Test Submission | Frozen split, final evaluation outputs, deployment evidence only if real | Not started |
-| Report weekly, concisely, with concrete progress, current focus/status, blockers/support, and next work | Weekly report PDF | Weekly Progress Report | Current repository evidence; maximum one page | Not started for Group 7 |
-| Provide final presentation/deliverable | Requirement source not present | Final deliverable | Requirements and evidence to be obtained | Requirements unavailable |
+| Frame the marketing problem, target audience/context, research questions, and value | Literature/Data/Technology guidelines | Literature Review | Cited sources, synthesis, gap linked to GrowthPilot | Complete — report 01 |
+| Summarize and compare literature rather than listing it | Literature/Data/Technology guidelines | Literature Review | Objective/data/method/findings/strengths/limitations comparison | Complete — report 01 |
+| Document dataset source, access, format, size, period, granularity, variables, and classification | Literature/Data/Technology guidelines | Data Research | Verified provenance/licence/access and reproducible profiling | Complete — report 01 + profile artifacts |
+| Assess data quality, bias, representativeness, privacy, and limitations | Literature/Data/Technology guidelines | Data Research | Real validation outputs and documented limitations | Complete — report 01 |
+| Provide descriptive statistics, visuals, and marketing insights where possible | Literature/Data/Technology guidelines | Data Research | Reproducible code, inputs, figures, and raw outputs | Complete — report 01 + EDA artifacts |
+| Compare technologies using task-relevant quality, data, interpretability, latency, cost, integration, scalability, privacy, maintenance, and deployment criteria | Literature/Data/Technology guidelines | Technology Review | Current primary documentation, research evidence, decision matrix | Complete — report 01; live cost/latency unmeasured |
+| Define overview, objectives, KPIs, background, methodology, evaluation, data, and literature context | Concept Note/Implementation Plan guidelines | Concept Note | Approved product/ML methodology and cited evidence | Complete — report 02 |
+| Supply a realistic input-to-marketing-action architecture/workflow diagram | Concept Note/Implementation Plan guidelines | Concept Note | Approved architecture at appropriate abstraction; human review/KPI loop | Complete — report 02 + source figure |
+| List a relevant technology stack only after selection | Concept Note/Implementation Plan guidelines | Implementation Plan | Approved decisions/ADRs | Complete — report 02 |
+| Provide timeline, task ownership, milestones, evidence, risks, mitigations, and fallbacks | Concept Note/Implementation Plan guidelines | Implementation Plan | Approved delivery plan and owners | Complete — report 02; future dates require review |
+| Cover privacy, consent, bias/fairness, transparency, explainability, manipulation, brand safety, and human oversight | Concept Note/Implementation Plan guidelines | Implementation Plan | Controls, risk analysis, and traceable design evidence | Complete — report 02 |
+| Highlight direct AI authorship | Concept Note/Implementation Plan guidelines | Implementation Plan | Visible disclosure in submitted artifact | Complete — visible disclosure in every output |
+| Document collection, cleaning, missingness/outliers, EDA, features, transformations, and code | Data Preparation/Feature Engineering template | Data Preparation / Feature Engineering | Reproducible pipeline, validations, figures, rationale | Complete — report 03 |
+| Justify model selection; report training, hyperparameters, cross-validation, metrics, confusion matrix/ROC or relevant visuals, and code | Data Preparation/Feature Engineering template | Model Exploration | Baselines, experiment records, preserved validation artifacts | Complete — report 03; temporal design replaces random CV |
+| Explain evaluation weaknesses, refinement methods, additional tuning, cross-validation changes, and feature selection if used | Model Refinement template | Model Refinement | Pre/post results from validation only and documented experiment lineage | Complete — report 04 |
+| Prepare untouched test data, apply the selected model, compare train/validation/test metrics, discuss deployment if applicable, and provide code | Model Refinement template | Test Submission | Frozen split, final evaluation outputs, deployment evidence only if real | Complete — report 04 |
+| Report weekly, concisely, with concrete progress, current focus/status, blockers/support, and next work | Weekly report PDF | Weekly Progress Report | Current repository evidence; maximum one page | Complete — Group 7 report 05, one page |
+| Provide final presentation/deliverable | Original concept deck; no separate final instructions present | Final deliverable | Reproducible product/demo and ML evidence | Complete to known scope — eight-slide PPTX/PDF; final channel requirements unknown |
 
 ## Confirmed special instructions
 

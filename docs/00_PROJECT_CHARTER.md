@@ -63,3 +63,21 @@ Historical snapshot; current implementation progress is in `docs/tasks/` and the
 - Dataset and churn target: not selected or defined.
 - EDA, feature engineering, training, and evaluation: not started; no ML metrics exist.
 - Backend, frontend, CRM/ERP-lite, and ad connectors: not implemented.
+
+## Current state after the 24-phase local roadmap
+
+- Architecture, domain/data contracts, tenancy/auth/RBAC and local tooling: implemented
+  and locally validated.
+- Dataset and target: UCI Online Retail II; versioned 90-day future-purchase inactivity
+  proxy with chronological snapshots and preserved provenance.
+- Frozen model: calibrated regularized logistic regression; final temporal-test metrics
+  and checksum are stored under `artifacts/ml/` with no post-test retuning.
+- Product: API, worker and Next.js operator workspace cover CRM, commerce, imports,
+  analytics, intelligence, integrations, attribution, audiences, campaigns and audit.
+- Marketing action: consent/permission/approval guarded and disabled by default through
+  the kill switch and zero budget ceiling; no live spend was executed.
+- Academic package: source Markdown, DOCX/PDF reports, one-page Group 7 weekly report,
+  figures and an editable eight-slide PPTX/PDF are under `academic/`.
+- Deployment: container definitions and statically validated AWS Terraform reference
+  exist; no cloud apply or image publication occurred.
+- Exact remaining external validation is recorded in `PRODUCTION_READINESS_REPORT.md`.

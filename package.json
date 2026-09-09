@@ -6,6 +6,7 @@
     "dev": "pnpm --filter @growthpilot/web dev",
     "build": "pnpm --filter @growthpilot/web build",
     "typecheck": "pnpm --filter @growthpilot/web typecheck",
-    "lint": "pnpm --filter @growthpilot/web lint"
+    "lint": "pnpm --filter @growthpilot/web lint",
+    "test": "pnpm --filter @growthpilot/web test"
   }
 }

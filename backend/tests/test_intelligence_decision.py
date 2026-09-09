@@ -39,9 +39,7 @@ def test_elevated_customer_with_consent_requires_review() -> None:
 
 
 def test_absent_consent_never_produces_contact_channel() -> None:
-    result = decide(
-        decision_input(consent={"email": False, "sms": False, "ads": False})
-    )
+    result = decide(decision_input(consent={"email": False, "sms": False, "ads": False}))
     assert result.state is DecisionState.NO_CONTACT_REVIEW
     assert result.eligible_channels == ()
     assert "NO_CONSENTED_CHANNEL" in result.reason_codes

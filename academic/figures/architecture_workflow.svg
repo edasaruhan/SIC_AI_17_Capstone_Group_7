@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="1280" viewBox="0 0 1280 1280" role="img" aria-labelledby="title desc">
+  <title id="title">GrowthPilot AI architecture and governed action workflow</title>
+  <desc id="desc">Data enters through validated imports and provider adapters, is stored in a tenant-scoped PostgreSQL system, analyzed by versioned analytics and machine learning services, reviewed in the web application, and only approved actions can enter a disabled-by-default execution boundary.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#2b6a57"/></marker>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="0" dy="4" stdDeviation="5" flood-opacity="0.12"/></filter>
+  </defs>
+  <rect width="1280" height="560" rx="28" fill="#f5f8f6"/>
+  <text x="64" y="58" font-family="Arial, sans-serif" font-size="28" font-weight="700" fill="#173b32">Governed data-to-decision workflow</text>
+  <text x="64" y="87" font-family="Arial, sans-serif" font-size="15" fill="#547068">Tenant isolation, provenance, consent, approval, and audit apply end to end.</text>
+
+  <g filter="url(#shadow)" font-family="Arial, sans-serif">
+    <rect x="64" y="142" width="200" height="132" rx="18" fill="#ffffff" stroke="#b8d2c8" stroke-width="2"/>
+    <text x="84" y="177" font-size="15" font-weight="700" fill="#2b6a57">1 · INGEST</text>
+    <text x="84" y="207" font-size="18" font-weight="700" fill="#173b32">Validated inputs</text>
+    <text x="84" y="235" font-size="14" fill="#547068">CSV/XLSX imports</text>
+    <text x="84" y="257" font-size="14" fill="#547068">Meta / Google adapters</text>
+
+    <rect x="316" y="142" width="200" height="132" rx="18" fill="#ffffff" stroke="#b8d2c8" stroke-width="2"/>
+    <text x="336" y="177" font-size="15" font-weight="700" fill="#2b6a57">2 · STORE</text>
+    <text x="336" y="207" font-size="18" font-weight="700" fill="#173b32">Canonical records</text>
+    <text x="336" y="235" font-size="14" fill="#547068">PostgreSQL + RLS</text>
+    <text x="336" y="257" font-size="14" fill="#547068">Audit + outbox</text>
+
+    <rect x="568" y="142" width="200" height="132" rx="18" fill="#ffffff" stroke="#b8d2c8" stroke-width="2"/>
+    <text x="588" y="177" font-size="15" font-weight="700" fill="#2b6a57">3 · ANALYZE</text>
+    <text x="588" y="207" font-size="18" font-weight="700" fill="#173b32">Versioned evidence</text>
+    <text x="588" y="235" font-size="14" fill="#547068">KPI / RFM / attribution</text>
+    <text x="588" y="257" font-size="14" fill="#547068">Churn-proxy scoring</text>
+
+    <rect x="820" y="142" width="200" height="132" rx="18" fill="#ffffff" stroke="#b8d2c8" stroke-width="2"/>
+    <text x="840" y="177" font-size="15" font-weight="700" fill="#2b6a57">4 · REVIEW</text>
+    <text x="840" y="207" font-size="18" font-weight="700" fill="#173b32">Human decision</text>
+    <text x="840" y="235" font-size="14" fill="#547068">Explanation + consent</text>
+    <text x="840" y="257" font-size="14" fill="#547068">Audience + approval</text>
+
+    <rect x="1072" y="142" width="144" height="132" rx="18" fill="#e8f1ed" stroke="#2b6a57" stroke-width="2"/>
+    <text x="1092" y="177" font-size="15" font-weight="700" fill="#2b6a57">5 · ACT</text>
+    <text x="1092" y="207" font-size="18" font-weight="700" fill="#173b32">Guarded</text>
+    <text x="1092" y="235" font-size="14" fill="#547068">Kill switch ON</text>
+    <text x="1092" y="257" font-size="14" fill="#547068">Spend cap 0</text>
+  </g>
+
+  <g stroke="#2b6a57" stroke-width="3" fill="none" marker-end="url(#arrow)">
+    <path d="M264 208 H306"/><path d="M516 208 H558"/><path d="M768 208 H810"/><path d="M1020 208 H1062"/>
+  </g>
+
+  <rect x="64" y="334" width="1152" height="142" rx="20" fill="#173b32"/>
+  <text x="88" y="371" font-family="Arial, sans-serif" font-size="15" font-weight="700" fill="#9dd4c0">CROSS-CUTTING CONTROLS</text>
+  <g font-family="Arial, sans-serif" font-size="16" fill="#ffffff">
+    <text x="88" y="410">Tenant scope + server-side RBAC</text>
+    <text x="383" y="410">Version + checksum provenance</text>
+    <text x="700" y="410">Consent + purpose limitation</text>
+    <text x="994" y="410">Human approval + audit</text>
+  </g>
+  <g fill="#66b89a">
+    <circle cx="76" cy="404" r="4"/><circle cx="371" cy="404" r="4"/><circle cx="688" cy="404" r="4"/><circle cx="982" cy="404" r="4"/>
+  </g>
+  <text x="64" y="522" font-family="Arial, sans-serif" font-size="13" fill="#6d817a">Implementation evidence: repository migrations, services, tests, model registry, and generated evaluation artifacts. Live provider execution remains unvalidated and disabled.</text>
+</svg>

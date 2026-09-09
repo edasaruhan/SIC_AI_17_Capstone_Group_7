@@ -1,15 +1,21 @@
-import { ArrowUpRight, Compass, ShieldCheck } from "lucide-react";
+import { ArrowUpRight, CircleAlert, TrendingUp, Users, WalletCards } from "lucide-react";
+import Link from "next/link";
+import { AppShell } from "@/components/app-shell";
+import { ApiState, apiGet } from "@/lib/api";
+import { evidenceLabel } from "@/lib/presentation";
 
-export default function Home() {
-  return <main className="mx-auto flex min-h-screen max-w-5xl flex-col justify-center px-6 py-20">
-    <div className="mb-16 flex items-center gap-3 text-lg font-semibold"><span className="rounded-xl bg-emerald-950 p-3 text-lime-200"><Compass size={24} /></span> GrowthPilot</div>
-    <div className="mb-6 flex items-center gap-2 text-xs font-semibold uppercase tracking-[.2em] text-emerald-800"><span className="h-2 w-2 rounded-full bg-emerald-600" /> Customer operations, connected</div>
-    <h1 className="max-w-3xl text-5xl font-semibold leading-[1.08] tracking-tight md:text-7xl">Know your customers.<br /><span className="text-emerald-700">Make the next move.</span></h1>
-    <p className="mt-7 max-w-xl text-lg leading-8 text-neutral-600">Your customer history, sales, and marketing decisions in one accountable workspace.</p>
-    <div className="mt-12 max-w-lg rounded-2xl border border-neutral-200 bg-white p-7">
-      <div className="mb-3 flex items-center justify-between"><h2 className="font-semibold">Workspace setup</h2><ArrowUpRight size={18} /></div>
-      <p className="text-sm leading-6 text-neutral-500">This local installation is being configured. Your workspace will appear after authenticated organization access is available.</p>
-      <div className="mt-6 flex items-center gap-2 border-t border-neutral-100 pt-4 text-xs text-neutral-500"><ShieldCheck size={16} /> Organization access is verified on the server.</div>
-    </div>
-  </main>;
+type Overview = { evidence: string; currency: string; net_revenue: string; orders: number; customers: number; low_stock_products: number; roas: string | null; availability_notes: string[] };
+const number = new Intl.NumberFormat("en-US");
+
+function Metric({ label, value, note, icon }: { label: string; value: string; note: string; icon: React.ReactNode }) {
+  return <article className="metric-card"><div className="metric-icon">{icon}</div><span>{label}</span><strong>{value}</strong><small>{note}</small></article>;
 }
+
+export default async function Home() {
+  const result: ApiState<Overview> = await apiGet("/api/v1/analytics/overview");
+  return <AppShell active="overview"><header className="page-header"><div><p className="eyebrow">Command center</p><h1>Good decisions start with grounded data.</h1><p>Operational performance, customer signals, and review queues in one accountable view.</p></div><span className="evidence-badge">{result.ok ? evidenceLabel(result.data.evidence) : "data unavailable"}</span></header>
+    {!result.ok ? <section className="state-panel"><CircleAlert /><div><h2>{result.kind === "unconfigured" ? "Connect your workspace" : "Dashboard unavailable"}</h2><p>{result.message}</p></div></section> : <><section className="metric-grid"><Metric label="Net revenue" value={`${result.data.currency} ${result.data.net_revenue}`} note="Sales less posted refunds" icon={<WalletCards />} /><Metric label="Orders" value={number.format(result.data.orders)} note="Selected operational period" icon={<TrendingUp />} /><Metric label="Customers" value={number.format(result.data.customers)} note="Current customer records" icon={<Users />} /><Metric label="ROAS" value={result.data.roas ?? "Not available"} note="Requires verified provider spend" icon={<ArrowUpRight />} /></section><section className="content-grid"><article className="panel"><div className="panel-heading"><div><p className="eyebrow">Attention</p><h2>Operational signals</h2></div><span>{result.data.low_stock_products} low stock</span></div><ul className="note-list">{result.data.availability_notes.map((note) => <li key={note}>{note}</li>)}</ul></article><article className="panel dark-panel"><p className="eyebrow">Decision safety</p><h2>Recommendations remain review-only.</h2><p>Customer risk is a prioritization signal. Consent and a permitted human approval remain mandatory before any outreach.</p><Link href="/decisions">Open review queue <ArrowUpRight size={16} /></Link></article></section></>}
+  </AppShell>;
+}
+
+export const dynamic = "force-dynamic";

@@ -11,8 +11,14 @@ from app.identity.context import TenantContext
 from app.identity.models import Membership
 from app.identity.permissions import ROLE_PERMISSIONS, Permission
 from app.imports.service import commit_batch, get_batch
+from app.integrations import service as integration_service
+from app.integrations.models import IntegrationSyncRun
+from app.integrations.providers import provider_for
+from app.intelligence import service as intelligence_service
+from app.intelligence.models import ScoringJob
 from app.platform.audit import OutboxEvent
 from app.platform.db import get_engine, set_context
+from app.platform.storage import get_object_store
 
 MAX_DELIVERIES = 5
 
@@ -101,6 +107,35 @@ def process_event(tenant_id: UUID, event_id: UUID) -> None:
                 return
             set_context(session, actor_id=actor_id, tenant_id=tenant_id)
             commit_batch(ctx, batch)
+        elif event.event_type == "intelligence.batch_score_requested":
+            job = session.get(ScoringJob, UUID(str(event.payload["entity_id"])))
+            if not membership or Permission.SCORE not in ROLE_PERMISSIONS[membership.role]:
+                if job:
+                    job.status = "failed"
+                    job.error_code = "authorization_revoked"
+                event.status = "failed"
+                event.last_error = "authorization_revoked"
+                return
+            ctx = TenantContext(session, tenant_id, actor_id, membership.role)
+            intelligence_service.execute_batch_score(ctx, UUID(str(event.payload["entity_id"])))
+        elif event.event_type == "integration.sync_requested":
+            run = session.get(IntegrationSyncRun, UUID(str(event.payload["entity_id"])))
+            if (
+                not membership
+                or Permission.INTEGRATION_WRITE not in ROLE_PERMISSIONS[membership.role]
+            ):
+                if run:
+                    run.status = "failed"
+                    run.error_code = "authorization_revoked"
+                event.status = "failed"
+                event.last_error = "authorization_revoked"
+                return
+            assert run is not None
+            ctx = TenantContext(session, tenant_id, actor_id, membership.role)
+            integration = integration_service.get_integration(ctx, run.integration_id)
+            integration_service.execute_sync(
+                ctx, run.id, provider_for(integration.provider), get_object_store()
+            )
         # Non-command events are acknowledged as delivered to the local audit/domain
         # consumer. External integrations must register explicit handlers later.
         event.status = "published"

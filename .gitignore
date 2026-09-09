@@ -39,6 +39,7 @@ test-results/
 playwright-report/
 dist/
 /tmp/
+.tmp/
 /data/raw/
 /data/interim/
 /data/processed/

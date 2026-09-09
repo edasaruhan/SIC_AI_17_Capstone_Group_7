@@ -25,6 +25,15 @@ class Settings(BaseSettings):
     s3_bucket: str = ""
     s3_endpoint: str | None = None
     max_upload_bytes: int = 5 * 1024 * 1024
+    model_path: Path = Path(".local/models/final_candidate.joblib")
+    model_manifest_path: Path = Path("artifacts/ml/final_candidate.json")
+    experimental_scoring_demo_only: bool = True
+    identifier_hmac_secret: SecretStr | None = None
+    marketing_kill_switch: bool = True
+    max_campaign_budget: float = 0.0
+    llm_provider: Literal["disabled", "openai_compatible"] = "disabled"
+    llm_api_key: SecretStr | None = None
+    llm_model: str = ""
 
     @model_validator(mode="after")
     def validate_auth(self) -> "Settings":

@@ -32,7 +32,7 @@ Platform-attributed and GrowthPilot-linked figures must not be silently merged o
 | ROAS | Attributed revenue divided by eligible ad spend | Attribution basis, revenue basis, time alignment, zero-spend behavior | Definition pending |
 | Customer value / LTV | Historical or expected customer economic value | Horizon, revenue versus contribution, discounting, censoring, model/method | Definition pending |
 | LTV:CAC | Compatible LTV divided by compatible CAC | Cohort, horizon, cost/revenue basis, zero/undefined handling | Definition pending |
-| Churn | Customer inactivity/loss under an approved target/business rule | Observation/prediction windows, purchase cycle, eligibility, censoring | Blocked by Target Definition Memo |
+| Churn proxy | No eligible purchase in the frozen 90-day future window (`future-inactivity-v1`) | Strict pre-cutoff features, fully observed outcome, temporal split and eligibility rules | Implemented for capstone; not contractual churn |
 | Retention | Eligible customers retained under an approved cohort rule | Cohort start, retained event, horizon, reactivation handling | Definition pending |
 | Repeat purchase | Customers with qualifying subsequent purchase | Cohort, order validity, time horizon | Definition pending |
 | Campaign response | Qualifying customer response to a campaign | Response event, exposure rule, time window, evidence class | Definition pending |

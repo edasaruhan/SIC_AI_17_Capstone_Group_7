@@ -1,0 +1,14 @@
+{
+  "evidence": "project_generated_local_registry",
+  "registered_model": "growthpilot-churn-inactivity",
+  "alias": "champion",
+  "version": 1,
+  "run_id": "6259c8ebe3744b5aac04c1b70cedbb26",
+  "model_uri": "models:/m-d037c52f9a1f43c0bdfdda20ffcced00",
+  "model_sha256": "942d705d66a9469d57494626a99da83c91a9a895a3a2b2d7e977ff3ba56952ad",
+  "target_version": "future-inactivity-v1",
+  "feature_version": "customer-behavior-v1",
+  "split_version": "temporal-split-v1",
+  "deployment_gate": "demo_only_until_business_domain_validation",
+  "serialization_note": "MLflow sklearn model is a local trusted artifact; never load untrusted models."
+}

@@ -1,24 +1,26 @@
 # Academic Deliverables Map
 
-Status: Planning map based on the six preserved source files plus the master project context. No assignment answer is represented as complete.
+Status: Synchronized completion map, 2026-09-09. All known deliverables are complete for Project Lead review; no submission/upload is claimed.
 
 | Assignment | Source template/guideline | Expected output format | Required evidence | Dependencies | Current status | Next action |
 |---|---|---|---|---|---|---|
-| Literature Review | `AI_in_Marketing_Literature_Data_Technology_Submission.docx` | Repository submission; exact artifact format not stated | Cited academic/industry sources, thematic synthesis, comparison, marketing gap and relevance | Research question and scope confirmation | Not started; stated deadline 2026-08-16 elapsed | Confirm submission status; define bounded research task |
-| Data Research | `AI_in_Marketing_Literature_Data_Technology_Submission.docx` | Repository submission; exact artifact format not stated | Verified source/licence/access, scope/profile, quality/privacy/bias analysis, descriptive outputs and visuals | Candidate search, selection decision, reproducible profiler | Blocked by dataset selection; stated deadline elapsed | Confirm submission status; authorize rigorous dataset research |
-| Technology Review | `AI_in_Marketing_Literature_Data_Technology_Submission.docx` | Repository submission; exact artifact format not stated | Current primary docs/research, comparison criteria, marketing fit, limitations/risks, justified consideration | Architecture/ML questions and evidence gathering | Not started; stated deadline elapsed | Confirm submission status; define comparison scope |
-| Concept Note | `AI_in_Marketing_Concept_Note_and_Implementation_Plan.docx` | Repository submission; exact artifact format not stated | Product/KPI/method context, realistic workflow diagram, data/literature summary, evaluation plan | Product scope, dataset direction, approved high-level architecture | Not started; stated deadline 2026-08-30 elapsed | Confirm status/date; Project Lead approves narrative and diagram scope |
-| Implementation Plan | `AI_in_Marketing_Concept_Note_and_Implementation_Plan.docx` | Repository submission; exact artifact format not stated | Approved stack, timeline/Gantt, task ownership, milestones, risks/fallbacks, responsible AI, citations, AI-authorship disclosure | Architecture decisions, calendar/team constraints | In planning; stated deadline elapsed | Confirm status/date; resolve architecture and schedule through bounded tasks |
-| Data Preparation / Feature Engineering | `Data preparationFeature Engineering and Model exploration.docx` | Exact output format/deadline not stated | Collection/cleaning evidence, missingness/outliers, EDA visuals/insights, feature rationale, transformations, code | Dataset and Target Definition Memo; temporal pipeline | Not started | Select data first; create reproducible preparation task |
-| Model Exploration | `Data preparationFeature Engineering and Model exploration.docx` | Exact output format/deadline not stated | Model rationale, strengths/weaknesses, training/hyperparameters/CV, metrics and visuals, code | Leakage-safe features/splits and baselines | Not started | Complete data/target gates before experimentation |
-| Model Refinement | `Model Refinement_Template.docx` | Exact output format/deadline not stated | Initial weaknesses, real refinement methods, tuning, CV changes, feature selection impact if applicable | Preserved exploration results and validation-only process | Not started | Freeze exploration evidence before refinement |
-| Test Submission | `Model Refinement_Template.docx` | Exact output format/deadline not stated | Test preparation/application, train-validation-test comparison, code, real deployment evidence only if applicable, conclusion/references | Frozen candidate/threshold and untouched holdout | Not started | Protect holdout until final evaluation |
-| Weekly Progress Report | `Samsung Innovation Campus_Capstone Projesi  Kısa İlerleme Raporu Şablonu.docx (2).pdf` | Maximum one-page report; submission format not stated | Concrete delta, focus, traffic-light status, blockers/risks, support, next-period work | Current repository/task evidence | Not started for Group 7 | Obtain blank/current template; do not reuse pre-filled Group 10 claims |
-| Final presentation/deliverable | Requirements not present; original `GrowthPilot_AI_Sunum_8slayt.pdf` is concept reference only | TBD | Reproducible product/demo and ML evidence, citations, limitations, provenance | Final instructor requirements and completed audited milestones | Requirements unavailable | Request authoritative final-deliverable instructions |
+| Literature Review | Instructor literature/data/technology DOCX | Markdown + DOCX + PDF in report 01 | Thematic synthesis, comparison, gap, citations | Research/target evidence | Complete; deadline in source elapsed | Project Lead content review; confirm submission channel/date |
+| Data Research | Instructor literature/data/technology DOCX | Included in report 01 | DOI/licence/profile, quality/privacy/limitations, EDA | Selected UCI source and reproducible profiler | Complete | Review source attribution |
+| Technology Review | Instructor literature/data/technology DOCX | Included in report 01 | Architecture comparison, marketing fit, limitations | Accepted ADRs and official docs | Complete; live cost/latency not measured | Review wording |
+| Concept Note | Instructor concept/plan DOCX | Markdown + DOCX + PDF in report 02 | Scope, KPIs, method, data, workflow diagram | Implemented architecture/evidence | Complete | Project Lead narrative review |
+| Implementation Plan | Instructor concept/plan DOCX | Included in report 02 | Stack, actual timeline, ownership, risks, responsible AI, disclosure | Delivery records and ADRs | Complete; future schedule not invented | Confirm external owners/dates |
+| Data Preparation / Feature Engineering | Instructor data/model DOCX | Markdown + DOCX + PDF in report 03 | Cleaning, missingness/outliers, EDA, features, transforms, code | Versioned data pipeline | Complete | Review figures/code excerpt |
+| Model Exploration | Instructor data/model DOCX | Included in report 03 | Rationale, candidates, temporal validation, metrics, code | Preserved MLflow/artifacts | Complete | Review model comparison |
+| Model Refinement | Instructor refinement DOCX | Markdown + DOCX + PDF in report 04 | Weaknesses, tuning, calibration, temporal design, SHAP | Frozen candidate evidence | Complete | Review noncausal language |
+| Test Submission | Instructor refinement DOCX | Included in report 04 | Test integrity, metrics, confusion matrix/curves, deployment truth | Untouched holdout | Complete | Review final numbers/checksums |
+| Weekly Progress Report | Instructor weekly-report PDF | Markdown + DOCX + one-page PDF report 05 | Six required questions and current evidence | Current readiness audit | Complete for current cycle | Confirm Tuesday/submission process |
+| Final presentation | Original eight-slide concept PDF | Editable eight-slide PPTX + PDF | Actual product/ML evidence, sources, limitations, AI disclosure | All completed phases | Complete to known requirements | Confirm any additional instructor rubric |
 
-## Evidence package convention to approve
+## Evidence package convention used
 
-When assignment work begins, prefer an editable source, required submission artifact, `figures/`, a provenance note, and links to reproducible inputs/scripts/raw metric outputs. Final folder names and formats require Project Lead confirmation after checking instructor expectations.
+Each report has Markdown source plus DOCX/PDF; shared figures and presentation outputs are
+under `academic/`. Reproducible metric inputs remain under `artifacts/` and generation code
+under `scripts/`. Submission naming/channel may be adjusted only after reviewer confirmation.
 
 ## Provenance classes
 

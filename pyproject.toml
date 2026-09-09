@@ -22,7 +22,23 @@ dependencies = [
 ]
 
 [dependency-groups]
-dev = ["ruff>=0.11,<1", "mypy>=1.15,<2", "pytest>=8.3,<10", "pytest-cov>=6,<8", "pip-audit>=2.8,<3", "types-boto3[s3]>=1.37,<2", "types-openpyxl>=3.1,<4", "types-defusedxml>=0.7,<1", "pandas-stubs>=2.3,<3"]
+dev = [
+    "ruff>=0.11,<1",
+    "mypy>=1.15,<2",
+    "pytest>=8.3,<10",
+    "pytest-cov>=6,<8",
+    "pip-audit>=2.8,<3",
+    "types-boto3[s3]>=1.37,<2",
+    "types-openpyxl>=3.1,<4",
+    "types-defusedxml>=0.7,<1",
+    "pandas-stubs>=2.3,<3",
+    "python-docx>=1.2.0",
+    "pdfplumber>=0.11.10",
+    "pypdf>=6.18.0",
+    "reportlab>=5.0.1",
+    "pdf2image>=1.17.0",
+    "python-pptx>=1.0.2",
+]
 
 [tool.hatch.build.targets.wheel]
 packages = ["backend/app"]
@@ -38,6 +54,7 @@ ignore = ["S101", "B008"]
 [tool.ruff.lint.per-file-ignores]
 "backend/tests/**" = ["S105", "S106"]
 "scripts/**" = ["S603", "S607"]
+"scripts/generate_academic_deliverables.py" = ["E501"]
 "backend/migrations/**" = ["E501"]
 
 [tool.mypy]
