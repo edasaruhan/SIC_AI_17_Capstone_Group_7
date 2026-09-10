@@ -1819,9 +1819,7 @@ def sync_assignment_package() -> None:
     presentation_destination.mkdir(parents=True, exist_ok=True)
     for suffix in (".pptx", ".pdf"):
         filename = f"GrowthPilot_AI_Final_Presentation{suffix}"
-        shutil.copy2(
-            presentation_source / filename, presentation_destination / filename
-        )
+        shutil.copy2(presentation_source / filename, presentation_destination / filename)
 
 
 def main() -> None:
