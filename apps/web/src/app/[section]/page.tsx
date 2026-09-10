@@ -1,4 +1,5 @@
 import { ArrowUpRight, CircleAlert, DatabaseZap } from "lucide-react";
+import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { AppShell } from "@/components/app-shell";
@@ -21,6 +22,11 @@ const sections: Record<string, Section> = {
   audit: { title: "Audit trail", eyebrow: "Governance", description: "Immutable operational evidence for meaningful workspace events.", endpoint: "/api/v1/audit", key: "root", empty: "No audit evidence is visible to this role.", fields: ["created_at", "event_type", "entity_id"] },
   settings: { title: "Workspace settings", eyebrow: "Administration", description: "Organization context, team roles, permissions, and safety controls.", endpoint: "/api/v1/workspace", key: "object", empty: "Workspace configuration is unavailable.", fields: ["name", "role", "timezone", "currency"] },
 };
+
+export async function generateMetadata({ params }: { params: Promise<{ section: string }> }): Promise<Metadata> {
+  const { section } = await params;
+  return { title: sections[section]?.title ?? "Page not found" };
+}
 
 export default async function SectionPage({ params }: { params: Promise<{ section: string }> }) {
   const { section: slug } = await params; const section = sections[slug]; if (!section) notFound();

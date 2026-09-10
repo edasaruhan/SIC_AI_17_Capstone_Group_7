@@ -20,7 +20,7 @@ Green for authorized local delivery. Backend: 83 tests passing before final pack
 
 ## 4. Problems and risks
 
-No live Meta, Google Ads, LLM, OIDC or cloud credentials; browser controller unavailable; production backup/restore and load tests not performed. Dataset is historical, single-retailer, UK-based; inactivity is a proxy, not contractual churn; predictive results are noncausal.
+No live Meta, Google Ads, LLM, OIDC or cloud credentials; automated desktop/mobile Chromium and Axe checks pass, but manual multi-browser and assistive-technology review is outstanding; production backup/restore and load tests were not performed. Dataset is historical, single-retailer, UK-based; inactivity is a proxy, not contractual churn; predictive results are noncausal.
 
 ## 5. Support or decision needed
 
@@ -28,6 +28,6 @@ Project Lead should audit deliverables and decide whether to authorize final squ
 
 ## 6. Tasks before next report
 
-Address audit findings; run credentialed sandbox and browser/accessibility validation; rehearse backup/restore; define pilot eligibility and randomized holdout; only then request separate deployment/publication authorization.
+Address audit findings; run credentialed sandbox and manual browser/assistive-technology validation; rehearse backup/restore; define pilot eligibility and randomized holdout; only then request separate deployment/publication authorization.
 
 **AI disclosure:** drafted with OpenAI Codex/ChatGPT assistance and verified against repository evidence; human review required.

@@ -120,7 +120,7 @@ The technology must support ordinary customer operations and auditable intellige
 | --- | --- | --- | --- |
 | API/domain | Python 3.12, FastAPI, Pydantic, SQLAlchemy | Typed validation, OpenAPI, shared ML ecosystem | Modular-monolith discipline and strict typing required |
 | Database/tenancy | PostgreSQL RLS | Transactions, constraints, analytics and row-level tenant policy | RLS is defense-in-depth; application scope tests still required |
-| Web | Next.js, React, strict TypeScript | Server-rendered operator UI and typed boundaries | Browser QA and accessibility require deployment-like validation |
+| Web | Next.js, React, strict TypeScript | Server-rendered operator UI and typed boundaries | Automated desktop/mobile Chromium and Axe checks pass; manual multi-browser and assistive-technology review remains external |
 | Jobs | Redis, Dramatiq, transactional outbox | Durable async imports/sync/scoring with retries | Operational monitoring and managed Redis needed |
 | Modeling | scikit-learn + LightGBM candidates | Transparent pipelines plus nonlinear challenger | Validation chose regularized logistic regression, not assumed LightGBM |
 | Tracking | MLflow | Run, parameter, metric and artifact provenance | Local registry is not a production registry service |
@@ -141,7 +141,7 @@ Performance and cost conclusions are architectural assessments, not benchmark cl
 
 ### 4. Limitations and opportunities
 
-No live Meta, Google Ads, OIDC, LLM or cloud credentials were supplied; these boundaries are implemented and mock-tested but not live-validated. The local MLflow registry and single historical dataset do not establish production robustness. Next work after review should include credentialed sandbox validation, load/resilience tests, accessibility/browser review, managed backup/restore rehearsal and monitoring thresholds based on real operating data.
+No live Meta, Google Ads, OIDC, LLM or cloud credentials were supplied; these boundaries are implemented and mock-tested but not live-validated. The local MLflow registry and single historical dataset do not establish production robustness. Next work after review should include credentialed sandbox validation, load/resilience tests, manual multi-browser and assistive-technology review, managed backup/restore rehearsal and monitoring thresholds based on real operating data.
 
 ### 5. Technology conclusion
 

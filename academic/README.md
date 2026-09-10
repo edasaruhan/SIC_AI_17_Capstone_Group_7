@@ -17,11 +17,14 @@ metric is reproduced from committed project artifacts. External-source claims ar
 AI-assisted drafting is disclosed in each deliverable. The presentation is a final,
 evidence-based replacement for the earlier concept-only instructor reference deck.
 
-Regenerate the written package with:
+Regenerate the written package and synchronized `ödevler/` DOCX/PDF copies with:
 
 ```bash
 uv run python scripts/generate_academic_deliverables.py
 ```
+
+LibreOffice (`soffice`) must be available on `PATH` for deterministic PDF export. The
+generator fails visibly if a PDF cannot be produced; it never leaves a silent stale copy.
 
 The PPTX is the editable presentation source. It was generated with the required
 `@oai/artifact-tool` presentation workflow and independently rendered through

@@ -1,10 +1,13 @@
 import { ArrowLeft, CircleAlert } from "lucide-react";
+import type { Metadata } from "next";
 import Link from "next/link";
 import { AppShell } from "@/components/app-shell";
 import { apiGet } from "@/lib/api";
 
 type Customer = { id: string; name: string; email: string | null; phone: string | null; status: string; tags: string[] };
 type Summary = { recency_days: number | null; frequency: number; monetary: string; currency: string; segment: string; churn_probability: number | null; model_status: string };
+
+export const metadata: Metadata = { title: "Customer 360" };
 
 export default async function CustomerPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params; const [customer, summary] = await Promise.all([apiGet<Customer>(`/api/v1/customers/${id}`), apiGet<Summary>(`/api/v1/analytics/customers/${id}`)]);

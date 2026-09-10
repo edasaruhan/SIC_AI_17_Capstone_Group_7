@@ -8,8 +8,9 @@ Status: **LOCAL BUILD COMPLETE — NOT APPROVED FOR PRODUCTION DEPLOYMENT**
 The authorized 24-phase local roadmap is complete and ready for Project Lead audit. The application,
 frozen ML evidence, academic package, container definitions and AWS Terraform reference exist and
 pass the locally executable gates. Production approval is withheld because live identity/provider/
-LLM/cloud validation, browser accessibility, load/resilience, managed restore and external security
-review have not occurred. Marketing execution is disabled by default and no spend was performed.
+LLM/cloud validation, manual multi-browser/assistive-technology review, load/resilience, managed
+restore and external security review have not occurred. Marketing execution is disabled by default
+and no spend was performed.
 
 ## Readiness matrix
 
@@ -21,7 +22,7 @@ review have not occurred. Marketing execution is disabled by default and no spen
 | Imports/jobs | Content validation, staging, idempotency, outbox, durable status and worker rechecks | Local pass; load/malware service validation required |
 | Analytics | Canonical KPI and RFM/value definitions, explicit null states | Local pass; production data reconciliation required |
 | ML | Versioned data/features/splits, baselines, calibration, frozen test, SHAP and registry | Reproducible historical evidence; tenant drift/fitness required |
-| Web | Required B2B areas, real API states, server-only credentials | Build/test pass; browser/a11y review external |
+| Web | Required B2B areas, real API states, server-only credentials | Build/unit tests and 26 desktop/mobile Chromium route+Axe checks pass; manual browser/assistive-tech matrix external |
 | Integrations | Meta/Google fixed-origin adapters, normalization, mocks/contract tests | No credentialed live validation |
 | Attribution | Deterministic HMAC-protected last-touch, method/version/evidence | Local pass; noncausal by design |
 | Audiences/campaigns | Immutable snapshots, current consent, approvals, spend/kill-switch blocks | Local pass; execution intentionally disabled |
@@ -40,7 +41,9 @@ The final local quality gate on 2026-09-09 produced:
 - Pytest passed 83/83 tests, including PostgreSQL RLS/tenant and Redis delivery tests; two
   upstream deprecation warnings remain.
 - Frontend TypeScript and ESLint passed, Vitest passed 2/2 tests, and the Next.js Webpack
-  production build completed for all application routes.
+  production build completed for all application routes. Playwright passed 26/26 checks across
+  13 primary routes in desktop and mobile Chromium viewports, with no Axe WCAG 2.0/2.1 A/AA
+  violation, page exception or horizontal overflow.
 - Alembic `current` and `heads` both reported migration `0011 (head)`.
 - `pip-audit` found no known vulnerability in auditable Python packages. `pnpm audit` initially
   identified three development-tool findings; Vitest/OpenAPI tooling and the transitive
@@ -77,7 +80,8 @@ claims. No post-test tuning is permitted.
 2. Build/scan/sign immutable images; run migrations as a separately authorized one-shot task.
 3. Run credentialed Meta and Google sandbox sync tests against current permissions, quotas and schemas.
 4. Select/approve an LLM provider and validate privacy, logging, retention and output controls.
-5. Perform browser matrix, WCAG accessibility, performance/load, queue retry and failure-injection tests.
+5. Perform manual multi-browser and assistive-technology review plus production-like
+   performance/load, queue retry and failure-injection tests.
 6. Apply infrastructure only after budget/WAF/alert/runbook review; conduct database/object restore drill.
 7. Validate model drift, calibration, subgroup risks and lawful use on current tenant data.
 8. Design an approved randomized holdout before claiming incremental campaign effect.

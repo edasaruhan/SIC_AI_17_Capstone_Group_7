@@ -25,7 +25,12 @@ dedicated `growthpilot_test` database; migrations must be applied there first.
 Infrastructure data, dependencies, local logs and generated previews are ignored.
 
 Frontend: `pnpm install --frozen-lockfile`, `pnpm dev`; `pnpm typecheck`, `pnpm lint`,
-`pnpm build`. Native install scripts are allowlisted only for esbuild/unrs-resolver.
+`pnpm test`, `pnpm build`. Install the E2E browser once with
+`pnpm --filter @growthpilot/web exec playwright install chromium`, then run
+`pnpm build` followed by `pnpm test:e2e`. The E2E suite starts the standalone
+production server, covers all 13 primary routes in desktop and mobile
+Chromium viewports, checks application errors/horizontal overflow, and runs Axe against
+WCAG 2.0/2.1 A/AA rules. Native install scripts are allowlisted only for esbuild/unrs-resolver.
 The production build uses local/system fonts and requires no font CDN.
 
 Redis uses a separate password-protected loopback instance on 56379 with private

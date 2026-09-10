@@ -1,6 +1,6 @@
 # Security, Privacy, and Responsible AI
 
-Status: Mandatory control objectives. Implementation details depend on pending architecture decisions and legal review.
+Status: Local technical controls implemented and tested; production configuration and qualified legal review remain external.
 
 ## Security principles
 
@@ -8,13 +8,21 @@ Status: Mandatory control objectives. Implementation details depend on pending a
 - Enforce authentication, authorization, tenant scope, and resource ownership on the server side.
 - Treat cross-tenant access as a critical defect and test isolation at query, API, job, import, connector, artifact, prediction, and audit boundaries.
 - Keep production secrets in an approved secret-management boundary; never commit them or place secret values in domain records.
-- Encrypt network traffic and use appropriate encryption-at-rest controls once infrastructure is selected.
+- The AWS reference enforces TLS-facing load balancing and encrypted RDS, Redis, S3 and secrets/KMS resources; no cloud apply or production certification is claimed.
 
 ## Authentication and RBAC
 
-Authentication, session/token handling, tenant selection, membership lifecycle, role definitions, permission evaluation, administrative recovery, and service identities remain architecture decisions. Candidate roles such as owner, admin, marketing manager, analyst, and operator are conceptual only.
+The accepted boundary is provider-neutral OIDC/OAuth2/JWT with a deliberately gated
+development token adapter. Tenant selection resolves through active membership. Owner,
+admin, marketing manager, analyst and operator roles map to centralized capabilities;
+high-impact action permissions are enforced server-side. The production IdP, recovery
+process and service identities remain deployment configuration items.
 
 Authorization must be centralized, deny by default, tenant-aware, and verified independently of UI visibility. Sensitive operations require stronger permissions and audit evidence.
+
+Local PostgreSQL/API tests verify membership selection, forged/expired/wrong-audience
+token rejection, restricted runtime privileges, RLS isolation and pool reuse. These tests
+do not replace production IdP validation or an external penetration test.
 
 ## Uploads and imports
 

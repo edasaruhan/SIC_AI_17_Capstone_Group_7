@@ -14,6 +14,6 @@ attribution, consent-aware audiences, campaign approvals and grounded generation
 External provider/cloud validation and real campaign execution remain disabled.
 
 See [local setup](docs/LOCAL_DEVELOPMENT.md), [demo guide](docs/DEMO_GUIDE.md),
-[readiness report](docs/PRODUCTION_READINESS_REPORT.md), [academic package](academic/README.md),
-and the [project charter](docs/00_PROJECT_CHARTER.md).
+[readiness report](docs/PRODUCTION_READINESS_REPORT.md), [academic source package](academic/README.md),
+[organized assignment package](ödevler/README.md), and the [project charter](docs/00_PROJECT_CHARTER.md).
 Original instructor files remain unchanged under `references/instructor/`.

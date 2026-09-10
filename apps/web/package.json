@@ -8,7 +8,7 @@
     "start": "next start --hostname 127.0.0.1",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
-    "test": "vitest run",
+    "test": "vitest run src",
     "test:e2e": "playwright test"
   },
   "dependencies": {
@@ -23,6 +23,7 @@
     "zod": "^4.0.0"
   },
   "devDependencies": {
+    "@axe-core/playwright": "^4.13.0",
     "@playwright/test": "^1.51.0",
     "@tailwindcss/postcss": "^4.0.0",
     "@types/node": "^22",

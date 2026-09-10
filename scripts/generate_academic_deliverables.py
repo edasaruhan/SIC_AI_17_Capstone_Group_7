@@ -8,6 +8,9 @@ external claims are explicitly cited. The selected DOCX preset is
 from __future__ import annotations
 
 import json
+import shutil
+import subprocess
+import tempfile
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
@@ -25,6 +28,7 @@ FIG = ROOT / "academic" / "figures"
 ML = ROOT / "artifacts" / "ml"
 EDA = ROOT / "artifacts" / "eda"
 REPORTS = ROOT / "artifacts" / "reports"
+ASSIGNMENTS = ROOT / "ödevler"
 
 GREEN = "1E5A49"
 GREEN_LIGHT = "E8F1ED"
@@ -143,6 +147,14 @@ def set_repeat_table_header(row: Any) -> None:
     repeat = OxmlElement("w:tblHeader")
     repeat.set(qn("w:val"), "true")
     tr_pr.append(repeat)
+
+
+def prevent_table_row_split(row: Any) -> None:
+    """Keep each logical record together when a table crosses a page boundary."""
+    tr_pr = row._tr.get_or_add_trPr()
+    cant_split = OxmlElement("w:cantSplit")
+    cant_split.set(qn("w:val"), "true")
+    tr_pr.append(cant_split)
 
 
 def add_field(paragraph: Any, instruction: str) -> None:
@@ -327,7 +339,9 @@ def add_masthead(
         ("Status", status),
     ):
         p = doc.add_paragraph()
-        p.paragraph_format.space_after = Pt(2)
+        p.paragraph_format.space_after = Pt(3)
+        p.paragraph_format.line_spacing = 1.15
+        p.paragraph_format.keep_together = True
         set_run_font(p.add_run(f"{label}: "), size=10.5, bold=True, color=INK)
         set_run_font(p.add_run(value), size=10.5, color="000000")
     rule = doc.add_paragraph()
@@ -338,7 +352,7 @@ def add_masthead(
     p.paragraph_format.left_indent = Inches(0.08)
     p.paragraph_format.right_indent = Inches(0.08)
     p.paragraph_format.space_before = Pt(4)
-    p.paragraph_format.space_after = Pt(0)
+    p.paragraph_format.space_after = Pt(8)
     r = p.add_run(
         "AI AUTHORSHIP DISCLOSURE — This document was drafted with OpenAI Codex/ChatGPT "
         "assistance and checked against repository evidence. Reported project metrics come "
@@ -353,6 +367,7 @@ def add_table(doc: Document, headers: list[str], rows: list[list[str]], widths: 
     table.style = "Table Grid"
     set_table_geometry(table, widths)
     set_repeat_table_header(table.rows[0])
+    prevent_table_row_split(table.rows[0])
     for cell, text in zip(table.rows[0].cells, headers, strict=True):
         shade(cell, GRAY)
         cell.vertical_alignment = WD_CELL_VERTICAL_ALIGNMENT.CENTER
@@ -360,7 +375,9 @@ def add_table(doc: Document, headers: list[str], rows: list[list[str]], widths: 
         p.paragraph_format.space_after = Pt(0)
         set_run_font(p.add_run(text), size=9.5, bold=True, color=INK)
     for values in rows:
-        cells = table.add_row().cells
+        row = table.add_row()
+        prevent_table_row_split(row)
+        cells = row.cells
         for cell, text in zip(cells, values, strict=True):
             cell.vertical_alignment = WD_CELL_VERTICAL_ALIGNMENT.TOP
             p = cell.paragraphs[0]
@@ -474,6 +491,11 @@ def build_submission(submission: Submission) -> None:
     configure_document(doc)
     set_header_footer(doc, submission.title)
     add_masthead(doc, submission.title, submission.subtitle)
+    if submission.stem == "03_Data_Preparation_Feature_Engineering_Model_Exploration":
+        # The long two-line title and dense first section need a true cover page in
+        # LibreOffice; otherwise its pagination engine can visually collapse two
+        # adjacent metadata paragraphs while trying to keep the first table intact.
+        doc.add_page_break()
     render_blocks(doc, submission.blocks)
     doc.core_properties.title = submission.title
     doc.core_properties.subject = "Samsung Innovation Campus — AI in Marketing Capstone"
@@ -720,7 +742,7 @@ def literature_submission(profile: dict[str, Any]) -> Submission:
                             "Web",
                             "Next.js, React, strict TypeScript",
                             "Server-rendered operator UI and typed boundaries",
-                            "Browser QA and accessibility require deployment-like validation",
+                            "Automated desktop/mobile Chromium and Axe checks pass; manual multi-browser and assistive-technology review remains external",
                         ],
                         [
                             "Jobs",
@@ -777,7 +799,7 @@ def literature_submission(profile: dict[str, Any]) -> Submission:
             Block("h2", "4. Limitations and opportunities"),
             Block(
                 "p",
-                "No live Meta, Google Ads, OIDC, LLM or cloud credentials were supplied; these boundaries are implemented and mock-tested but not live-validated. The local MLflow registry and single historical dataset do not establish production robustness. Next work after review should include credentialed sandbox validation, load/resilience tests, accessibility/browser review, managed backup/restore rehearsal and monitoring thresholds based on real operating data.",
+                "No live Meta, Google Ads, OIDC, LLM or cloud credentials were supplied; these boundaries are implemented and mock-tested but not live-validated. The local MLflow registry and single historical dataset do not establish production robustness. Next work after review should include credentialed sandbox validation, load/resilience tests, manual multi-browser and assistive-technology review, managed backup/restore rehearsal and monitoring thresholds based on real operating data.",
             ),
             Block("h2", "5. Technology conclusion"),
             Block(
@@ -1105,7 +1127,7 @@ def concept_submission() -> Submission:
             Block("h2", "6. Current delivery boundary"),
             Block(
                 "p",
-                "The local implementation and academic evidence are complete for review. Live Meta/Google/LLM/OIDC/cloud validation, production restore drills, browser accessibility testing and any real campaign execution remain external. No push, paid deployment or advertising spend is authorized by this plan.",
+                "The local implementation and academic evidence are complete for review. Automated desktop/mobile Chromium and Axe checks pass; live Meta/Google/LLM/OIDC/cloud validation, production restore drills, manual multi-browser and assistive-technology testing, and any real campaign execution remain external. No push, paid deployment or advertising spend is authorized by this plan.",
             ),
             Block("h1", "References"),
             Block(
@@ -1690,7 +1712,7 @@ def weekly_report() -> None:
         ),
         (
             "4. Problems and risks",
-            "No live Meta, Google Ads, LLM, OIDC or cloud credentials; browser controller unavailable; production backup/restore and load tests not performed. Dataset is historical, single-retailer, UK-based; inactivity is a proxy, not contractual churn; predictive results are noncausal.",
+            "No live Meta, Google Ads, LLM, OIDC or cloud credentials; automated desktop/mobile Chromium and Axe checks pass, but manual multi-browser and assistive-technology review is outstanding; production backup/restore and load tests were not performed. Dataset is historical, single-retailer, UK-based; inactivity is a proxy, not contractual churn; predictive results are noncausal.",
         ),
         (
             "5. Support or decision needed",
@@ -1698,7 +1720,7 @@ def weekly_report() -> None:
         ),
         (
             "6. Tasks before next report",
-            "Address audit findings; run credentialed sandbox and browser/accessibility validation; rehearse backup/restore; define pilot eligibility and randomized holdout; only then request separate deployment/publication authorization.",
+            "Address audit findings; run credentialed sandbox and manual browser/assistive-technology validation; rehearse backup/restore; define pilot eligibility and randomized holdout; only then request separate deployment/publication authorization.",
         ),
     ]
     for title, body in entries:
@@ -1734,6 +1756,74 @@ def weekly_report() -> None:
     (OUT / f"{stem}.md").write_text(md, encoding="utf-8")
 
 
+def render_pdfs() -> None:
+    soffice = shutil.which("soffice")
+    if soffice is None:
+        raise RuntimeError("LibreOffice 'soffice' is required to regenerate submission PDFs")
+    with tempfile.TemporaryDirectory(prefix="growthpilot_lo_") as profile:
+        profile_uri = Path(profile).as_uri()
+        for docx_path in sorted(OUT.glob("*.docx")):
+            subprocess.run(
+                [
+                    soffice,
+                    f"-env:UserInstallation={profile_uri}",
+                    "--headless",
+                    "--norestore",
+                    "--convert-to",
+                    "pdf:writer_pdf_Export",
+                    "--outdir",
+                    str(OUT),
+                    str(docx_path),
+                ],
+                check=True,
+                capture_output=True,
+                text=True,
+            )
+            pdf_path = docx_path.with_suffix(".pdf")
+            if not pdf_path.is_file() or pdf_path.stat().st_size == 0:
+                raise RuntimeError(f"LibreOffice did not produce {pdf_path}")
+
+
+def sync_assignment_package() -> None:
+    mapping = {
+        "01_Literature_Data_Technology_Submission": (
+            "01_Literatur_Veri_Teknoloji",
+            "Odev_01_Literatur_Veri_Teknoloji",
+        ),
+        "02_Concept_Note_and_Implementation_Plan": (
+            "02_Kavram_Notu_Uygulama_Plani",
+            "Odev_02_Kavram_Notu_Uygulama_Plani",
+        ),
+        "03_Data_Preparation_Feature_Engineering_Model_Exploration": (
+            "03_Veri_Hazirlama_Ozellik_Muhendisligi_Model_Kesfi",
+            "Odev_03_Veri_Hazirlama_Ozellik_Muhendisligi_Model_Kesfi",
+        ),
+        "04_Model_Refinement_and_Test_Submission": (
+            "04_Model_Iyilestirme_ve_Test",
+            "Odev_04_Model_Iyilestirme_ve_Test",
+        ),
+        "05_Weekly_Progress_Report_2026-09-09": (
+            "05_Haftalik_Ilerleme_Raporu",
+            "Odev_05_Haftalik_Ilerleme_Raporu",
+        ),
+    }
+    for source_stem, (directory, destination_stem) in mapping.items():
+        destination = ASSIGNMENTS / directory
+        destination.mkdir(parents=True, exist_ok=True)
+        for suffix in (".docx", ".pdf"):
+            shutil.copy2(
+                OUT / f"{source_stem}{suffix}", destination / f"{destination_stem}{suffix}"
+            )
+    presentation_source = ROOT / "academic" / "presentation"
+    presentation_destination = ASSIGNMENTS / "06_Final_Sunum"
+    presentation_destination.mkdir(parents=True, exist_ok=True)
+    for suffix in (".pptx", ".pdf"):
+        filename = f"GrowthPilot_AI_Final_Presentation{suffix}"
+        shutil.copy2(
+            presentation_source / filename, presentation_destination / filename
+        )
+
+
 def main() -> None:
     OUT.mkdir(parents=True, exist_ok=True)
     profile = load_json(REPORTS / "dataset_profile.json")
@@ -1749,7 +1839,12 @@ def main() -> None:
     ):
         build_submission(submission)
     weekly_report()
-    print(f"Generated 5 academic DOCX + Markdown pairs in {OUT}")
+    render_pdfs()
+    sync_assignment_package()
+    print(
+        f"Generated 5 academic DOCX/Markdown/PDF sets in {OUT} and synchronized "
+        f"all written and presentation deliverables in {ASSIGNMENTS}"
+    )
 
 
 if __name__ == "__main__":

@@ -126,7 +126,7 @@ These are actual local execution dates, not backdated instructor submission clai
 
 ### 6. Current delivery boundary
 
-The local implementation and academic evidence are complete for review. Live Meta/Google/LLM/OIDC/cloud validation, production restore drills, browser accessibility testing and any real campaign execution remain external. No push, paid deployment or advertising spend is authorized by this plan.
+The local implementation and academic evidence are complete for review. Automated desktop/mobile Chromium and Axe checks pass; live Meta/Google/LLM/OIDC/cloud validation, production restore drills, manual multi-browser and assistive-technology testing, and any real campaign execution remain external. No push, paid deployment or advertising spend is authorized by this plan.
 
 ## References
 
