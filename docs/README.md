@@ -23,6 +23,7 @@ merkezidir. İlk kez inceleyenler aşağıdaki sırayı izleyebilir.
 | [`09_RISK_REGISTER.md`](09_RISK_REGISTER.md) | İzlenen ürün/teknik/akademik riskler |
 | [`10_TASK_LOG.md`](10_TASK_LOG.md) | Tamamlanan çalışmaların toplu kaydı |
 | [`11_ACADEMIC_DELIVERABLES_MAP.md`](11_ACADEMIC_DELIVERABLES_MAP.md) | Ödev, kaynak ve kanıt eşlemesi |
+| [`ASSIGNMENT_FINAL_AUDIT.md`](ASSIGNMENT_FINAL_AUDIT.md) | Nihai ödev içerik, biçim, render ve kanıt denetimi |
 
 ## Mimari ve domain
 

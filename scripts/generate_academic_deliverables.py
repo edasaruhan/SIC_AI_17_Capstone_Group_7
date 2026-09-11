@@ -779,7 +779,32 @@ def literature_submission(profile: dict[str, Any]) -> Submission:
                 ),
                 note="Performance and cost conclusions are architectural assessments, not benchmark claims. Live provider latency/cost was not measured.",
             ),
-            Block("h2", "3. Use cases"),
+            Block("h2", "3. Industry examples and project use cases"),
+            Block(
+                "p",
+                "The following external-source examples show how established platforms place machine learning inside marketing operations. They document product capabilities, not outcomes achieved by GrowthPilot.",
+            ),
+            Block(
+                "table",
+                (
+                    ["External product", "Marketing use / evidence", "Lesson for GrowthPilot"],
+                    [
+                        [
+                            "Salesforce Einstein Lead Scoring",
+                            "Analyzes historical lead-conversion patterns to prioritize current leads and exposes influential fields in CRM views.",
+                            "A score becomes operationally useful when it appears in the user's workflow with an explanation; vendor capability is not GrowthPilot outcome evidence.",
+                        ],
+                        [
+                            "Google Ads Smart Bidding",
+                            "Uses Google AI for auction-time bidding toward conversions or conversion value; it depends on conversion tracking and may depend on historical conversion volume.",
+                            "Optimization quality depends on measurement and provider data. GrowthPilot therefore keeps provider execution separate from first-party decision governance.",
+                        ],
+                    ],
+                    [1800, 3700, 3860],
+                ),
+                note="External-source capability examples. No vendor performance claim or GrowthPilot business outcome is asserted.",
+            ),
+            Block("h3", "GrowthPilot application"),
             Block(
                 "bullet",
                 "Customer 360: orders, value, RFM segment, predictions and consent in one tenant-scoped view.",
@@ -830,6 +855,14 @@ def literature_submission(profile: dict[str, Any]) -> Submission:
             Block(
                 "p",
                 "Saito, T., & Rehmsmeier, M. (2015). The precision-recall plot is more informative than the ROC plot when evaluating binary classifiers on imbalanced datasets. PLOS ONE, 10(3), e0118432. https://doi.org/10.1371/journal.pone.0118432",
+            ),
+            Block(
+                "p",
+                "Salesforce. (n.d.). Einstein Lead Scoring. Salesforce Help. https://help.salesforce.com/s/articleView?id=einstein_sales_lead_insights.htm&language=en_US. Accessed 11 September 2026.",
+            ),
+            Block(
+                "p",
+                "Google Ads Help. (n.d.). About Smart Bidding. https://support.google.com/google-ads/answer/7065882?hl=en. Accessed 11 September 2026.",
             ),
             Block(
                 "p",

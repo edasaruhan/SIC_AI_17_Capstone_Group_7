@@ -126,6 +126,7 @@ anonimleştirilmiş/özet proje kanıtlarıdır.
 | 24 aşamanın durumunu görmek | [Task Index](docs/tasks/README.md) ve [Task Log](docs/10_TASK_LOG.md) |
 | Demoyu yürütmek | [Demo Guide](docs/DEMO_GUIDE.md) |
 | Ödevleri teslim etmek | [Ödev Teslim Rehberi](ödevler/README.md) |
+| Nihai ödev denetimini görmek | [Assignment Final Audit](docs/ASSIGNMENT_FINAL_AUDIT.md) |
 | Tüm belgeler arasında gezinmek | [Documentation Index](docs/README.md) |
 
 ## Yerel kurulum
@@ -234,7 +235,9 @@ Teslim edilecek sade paket doğrudan [`ödevler/`](ödevler/README.md) altındad
 `academic/` üretim/kaynak paketidir; `ödevler/` teslim için düzenlenmiş eş kopyalardır.
 Altı eğitmen dosyasının orijinalleri [`references/instructor/`](references/README.md)
 altında değiştirilmeden korunur. Ayrıntılı eşleme:
-[Academic Deliverables Map](docs/11_ACADEMIC_DELIVERABLES_MAP.md).
+[Academic Deliverables Map](docs/11_ACADEMIC_DELIVERABLES_MAP.md). Eğitmen kaynaklarına
+karşı içerik, biçim, render, erişilebilirlik ve kanıt kontrollerinin sonucu
+[Assignment Final Audit](docs/ASSIGNMENT_FINAL_AUDIT.md) içinde kayıtlıdır.
 
 ## Güvenlik ve kanıt ilkeleri
 

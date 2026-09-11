@@ -129,7 +129,18 @@ The technology must support ordinary customer operations and auditable intellige
 
 Performance and cost conclusions are architectural assessments, not benchmark claims. Live provider latency/cost was not measured.
 
-### 3. Use cases
+### 3. Industry examples and project use cases
+
+The following external-source examples show how established platforms place machine learning inside marketing operations. They document product capabilities, not outcomes achieved by GrowthPilot.
+
+| External product | Marketing use / evidence | Lesson for GrowthPilot |
+| --- | --- | --- |
+| Salesforce Einstein Lead Scoring | Analyzes historical lead-conversion patterns to prioritize current leads and exposes influential fields in CRM views. | A score becomes operationally useful when it appears in the user's workflow with an explanation; vendor capability is not GrowthPilot outcome evidence. |
+| Google Ads Smart Bidding | Uses Google AI for auction-time bidding toward conversions or conversion value; it depends on conversion tracking and may depend on historical conversion volume. | Optimization quality depends on measurement and provider data. GrowthPilot therefore keeps provider execution separate from first-party decision governance. |
+
+External-source capability examples. No vendor performance claim or GrowthPilot business outcome is asserted.
+
+#### GrowthPilot application
 
 - Customer 360: orders, value, RFM segment, predictions and consent in one tenant-scoped view.
 
@@ -160,5 +171,9 @@ Lundberg, S. M., & Lee, S.-I. (2017). A unified approach to interpreting model p
 Platzer, M., & Reutterer, T. (2016). Ticking away the moments: Timing regularity helps to better predict customer activity. Marketing Science, 35(5), 779–799. https://doi.org/10.1287/mksc.2015.0963
 
 Saito, T., & Rehmsmeier, M. (2015). The precision-recall plot is more informative than the ROC plot when evaluating binary classifiers on imbalanced datasets. PLOS ONE, 10(3), e0118432. https://doi.org/10.1371/journal.pone.0118432
+
+Salesforce. (n.d.). Einstein Lead Scoring. Salesforce Help. https://help.salesforce.com/s/articleView?id=einstein_sales_lead_insights.htm&language=en_US. Accessed 11 September 2026.
+
+Google Ads Help. (n.d.). About Smart Bidding. https://support.google.com/google-ads/answer/7065882?hl=en. Accessed 11 September 2026.
 
 Technology documentation: PostgreSQL row security; scikit-learn model evaluation and calibration; LightGBM Python API; SHAP documentation; MLflow tracking; FastAPI security; Next.js App Router. Accessed 8–9 September 2026; URLs are recorded in repository ADRs and research notes.
