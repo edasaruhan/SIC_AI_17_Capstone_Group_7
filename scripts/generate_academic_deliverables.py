@@ -1815,11 +1815,15 @@ def sync_assignment_package() -> None:
                 OUT / f"{source_stem}{suffix}", destination / f"{destination_stem}{suffix}"
             )
     presentation_source = ROOT / "academic" / "presentation"
-    presentation_destination = ASSIGNMENTS / "06_Final_Sunum"
+    presentation_destination = ASSIGNMENTS / "06_Final_Sunumu"
     presentation_destination.mkdir(parents=True, exist_ok=True)
     for suffix in (".pptx", ".pdf"):
-        filename = f"GrowthPilot_AI_Final_Presentation{suffix}"
-        shutil.copy2(presentation_source / filename, presentation_destination / filename)
+        source_filename = f"GrowthPilot_AI_Final_Presentation{suffix}"
+        destination_filename = f"Odev_06_GrowthPilot_Final_Sunumu{suffix}"
+        shutil.copy2(
+            presentation_source / source_filename,
+            presentation_destination / destination_filename,
+        )
 
 
 def main() -> None:
