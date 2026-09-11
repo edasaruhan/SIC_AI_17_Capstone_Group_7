@@ -56,3 +56,34 @@ with Axe WCAG 2.0/2.1 A/AA rules.
 No live provider credentials, paid infrastructure, advertising spend, final history
 squash or GitHub push were used. Exact production-only gates remain in
 `PRODUCTION_READINESS_REPORT.md` and require separate authority or external evidence.
+
+## TASK-DOC-001 — Repository information architecture
+
+**Status:** COMPLETE
+
+**Completed:** 2026-09-11
+
+**Owner:** Codex
+
+**Goal:** Make the repository immediately understandable to a new reviewer without
+moving stable implementation or evidence files.
+
+**Files changed:** The root `README.md` was expanded into the canonical onboarding page;
+navigation guides were added to `docs/`, `backend/`, `apps/web/`, `scripts/`, `artifacts/`,
+`data/` and `references/`. `DEMO_GUIDE.md` was corrected to state that local setup creates
+infrastructure/secrets but does not seed demo identities or frontend credentials.
+
+**Implementation summary:** Added a truthful product/status summary, capability matrix,
+architecture flow, annotated repository tree, role-based reading paths, locked setup/test
+commands, frozen ML evidence, academic-delivery map, security principles and explicit
+production gates. Directory guides explain ownership, provenance and safe usage without
+duplicating implementation logic.
+
+**Validation:** All relative Markdown file links in the changed documents resolve; Git
+diff whitespace validation passes. Commands, versions, module names, result values and
+external limitations were cross-checked against manifests, source files and the production
+readiness report.
+
+**Known limitations:** GitHub rendering of Mermaid and anchor normalization will receive
+its final visual check only after an authorized publication. No product, architecture,
+academic result or runtime behavior changed.
