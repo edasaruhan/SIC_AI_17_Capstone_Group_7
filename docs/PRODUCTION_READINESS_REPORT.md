@@ -1,11 +1,11 @@
 # Production-readiness report
 
-Date: 2026-09-09
+Date: 2026-09-12
 Status: **LOCAL BUILD COMPLETE — NOT APPROVED FOR PRODUCTION DEPLOYMENT**
 
 ## Executive decision
 
-The authorized 24-phase local roadmap is complete and ready for Project Lead audit. The application,
+The authorized 24-phase local roadmap and Project Lead academic-package audit are complete. The application,
 frozen ML evidence, academic package, container definitions and AWS Terraform reference exist and
 pass the locally executable gates. Production approval is withheld because live identity/provider/
 LLM/cloud validation, manual multi-browser/assistive-technology review, load/resilience, managed
@@ -91,5 +91,6 @@ claims. No post-test tuning is permitted.
 
 Missing live credentials are not local-development blockers but are production blockers for those
 capabilities. The elapsed instructor deadlines are submission-process blockers, not evidence-quality
-blockers. There is no known critical local defect. Final squash, GitHub push, paid deployment and live
-advertising spend remain explicitly unauthorized.
+blockers. There is no known critical local defect. The audited repository was published through
+commit `616cc5f901c73f72d6f7a3ae075a814adf6b1566`. Paid deployment, production
+infrastructure mutation and live advertising spend remain separately unauthorized.

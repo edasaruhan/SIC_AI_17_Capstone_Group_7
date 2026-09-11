@@ -11,7 +11,8 @@ Out of scope: Invented instructor requirements, backdated submission claims or L
 Dependencies: Frozen project evidence and PHASE-22 validation.
 Acceptance: DOCX/PDF pairs render cleanly; weekly report is one page; deck has eight slides and no
 canvas overflow; all numbers trace to actual artifacts; originals remain unchanged.
-Validation: Five DOCX files rendered to 24 PNG pages and matching PDFs (7/6/5/5/1 pages);
+Validation: Five Turkish DOCX files rendered to 23 PNG pages and matching PDFs
+(7/5/5/5/1 pages);
 PowerPoint overflow test passed and LibreOffice produced an eight-page PDF; visual montages and
 representative full-size pages were inspected.
 Risks: Submission deadlines in two instructor files elapsed before repository initialization;

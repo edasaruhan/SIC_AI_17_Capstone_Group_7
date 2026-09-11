@@ -272,6 +272,6 @@ sunulmamalıdır.
 
 - Resmî repository: <https://github.com/edasaruhan/SIC_AI_17_Capstone_Group_7>
 - Product Owner / Founder: **Şahin Başcı**
-- Teslim durumu: **Local build complete — Project Lead final audit required**
+- Teslim durumu: **Yerel build ve akademik denetim tamamlandı; production dış doğrulama kapıları bekliyor**
 - Lisans: Repository henüz açık kaynak lisansı beyan etmez; özellikle eğitmen kaynakları
   yeniden kullanım izni varmış gibi değerlendirilmemelidir.
