@@ -1,6 +1,6 @@
 # Assignment Final Audit
 
-**Status:** COMPLETE — locally ready for human submission review and repository publication
+**Status:** COMPLETE — Turkish deliverables ready for human submission review and repository publication
 
 **Audit date:** 2026-09-11
 
@@ -27,18 +27,29 @@ acceptance of an elapsed deadline.
 | Check | Result |
 |---|---:|
 | Academic-source files matched to organized `ödevler/` copies | 12 / 12 byte-identical |
-| Written DOCX files rendered and visually inspected | 5 files / 25 pages |
+| Written DOCX files rendered and visually inspected | 5 files / 23 pages |
 | Final presentation PDF visually inspected | 8 / 8 slides |
-| Written PDF pages matched to fresh DOCX renders | 25 / 25 pixel-identical |
+| Written PDF pages matched to fresh DOCX renders | 23 / 23 pixel-identical |
 | DOCX accessibility findings | 0 high / 0 medium / 0 low across all five files |
 | Office ZIP-package integrity | 6 / 6 passed |
 | Tracked insertions/deletions in DOCX | 0 / 0 |
 | Comments and macros in Office files | 0 / 0 |
 | PDF encryption | None in all six PDFs |
 
-Page counts are 7, 6, 6, 5 and 1 for written reports 01–05; the presentation is eight
+Page counts are 7, 5, 5, 5 and 1 for written reports 01–05; the presentation is eight
 16:9 pages. Visual inspection found no clipped text, overlap, broken table, missing image,
 unreadable chart or unintended blank page.
+
+## Turkish-language correction
+
+- The five written assignments and all eight presentation slides use Turkish narrative,
+  headings, labels and AI-assistance disclosures.
+- Bibliographic work titles, code, product/library names, standard metric abbreviations
+  and evidence-figure technical labels remain in their original form to preserve
+  citation, execution and artifact traceability.
+- Turkish Markdown is now the source of truth for written regeneration. The presentation
+  translation is a deterministic, repeatable OOXML transformation that preserves the
+  editable deck design.
 
 ## Evidence integrity
 

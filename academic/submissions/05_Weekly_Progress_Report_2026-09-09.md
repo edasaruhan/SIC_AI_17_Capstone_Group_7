@@ -1,33 +1,33 @@
-# Short Weekly Progress Report
+# Kısa Haftalık İlerleme Raporu
 
-**Team:** Group 7
-**Project:** GrowthPilot AI
-**Date:** 9 September 2026
-**Reporter:** Şahin Başcı
-**Status:** GREEN — local scope complete; external validation open
+**Ekip:** Grup 7
+**Proje:** GrowthPilot AI
+**Tarih:** 9 Eylül 2026
+**Raporlayan:** Şahin Başcı
+**Durum:** YEŞİL — yerel kapsam tamamlandı; dış doğrulama bekliyor
 
-## 1. Progress since the previous report
+## 1. Önceki rapordan bu yana ilerleme
 
-Completed the production-oriented local application, temporal churn-proxy data/ML pipeline, frozen final evaluation, model registry/inference, integrations, attribution, audiences/campaign approval, security boundaries and all academic submission artifacts. No fabricated business result or live provider result is included.
+Üretime yönelik yerel uygulama; zamansal müşteri kaybı vekil veri/ML hattı; dondurulmuş nihai değerlendirme; model kaydı/çıkarım; entegrasyon, atıf, kitle/kampanya onayı, güvenlik sınırları ve akademik teslimler tamamlandı. Uydurma iş veya canlı sağlayıcı sonucu yoktur.
 
-## 2. Current focus
+## 2. Güncel odak
 
-Final audit: rendered document/slide QA, clean full test suite, dependency/secret scans, evidence mapping and Phase 22–24 readiness documentation.
+Nihai denetim: belge/slayt görsel kalite kontrolü, temiz test paketi, bağımlılık/sır taraması, kanıt eşlemesi ve Faz 22–24 hazırlık belgeleri.
 
-## 3. Status and evidence
+## 3. Durum ve kanıt
 
-Green for authorized local delivery. Backend: 83 tests passing before final package audit; frontend typecheck/lint/Vitest/webpack build passing. Final test: PR-AUC 0.647525, ROC-AUC 0.765878, Brier 0.199854; model SHA-256 942d705d…52ad.
+Yetkili yerel teslim yeşildir. Arka uçta 83 test; ön yüzde tür denetimi, lint, Vitest ve webpack derlemesi geçmiştir. Nihai test: PR-AUC 0.647525, ROC-AUC 0.765878, Brier 0.199854; model SHA-256 942d705d…52ad.
 
-## 4. Problems and risks
+## 4. Sorunlar ve riskler
 
-No live Meta, Google Ads, LLM, OIDC or cloud credentials; automated desktop/mobile Chromium and Axe checks pass, but manual multi-browser and assistive-technology review is outstanding; production backup/restore and load tests were not performed. Dataset is historical, single-retailer, UK-based; inactivity is a proxy, not contractual churn; predictive results are noncausal.
+Canlı Meta, Google Ads, LLM, OIDC veya bulut kimlik bilgileri yoktur. Otomatik Chromium/Axe kontrolleri geçer; manuel çoklu tarayıcı/yardımcı teknoloji, üretim geri yükleme ve yük testleri bekler. Veri tarihsel, tek perakendecili ve Birleşik Krallık kökenlidir; hareketsizlik vekildir, sonuçlar nedensel değildir.
 
-## 5. Support or decision needed
+## 5. Gereken destek veya karar
 
-Project Lead should audit deliverables and decide whether to authorize final squash/publication. Founder must provide sandbox credentials and approve any deployment or real campaign. Submission dates in instructor files have elapsed and require instructor confirmation.
+Proje Lideri teslimleri denetleyip nihai yayın kararını vermelidir. Kurucu, dağıtım veya gerçek kampanya öncesi test ortamı kimlik bilgilerini sağlamalı ve onay vermelidir. Eğitmen dosyalarındaki geçmiş teslim tarihleri için eğitmen teyidi gerekir.
 
-## 6. Tasks before next report
+## 6. Sonraki rapora kadar görevler
 
-Address audit findings; run credentialed sandbox and manual browser/assistive-technology validation; rehearse backup/restore; define pilot eligibility and randomized holdout; only then request separate deployment/publication authorization.
+Denetim bulgularını gider; kimlik bilgili test ortamı ve manuel tarayıcı/yardımcı teknoloji doğrulamasını yürüt; geri yükleme provası yap; pilot uygunluğu ile rastgele kontrol grubunu tanımla; sonra ayrı dağıtım/yayın onayı iste.
 
-**AI disclosure:** drafted with OpenAI Codex/ChatGPT assistance and verified against repository evidence; human review required.
+**Yapay zekâ kullanım beyanı:** OpenAI Codex/ChatGPT desteğiyle hazırlanmış ve depo kanıtlarıyla doğrulanmıştır; insan incelemesi gereklidir.

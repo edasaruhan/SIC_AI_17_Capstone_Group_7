@@ -1,68 +1,72 @@
-# Data Preparation, Feature Engineering and Model Exploration
+# Veri Hazırlama, Özellik Mühendisliği ve Model Keşfi
 
-Reproducible temporal customer modeling for future-purchase inactivity
+Gelecekte satın alma hareketsizliği için yeniden üretilebilir zamansal müşteri modellemesi
 
-**AI AUTHORSHIP DISCLOSURE:** This document was drafted with OpenAI Codex/ChatGPT assistance and checked against repository evidence. Human review remains required.
+**YAPAY ZEKA KULLANIM BEYANI:** Bu belge OpenAI Codex/ChatGPT desteğiyle hazırlanmış ve depo kanıtlarıyla kontrol edilmiştir. İnsan incelemesi gereklidir.
 
-## Part I — Data preparation and feature engineering
+## Bölüm I — Veri hazırlama ve özellik mühendisliği
 
-### 1. Overview and collection
+### 1. Genel bakış ve toplama
 
-The pipeline downloads UCI Online Retail II from its stable repository URL, verifies SHA-256 572e36277c2390fbfde10664750731e0a86f55e33470d91919085f0408e67bfb, profiles both worksheets and writes deterministic reports. Raw and customer-level prepared files are local/ignored; aggregate evidence and scripts are versioned.
+İşlem hattı UCI Online Retail II'yi kalıcı depo URL'sinden indirir, SHA-256 572e36277c2390fbfde10664750731e0a86f55e33470d91919085f0408e67bfb değerini doğrular, iki çalışma sayfasını profiller ve belirlenimci raporlar yazar. Ham ve müşteri düzeyi hazırlanmış dosyalar yerelde/Git dışında; toplu kanıtlar ve betikler sürüm denetimindedir.
 
-### 2. Cleaning and validation
+### 2. Temizleme ve doğrulama
 
-| Step | Rows / rule | Rationale |
+| Adım | Satır / kural | Gerekçe |
 | --- | --- | --- |
-| Raw input | 1,067,371 | Preserved external-source evidence |
-| Exact duplicate removal | 34,335 removed | Avoid repeated identical transaction lines |
-| Identity/date usability | 235,151 excluded | Customer snapshots require stable ID and time |
-| Normalized retained rows | 797,885 | Canonical names/types after deterministic rules |
-| Eligible purchase event | Positive quantity and price; non-cancellation; pre-cutoff | Separate purchases from returns/cancellations |
+| Ham girdi | 1.067.371 | Dış kaynak kanıtı korunur |
+| Birebir yinelenenleri kaldırma | 34.335 kaldırıldı | Aynı işlem satırının tekrarını önler |
+| Kimlik/tarih kullanılabilirliği | 235.151 dışlandı | Anlık görüntü için kararlı kimlik ve zaman gerekir |
+| Tutulan normalleştirilmiş satır | 797.885 | Belirlenimci kurallar sonrası standart ad/tür |
+| Uygun satın alma olayı | Pozitif miktar/fiyat; iptal değil; kesim öncesi | Satın almayı iade/iptalden ayırır |
 
-Evidence class: project-generated from artifacts/reports/data_preparation.json.
 
-Missing customer identifiers are not imputed because arbitrary identity assignment would create false histories. Missing descriptions do not block customer-level behavior features. Nonpositive quantity/price and cancellation invoices are excluded from eligible purchase events but remain part of source-quality evidence. Monetary outliers are not winsorized before aggregation; log1p and standardized transformations reduce scale dominance inside fitted pipelines.
 
-### 3. Temporal snapshots and leakage prevention
+Kanıt sınıfı: artifacts/reports/data_preparation.json üzerinden projede üretilmiştir.
 
-| Split | Cutoff(s) | Rows | Inactivity rate |
+Eksik müşteri kimliği atanmamıştır; keyfî atama sahte geçmiş üretirdi. Eksik açıklamalar müşteri davranış özelliklerini engellemez. Pozitif olmayan miktar/fiyat ve iptal faturaları uygun olaylardan çıkarılır ancak kaynak kalite kanıtında kalır. Parasal aykırı değerler toplama öncesi kırpılmaz; log1p ve standartlaştırma eğitilmiş hat içinde ölçek baskısını azaltır.
+
+### 3. Zamansal anlık görüntüler ve sızıntı önleme
+
+| Veri bölümü | Kesim tarihleri | Satır | Hareketsizlik oranı |
 | --- | --- | --- | --- |
-| Training | 2010-06-01 monthly through 2010-12-01 | 20,677 | 0.483823 |
-| Validation | 2011-03-01 | 3,349 | 0.577187 |
-| Calibration | 2011-06-01 | 2,659 | 0.499436 |
-| Final test | 2011-09-01 | 2,772 | Sealed until final evaluation |
+| Eğitim | 2010-06-01–2010-12-01 aylık | 20.677 | 0.483823 |
+| Doğrulama | 2011-03-01 | 3.349 | 0.577187 |
+| Kalibrasyon | 2011-06-01 | 2.659 | 0.499436 |
+| Nihai test | 2011-09-01 | 2.772 | Nihai değerlendirmeye kadar mühürlü |
 
-All features use events strictly before the cutoff; each 90-day label window is fully observed.
 
-### 4. EDA
 
-![Figure 1. Label prevalence and recency across training snapshots.](../../artifacts/eda/training_label_recency.png)
+Tüm özellikler kesinlikle kesim öncesi olayları kullanır; her 90 günlük etiket penceresi tamamen gözlenir.
 
-*Figure 1. Label prevalence and recency across training snapshots.*
+### 4. Keşifsel veri analizi
 
-![Figure 2. Frequency and spend distributions support transformed modeling.](../../artifacts/eda/training_frequency_spend.png)
+![Şekil 1. Eğitim anlık görüntülerinde etiket yaygınlığı ve yakınlık.](../../artifacts/eda/training_label_recency.png)
 
-*Figure 2. Frequency and spend distributions support transformed modeling.*
+*Şekil 1. Eğitim anlık görüntülerinde etiket yaygınlığı ve yakınlık.*
 
-Training contains 20,677 customer snapshots with 48.3823% inactivity labels. Validation has 3,349 rows with 57.7187% inactivity. The prevalence shift is one reason accuracy is unsuitable as the primary measure. Skew and repeat observations also motivate time-based evaluation and customer-behavior aggregates rather than random line-level splitting.
+![Şekil 2. Sıklık ve harcama dağılımları dönüşümlü modellemeyi destekler.](../../artifacts/eda/training_frequency_spend.png)
 
-### 5. Feature design
+*Şekil 2. Sıklık ve harcama dağılımları dönüşümlü modellemeyi destekler.*
 
-| Feature family | Examples | Rationale |
+Eğitim 20.677 müşteri anlık görüntüsü ve %48,3823 hareketsizlik etiketi; doğrulama 3.349 satır ve %57,7187 hareketsizlik içerir. Yaygınlık değişimi doğruluğun neden birincil ölçüt olmadığını gösterir. Çarpıklık ve tekrarlı gözlemler, rastgele satır bölmesi yerine zamana dayalı değerlendirme ve müşteri davranışı toplamlarını destekler.
+
+### 5. Özellik tasarımı
+
+| Özellik ailesi | Örnekler | Gerekçe |
 | --- | --- | --- |
-| Recency/tenure | recency_days, tenure_days | How recently and how long the relationship has existed |
-| Frequency/cadence | invoice_count, active_days, mean/median/max gap | Repeat behavior and purchase periodicity |
-| Monetary | gross/net spend, average order value, return value | Commercial magnitude and reversal behavior |
-| Product breadth | distinct products, quantity, basket breadth | Depth and diversity of engagement |
-| Windowed behavior | 30/60/90-day counts/spend; trend deltas | Recent acceleration or decline before cutoff |
-| Context | country and snapshot month | Market/time context, encoded inside the pipeline |
+| Yakınlık/müşteri yaşı | recency_days, tenure_days | İlişkinin ne kadar yakın ve eski olduğu |
+| Sıklık/ritim | invoice_count, active_days, ortalama/medyan/azami aralık | Tekrar ve satın alma dönemselliği |
+| Parasal | brüt/net harcama, ortalama sipariş, iade | Ticari büyüklük ve ters işlem |
+| Ürün çeşitliliği | farklı ürün, miktar, sepet genişliği | Etkileşim derinliği ve çeşitliliği |
+| Pencereli davranış | 30/60/90 günlük sayım/harcama ve eğilim | Kesim öncesi hızlanma veya düşüş |
+| Bağlam | ülke ve anlık görüntü ayı | Hat içinde kodlanan pazar/zaman bağlamı |
 
 
 
-### 6. Scaling, normalization and encoding
+### 6. Ölçekleme, normalleştirme ve kodlama
 
-The scikit-learn ColumnTransformer fits preprocessing only on training data. Numeric columns use median imputation, log1p where defined and StandardScaler for logistic regression. Categorical values use most-frequent imputation and one-hot encoding with unknown-category tolerance. Tree candidates use compatible encoded input without assuming that scaling improves trees.
+scikit-learn ColumnTransformer ön işlemeyi yalnız eğitim verisinde uyarlar. Sayısal sütunlar medyan doldurma, uygun yerde log1p ve lojistik regresyon için StandardScaler kullanır. Kategorikler en sık değerle doldurulur ve bilinmeyen kategori toleranslı one-hot kodlanır. Ağaç adayları, ölçeklemenin ağaçları iyileştirdiğini varsaymadan uyumlu kodlanmış girdi kullanır.
 
 ```python
 numeric = Pipeline([
@@ -77,41 +81,43 @@ model = Pipeline([('preprocess', ColumnTransformer(...)),
                   ('classifier', LogisticRegression(C=0.01, max_iter=2000))])
 ```
 
-## Part II — Model exploration
+## Bölüm II — Model keşfi
 
-### 1. Candidate selection rationale
+### 1. Aday seçimi gerekçesi
 
-The recency heuristic is a business baseline; the dummy prior detects whether a model adds ranking information. Logistic regression is transparent, fast and regularizable. Random forest captures nonlinear interactions with modest preprocessing. LightGBM is an efficient boosted-tree challenger. The concept deck anticipated LightGBM, but the experiment did not privilege it: validation PR-AUC selected logistic regression.
+Yakınlık sezgiseli iş temeli; kukla önsel, modelin sıralama bilgisi katıp katmadığı kontrolüdür. Lojistik regresyon şeffaf, hızlı ve düzenlileştirilebilir; rastgele orman doğrusal olmayan etkileşimleri; LightGBM verimli artırılmış ağaç yaklaşımını temsil eder. Kavram sunumu LightGBM öngörse de deney ona öncelik vermemiş, doğrulama PR-AUC lojistik regresyonu seçmiştir.
 
-| Candidate | Strength | Weakness |
+| Aday | Güçlü yön | Zayıf yön |
 | --- | --- | --- |
-| Recency heuristic | Simple, explainable business reference | Ignores frequency, value and cadence |
-| Dummy prior | Calibration/prevalence sanity check | No individualized ranking |
-| Logistic regression | Transparent, efficient, stable regularization | Linear log-odds boundary; encoded interactions limited |
-| Random forest | Nonlinear interactions and robustness | Larger model; probability calibration may degrade |
-| LightGBM | Strong nonlinear tabular learner | More tuning/interpretation complexity and overfit risk |
+| Yakınlık sezgiseli | Basit ve açıklanabilir | Sıklık, değer ve ritmi yok sayar |
+| Kukla önsel | Kalibrasyon/yaygınlık sağlaması | Kişiselleştirilmiş sıralama yok |
+| Lojistik regresyon | Şeffaf, verimli, kararlı düzenlileştirme | Doğrusal log-olasılık sınırı |
+| Rastgele orman | Doğrusal olmayan etkileşim ve sağlamlık | Daha büyük model; kalibrasyon bozulabilir |
+| LightGBM | Güçlü doğrusal olmayan tablo öğrenicisi | Daha karmaşık ayar/yorum ve aşırı uyum riski |
 
 
 
-### 2. Training, hyperparameters and validation
+### 2. Eğitim, hiperparametreler ve doğrulama
 
-Candidate preprocessing and models are fit on seven pre-test training cutoffs. Model family is selected by the single 2011-03-01 validation snapshot. A later 2011-06-01 calibration snapshot is reserved for sigmoid probability calibration and the operational threshold; the final 2011-09-01 cutoff is never used during exploration.
+Adaylar test öncesi yedi kesimde eğitilir. Aile, yalnız 2011-03-01 doğrulamasında seçilir. 2011-06-01 sigmoid kalibrasyon ve eşik için ayrılır; 2011-09-01 keşifte kullanılmaz.
 
-| Model | Key parameters | Validation PR-AUC | ROC-AUC | Brier | Top-10% lift |
+| Model | Temel parametre | Doğrulama PR-AUC | ROC-AUC | Brier | İlk %10 artış |
 | --- | --- | --- | --- | --- | --- |
-| Recency | clip(recency/180) | 0.715529 | 0.689417 | 0.248166 | 1.292940 |
-| Dummy | prior | 0.577187 | 0.500000 | 0.244072 | 0.961948 |
-| Logistic | C=1.0 | 0.805322 | 0.782819 | 0.213300 | 1.510154 |
-| Random forest | 300 trees; leaf=10 | 0.803517 | 0.782053 | 0.195463 | 1.520498 |
-| LightGBM | 300 trees; lr=.05; leaves=31 | 0.805223 | 0.776941 | 0.200875 | 1.546357 |
+| Yakınlık | clip(recency/180) | 0.715529 | 0.689417 | 0.248166 | 1.292940 |
+| Kukla | prior | 0.577187 | 0.500000 | 0.244072 | 0.961948 |
+| Lojistik | C=1.0 | 0.805322 | 0.782819 | 0.213300 | 1.510154 |
+| Rastgele orman | 300 ağaç; yaprak=10 | 0.803517 | 0.782053 | 0.195463 | 1.520498 |
+| LightGBM | 300 ağaç; lr=.05; yaprak=31 | 0.805223 | 0.776941 | 0.200875 | 1.546357 |
 
-Selection metric: validation PR-AUC. Initial winner: logistic regression.
 
-### 3. Evaluation interpretation
 
-Logistic PR-AUC 0.805322 narrowly exceeds LightGBM 0.805223 and random forest 0.803517 in initial exploration. Tree candidates have better uncalibrated Brier values, which motivates a separate calibration step rather than changing the selection metric after seeing results. The recency baseline is meaningfully weaker but nontrivial, confirming that simple recency carries signal.
+Seçim ölçütü doğrulama PR-AUC; ilk kazanan lojistik regresyondur.
 
-### 4. Reproducibility
+### 3. Değerlendirme yorumu
+
+Lojistik PR-AUC 0.805322, LightGBM 0.805223 ve rastgele orman 0.803517 değerlerini az farkla aşar. Ağaçların kalibre edilmemiş Brier değerleri daha iyidir; bu, sonuç gördükten sonra seçim ölçütünü değiştirmeyi değil ayrı kalibrasyonu gerektirir. Yakınlık temeli daha zayıf ama anlamlıdır.
+
+### 4. Yeniden üretilebilirlik
 
 ```python
 make data-download
@@ -119,21 +125,21 @@ make data-profile
 make data-prepare
 make features-build
 make train
-# Outputs include split hashes, MLflow run IDs, parameters and validation metrics.
+# Çıktılar bölme özetlerini, MLflow kimliklerini, parametreleri ve ölçütleri içerir.
 ```
 
-Every split has a SHA-256 checksum and versioned target/feature/split identifiers. MLflow records model runs. The final test flag in model_exploration.json is false, demonstrating that exploration completed before final-test access.
+Her bölüm SHA-256, hedef/özellik/bölme sürümleriyle izlenir; MLflow çalıştırmaları kaydeder. model_exploration.json içindeki final_test bayrağının false olması keşfin nihai testten önce tamamlandığını gösterir.
 
-### 5. Conclusion
+### 5. Sonuç
 
-The preparation pipeline is leakage-aware, deterministic and suitable for the chosen historical study. Initial exploration selected logistic regression for refinement. This conclusion is limited to the stated validation cutoff and metric; it does not claim universal superiority or production readiness.
+Hazırlık hattı sızıntıya dayanıklı ve belirlenimcidir. İlk keşif iyileştirme için lojistik regresyonu seçmiştir. Sonuç belirtilen tarih ve ölçütle sınırlıdır; evrensel üstünlük veya üretim hazırlığı iddiası değildir.
 
-## References
+## Kaynakça
 
-Chen, D. (2012). Online Retail II [Dataset]. UCI Machine Learning Repository. https://doi.org/10.24432/C5CG6D
+Chen, D. (2012). Online Retail II [Veri kümesi]. UCI Machine Learning Repository. https://doi.org/10.24432/C5CG6D
 
-scikit-learn developers. Model evaluation, preprocessing and probability calibration documentation. https://scikit-learn.org/stable/
+scikit-learn geliştiricileri. Model değerlendirme, ön işleme ve olasılık kalibrasyonu belgeleri. https://scikit-learn.org/stable/
 
 Ke, G., et al. (2017). LightGBM: A highly efficient gradient boosting decision tree. Advances in Neural Information Processing Systems, 30.
 
-Project evidence: artifacts/reports/dataset_profile.json, artifacts/reports/data_preparation.json, artifacts/eda, artifacts/ml/model_exploration.json and the corresponding scripts/tests.
+Proje kanıtları: artifacts/reports/dataset_profile.json, artifacts/reports/data_preparation.json, artifacts/eda, artifacts/ml/model_exploration.json ve ilgili betikler/testler.

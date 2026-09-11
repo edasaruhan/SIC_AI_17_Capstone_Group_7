@@ -1,139 +1,143 @@
-# Concept Note and Implementation Plan
+# Kavram Notu ve Uygulama Planı
 
-GrowthPilot AI — governed customer operations and marketing intelligence for small retail teams
+GrowthPilot AI — küçük perakende ekipleri için yönetişimli müşteri operasyonları ve pazarlama zekâsı
 
-**AI AUTHORSHIP DISCLOSURE:** This document was drafted with OpenAI Codex/ChatGPT assistance and checked against repository evidence. Human review remains required.
+**YAPAY ZEKA KULLANIM BEYANI:** Bu belge OpenAI Codex/ChatGPT desteğiyle hazırlanmış ve depo kanıtlarıyla kontrol edilmiştir. İnsan incelemesi gereklidir.
 
-## Part I — Concept note
+## Bölüm I — Kavram notu
 
-### 1. Project overview, context and intended impact
+### 1. Proje özeti, bağlam ve amaçlanan etki
 
-GrowthPilot AI is a multi-tenant, production-oriented application that unifies customer, order, product, inventory and advertising data; provides CRM/ERP-lite workflows; and turns versioned analytics and ML-supported evidence into reviewed marketing decisions. The first capstone ML problem is 90-day future-purchase inactivity classification. It is one component of the product, not the whole product.
+GrowthPilot AI; müşteri, sipariş, ürün, stok ve reklam verisini birleştiren, hafif CRM/ERP iş akışları sunan ve sürümlü analitik ile makine öğrenmesi kanıtını incelenmiş pazarlama kararlarına dönüştüren çok kiracılı, üretime yönelik bir uygulamadır. İlk bitirme projesi ML problemi, 90 günlük gelecekte satın alma hareketsizliği sınıflandırmasıdır; ürünün tamamı değil, bir bileşenidir.
 
-The intended users are small retail operators and marketing managers who need a consistent customer record and a safer way to prioritize retention work. Intended impact is faster analysis, fewer definition disputes and more disciplined outreach review. No revenue uplift, adoption, campaign outcome or user result has yet been measured.
+Hedef kullanıcılar tutarlı müşteri kaydı ve müşteriyi elde tutma çalışmalarını daha güvenli önceliklendirme yolu arayan küçük perakende işletmecileri ile pazarlama yöneticileridir. Amaçlanan etki daha hızlı analiz, daha az tanım uyuşmazlığı ve daha disiplinli iletişim incelemesidir. Gelir artışı, benimseme, kampanya veya kullanıcı sonucu henüz ölçülmemiştir.
 
-### 2. Objectives and KPIs
+### 2. Amaçlar ve KPI'lar
 
-| Objective | KPI | Baseline | Target / decision rule |
+| Amaç | KPI | Başlangıç | Hedef / karar kuralı |
 | --- | --- | --- | --- |
-| Unify operating data | Valid imports, rejected-row visibility, provenance coverage | No production baseline available | 100% of accepted imports record tenant, source, actor and checksum |
-| Surface reliable customer intelligence | KPI freshness; prediction version coverage | No production baseline available | Every prediction stores model/feature/target versions and checksum |
-| Prioritize limited outreach | Precision, recall and lift at capacity | Test prevalence 0.392857 | Frozen ~10% policy; report evidence, do not promise uplift |
-| Protect customers and tenants | Cross-tenant denials; unauthorized actions | Not applicable before implementation | Zero known leakage in automated isolation tests; all actions server-authorized |
-| Govern marketing execution | Consent checks; approvals; budget/kill-switch blocks | No live execution | Execution disabled by default; explicit approval and live validation required |
+| Operasyon verisini birleştirmek | Geçerli içe aktarma, reddedilen satır görünürlüğü, kaynak kapsamı | Üretim başlangıç değeri yok | Kabul edilen her içe aktarma kiracı, kaynak, aktör ve sağlama toplamı kaydeder |
+| Güvenilir müşteri zekâsı sunmak | KPI güncelliği; tahmin sürümü kapsamı | Üretim başlangıç değeri yok | Her tahmin model/özellik/hedef sürümü ile sağlama toplamını saklar |
+| Sınırlı erişimi önceliklendirmek | Kapasitede kesinlik, duyarlılık, artış | Test yaygınlığı 0.392857 | Dondurulmuş yaklaşık %10 politika; kanıt raporlanır, artış vaat edilmez |
+| Müşterileri ve kiracıları korumak | Kiracılar arası retler; yetkisiz eylemler | Uygulama öncesi geçersiz | Otomatik yalıtım testlerinde bilinen sızıntı sıfır; tüm eylemler sunucuda yetkilendirilir |
+| Pazarlama yürütmesini yönetmek | Rıza, onay, bütçe/acil durdurma engelleri | Canlı yürütme yok | Yürütme varsayılan kapalı; açık onay ve canlı doğrulama gerekir |
 
-Targets are governance/quality acceptance rules, not fabricated commercial outcomes.
 
-### 3. Background and rationale
 
-The product concept responds to fragmentation: analytics notebooks alone do not resolve data capture, identity, permission, consent or execution safety. Literature on non-contractual customer bases shows that inactivity is latent and model-dependent. GrowthPilot therefore defines an observable future purchase window, uses time-based validation and stores a clear evidence trail.
+Hedefler ticari sonuç değil, yönetişim/kalite kabul kurallarıdır.
 
-### 4. AI methodology and evaluation
+### 3. Arka plan ve gerekçe
 
-1. Profile purchase cadence on training history only and freeze a 90-day label horizon.
+Analitik not defterleri tek başına veri toplama, kimlik, izin, rıza veya yürütme güvenliğini çözmez. Sözleşmesiz müşteri literatürü hareketsizliğin örtük ve modele bağlı olduğunu gösterir. Bu nedenle GrowthPilot gözlenebilir gelecek satın alma penceresi tanımlar, zamana dayalı doğrulama kullanır ve açık kanıt izi saklar.
 
-1. Construct leakage-safe customer snapshots using events strictly before each cutoff.
+### 4. Yapay zekâ yöntemi ve değerlendirme
 
-1. Compare a recency heuristic, a prevalence dummy, regularized logistic regression, random forest and LightGBM.
+1. Satın alma ritmini yalnız eğitim geçmişinde profille ve 90 günlük etiket ufkunu dondur.
 
-1. Select by validation PR-AUC; refine hyperparameters and probability calibration before touching the final test.
+1. Her kesimden kesinlikle önceki olaylarla sızıntısız müşteri anlık görüntüleri oluştur.
 
-1. Freeze the model artifact and ~10% capacity threshold, evaluate once on the untouched 2011-09-01 temporal test and prohibit post-test retuning.
+1. Yakınlık sezgiseli, yaygınlık kuklası, düzenlileştirilmiş lojistik regresyon, rastgele orman ve LightGBM'yi karşılaştır.
 
-1. Validate SHAP/log-odds additivity; store local explanations as fitted-model evidence only.
+1. Doğrulama PR-AUC ile seç; nihai teste dokunmadan hiperparametre ve olasılık kalibrasyonunu iyileştir.
 
-Primary measures are PR-AUC, ROC-AUC, Brier score, log loss and ECE, with precision/recall/lift at capacity and bootstrap intervals on the final test. A later business-impact test must randomize eligible customers into treatment/control or use another defensible causal design.
+1. Model eserini ve yaklaşık %10 kapasite eşiğini dondur; dokunulmamış 2011-09-01 testinde bir kez değerlendir ve test sonrası ayarı yasakla.
 
-### 5. Architecture and workflow
+1. SHAP/log-olasılık toplamsallığını doğrula; açıklamaları yalnız eğitilmiş model kanıtı olarak sakla.
 
-![Figure 1. Implemented data-to-decision architecture. Execution is disabled by default.](../../academic/figures/architecture_workflow.png)
+Birincil ölçütler PR-AUC, ROC-AUC, Brier, log kaybı ve ECE'dir; kapasitede kesinlik/duyarlılık/artış ve nihai test bootstrap aralıkları eklenir. İş etkisi için daha sonra uygun müşterilerin deney/kontrol gruplarına rastgele atanması veya savunulabilir başka nedensel tasarım gerekir.
 
-*Figure 1. Implemented data-to-decision architecture. Execution is disabled by default.*
+### 5. Mimari ve iş akışı
 
-The web application calls a FastAPI modular monolith. PostgreSQL enforces tenant keys, constraints and row-level security; Redis/Dramatiq workers consume durable outbox jobs. Validated imports and provider adapters populate canonical records. Analytics and scoring share versioned definitions. Audiences are snapshot-based, current consent is checked, and campaigns must be approved before queueing. External action remains blocked by the kill switch and zero default budget.
+![Şekil 1. Uygulanan veriden karara mimari. Yürütme varsayılan kapalıdır.](../../academic/figures/architecture_workflow.png)
 
-### 6. Data
+*Şekil 1. Uygulanan veriden karara mimari. Yürütme varsayılan kapalıdır.*
 
-The capstone experiment uses UCI Online Retail II (Chen, 2012; CC BY 4.0; DOI 10.24432/C5CG6D), 1,067,371 transaction lines covering 2009-12-01 through 2011-12-09. Production use would require each tenant’s own authorized customer/order data and provider credentials. Raw sources are checksum-verified; customer-level prepared artifacts are local and ignored.
+Web uygulaması FastAPI modüler tek parçasını çağırır. PostgreSQL kiracı anahtarlarını, kısıtları ve satır düzeyi güvenliği uygular; Redis/Dramatiq çalışanları kalıcı outbox işlerini tüketir. Doğrulanmış içe aktarımlar ve sağlayıcı bağdaştırıcıları standart kayıtları doldurur. Analitik ve puanlama sürümlü tanımları paylaşır. Kitleler anlık görüntülüdür, güncel rıza denetlenir ve kampanyalar kuyruğa alınmadan onaylanır. Harici eylem acil durdurma anahtarı ve sıfır varsayılan bütçeyle engellenir.
 
-### 7. Literature and industry context
+### 6. Veri
 
-Jerath, Fader and Hardie (2011), Batislam et al. (2007), and Platzer and Reutterer (2016) motivate a purchase-cadence-aware but operational definition of inactivity. Modern CRM and ad platforms expose pieces of the workflow, but GrowthPilot’s concept is an integrated, provider-neutral control plane with explicit provenance, tenant scope and human authorization. This comparison is functional, not a claim of commercial superiority.
+Deney, UCI Online Retail II'yi (Chen, 2012; CC BY 4.0; DOI 10.24432/C5CG6D) kullanır: 2009-12-01–2011-12-09 döneminde 1.067.371 işlem satırı. Üretimde her kiracının yetkili müşteri/sipariş verisi ve sağlayıcı kimlik bilgileri gerekir. Ham kaynakların sağlama toplamı doğrulanır; müşteri düzeyi hazırlanmış eserler yerelde ve Git dışındadır.
 
-## Part II — Implementation plan
+### 7. Literatür ve sektör bağlamı
 
-### 1. Technology stack
+Jerath, Fader ve Hardie (2011), Batislam ve diğerleri (2007), Platzer ve Reutterer (2016) satın alma ritmine duyarlı ancak operasyonel hareketsizlik tanımını destekler. Modern CRM ve reklam platformları akışın parçalarını sunar; GrowthPilot açık kaynak, kiracı kapsamı ve insan yetkilendirmesi olan bütünleşik, sağlayıcıdan bağımsız bir kontrol düzlemidir. Bu işlevsel bir karşılaştırmadır, ticari üstünlük iddiası değildir.
 
-| Layer | Technology | Responsibility |
+## Bölüm II — Uygulama planı
+
+### 1. Teknoloji yığını
+
+| Katman | Teknoloji | Sorumluluk |
 | --- | --- | --- |
-| Web | Next.js, React, strict TypeScript | Operator navigation, honest loading/empty/error states, customer 360 |
-| API | Python 3.12, FastAPI, Pydantic, SQLAlchemy | Validation, RBAC, domain rules, OpenAPI |
-| Data | PostgreSQL + RLS; S3-compatible object boundary | Canonical records, provenance, tenant isolation, bounded raw payloads |
-| Async | Redis, Dramatiq, outbox | Import, sync and scoring jobs with rechecked permissions |
-| ML | pandas/Polars, scikit-learn, LightGBM, SHAP, MLflow | Feature pipeline, experiments, registry, explanations |
-| Quality/ops | pytest, Ruff, mypy, Vitest, ESLint, OTel, Prometheus | Automated gates and observability |
+| Web | Next.js, React, katı TypeScript | Gezinme, dürüst yükleme/boş/hata durumları, Müşteri 360 |
+| API | Python 3.12, FastAPI, Pydantic, SQLAlchemy | Doğrulama, RBAC, alan kuralları, OpenAPI |
+| Veri | PostgreSQL + RLS; S3 uyumlu nesne sınırı | Standart kayıtlar, kaynak, yalıtım, sınırlı ham yük |
+| Eşzamansız | Redis, Dramatiq, outbox | İzinleri yeniden denetlenen içe aktarma/eşitleme/puanlama |
+| ML | pandas/Polars, scikit-learn, LightGBM, SHAP, MLflow | Özellik hattı, deney, kayıt, açıklama |
+| Kalite/operasyon | pytest, Ruff, mypy, Vitest, ESLint, OTel, Prometheus | Otomatik kapılar ve gözlemlenebilirlik |
 
 
 
-### 2. Timeline and ownership
+### 2. Takvim ve sorumluluk
 
-| Phase window | Work package | Owner / reviewer | Evidence / status |
+| Dönem | İş paketi | Sorumlu / inceleyen | Kanıt / durum |
 | --- | --- | --- | --- |
-| 2026-09-08 | Governance, architecture, domain and data contracts | Codex / Project Lead | Local commits; ADRs; requirements — complete |
-| 2026-09-08 | Dataset research, preparation, features and model exploration | Codex / ML-AI Lead | Profiles, splits, MLflow runs — complete |
-| 2026-09-08 | Refinement, frozen test, explanations and decision evidence | Codex / ML-AI Lead | Final artifacts and checksums — complete |
-| 2026-09-09 | Inference, UI, integrations, attribution, audiences and generation | Codex / Project Lead | Local code/tests — complete; live credentials absent |
-| 2026-09-09 | Security hardening, academic package and release readiness | Codex / Founder | Local validation — in final review |
-| After approval | Credentialed sandboxes, deployment, pilot and causal impact test | Founder / Project Lead | External validation — not started |
+| 2026-09-08 | Yönetişim, mimari, alan ve veri sözleşmeleri | Codex / Proje Lideri | Yerel commit, ADR ve gereksinimler — tamamlandı |
+| 2026-09-08 | Veri araştırması, hazırlık, özellik ve model keşfi | Codex / ML-AI Lideri | Profil, bölme, MLflow — tamamlandı |
+| 2026-09-08 | İyileştirme, dondurulmuş test, açıklama | Codex / ML-AI Lideri | Nihai eser ve sağlama toplamı — tamamlandı |
+| 2026-09-09 | Çıkarım, arayüz, entegrasyon, atıf, kitle ve üretim | Codex / Proje Lideri | Yerel kod/test — tamam; canlı kimlik bilgisi yok |
+| 2026-09-09 | Güvenlik, akademik paket, sürüm hazırlığı | Codex / Kurucu | Yerel doğrulama — nihai incelemede |
+| Onay sonrası | Kimlik bilgili test ortamı, dağıtım, pilot, nedensel test | Kurucu / Proje Lideri | Dış doğrulama — başlamadı |
 
-These are actual local execution dates, not backdated instructor submission claims.
 
-### 3. Milestones and evidence
 
-- M0–M1: governance baseline, accepted ADRs, threat/data contracts and clean Git history.
+Bunlar gerçek yerel çalışma tarihleridir; geriye dönük teslim iddiası değildir.
 
-- M2–M5: cited research, licensed source, reproducible preparation, model comparison, frozen evaluation and explanation evidence.
+### 3. Kilometre taşları ve kanıt
 
-- M6–M10: tenant-safe API/UI, CRM/commerce/imports, intelligence, adapters, attribution, audiences and approval lifecycle.
+- M0–M1: yönetişim, kabul edilmiş ADR, tehdit/veri sözleşmesi ve temiz Git geçmişi.
 
-- M11–M12: security/recovery boundaries, complete tests, academic deliverables, demo script and release-readiness report.
+- M2–M5: kaynaklı araştırma, lisanslı veri, yeniden üretilebilir hazırlık, model karşılaştırması, dondurulmuş değerlendirme ve açıklama.
 
-### 4. Challenges, mitigations and fallback plans
+- M6–M10: kiracı güvenli API/arayüz, CRM/ticaret/içe aktarma, zekâ, bağdaştırıcı, atıf, kitle ve onay yaşam döngüsü.
 
-| Risk | Mitigation | Fallback / decision boundary |
+- M11–M12: güvenlik/kurtarma sınırları, testler, akademik teslimler, demo ve sürüm hazırlığı.
+
+### 4. Zorluklar, önlemler ve geri dönüş
+
+| Risk | Önlem | Geri dönüş / karar sınırı |
 | --- | --- | --- |
-| Historical single-retailer bias | Temporal holdout, intervals, explicit evidence labels | Do not deploy model until tenant data is validated |
-| Inactivity is not contractual churn | Operational label and target version | Present score as inactivity risk only |
-| Cross-tenant leakage | Tenant keys, server guards, PostgreSQL RLS, adversarial tests | Block release on any unresolved leakage |
-| Provider/API change or missing credentials | Adapters, fixed origins, mocks, durable sync records | Keep integration disabled; import CSV/XLSX |
-| Uncertain campaign effect | Separate prediction from causal measurement | Use no-send planning mode until approved experiment |
-| Unsafe generated content | Server-derived facts, forbidden-claim validation, human approval | Disabled provider; manual draft only |
-| Operational outage/data loss | Health/metrics, backups/runbooks, durable jobs | RPO/RTO remain targets until restore drill |
+| Tek tarihsel perakendeci yanlılığı | Zamansal bekletme, aralıklar, kanıt etiketleri | Kiracı verisi doğrulanmadan modeli dağıtma |
+| Hareketsizlik gerçek kayıp değildir | Operasyonel etiket ve hedef sürümü | Yalnız hareketsizlik riski olarak sun |
+| Kiracılar arası sızıntı | Anahtar, sunucu koruması, RLS, saldırgan test | Çözülmemiş sızıntıda sürümü engelle |
+| API değişimi/kimlik bilgisi yokluğu | Bağdaştırıcı, sabit köken, taklit, kalıcı eşitleme | Entegrasyonu kapalı tut; CSV/XLSX kullan |
+| Kampanya etkisi belirsizliği | Tahmini nedensel ölçümden ayır | Onaylı deney öncesi gönderimsiz plan |
+| Güvensiz üretilen içerik | Sunucu gerçekleri, yasak iddia kontrolü, insan onayı | Sağlayıcı kapalı; yalnız manuel taslak |
+| Kesinti/veri kaybı | Sağlık/ölçüt, yedek, runbook, kalıcı iş | Geri yükleme tatbikatına kadar RPO/RTO hedeftir |
 
 
 
-### 5. Ethics and responsible AI
+### 5. Etik ve sorumlu yapay zekâ
 
-- Purpose limitation and minimization: customer-level outputs stay inside tenant scope; academic deliverables use aggregates.
+- Amaç sınırlaması ve veri minimizasyonu: müşteri çıktıları kiracı içinde; akademik çıktılar topludur.
 
-- Consent and human agency: scoring never authorizes an action; audience membership is rechecked; approvals are explicit.
+- Rıza ve insan iradesi: puan eylem yetkisi vermez; kitle üyeliği yeniden kontrol edilir; onay açıktır.
 
-- Transparency: target, features, model, threshold and limitations are versioned; explanations are noncausal.
+- Şeffaflık: hedef, özellik, model, eşik ve sınırlılıklar sürümlüdür; açıklamalar nedensel değildir.
 
-- Fairness: country and other sensitive/proxy effects require lawful subgroup review before production. No fairness claim is made from this dataset.
+- Adalet: ülke ve vekil etkileri üretim öncesi hukuka uygun alt grup incelemesi gerektirir; adalet iddiası yoktur.
 
-- Security: secret references, not secret values, are stored; provider requests use fixed HTTPS origins and no redirects.
+- Güvenlik: sır değerleri değil referansları saklanır; sağlayıcı istekleri sabit HTTPS kökeni kullanır ve yönlendirme izlemez.
 
-### 6. Current delivery boundary
+### 6. Güncel teslim sınırı
 
-The local implementation and academic evidence are complete for review. Automated desktop/mobile Chromium and Axe checks pass; live Meta/Google/LLM/OIDC/cloud validation, production restore drills, manual multi-browser and assistive-technology testing, and any real campaign execution remain external. No push, paid deployment or advertising spend is authorized by this plan.
+Yerel uygulama ve akademik kanıt incelemeye hazırdır. Otomatik masaüstü/mobil Chromium ve Axe kontrolleri geçer; canlı Meta/Google/LLM/OIDC/bulut, üretim geri yükleme, manuel çoklu tarayıcı/yardımcı teknoloji ve gerçek kampanya yürütmesi dış doğrulamada bekler. Ücretli dağıtım veya reklam harcaması yapılmamıştır.
 
-## References
+## Kaynakça
 
-Chen, D. (2012). Online Retail II [Dataset]. UCI Machine Learning Repository. https://doi.org/10.24432/C5CG6D
+Chen, D. (2012). Online Retail II [Veri kümesi]. UCI Machine Learning Repository. https://doi.org/10.24432/C5CG6D
 
 Jerath, K., Fader, P. S., & Hardie, B. G. S. (2011). New perspectives on customer “death” using a generalization of the Pareto/NBD model. Marketing Science, 30(5), 866–880. https://doi.org/10.1287/mksc.1110.0654
 
 Batislam, E. P., Denizel, M., & Filiztekin, A. (2007). Empirical validation and comparison of models for customer base analysis. International Journal of Research in Marketing, 24(3), 201–209. https://doi.org/10.1016/j.ijresmar.2006.12.005
 
-Project sources: docs/03_ARCHITECTURE_DECISIONS.md, docs/08_DELIVERY_PLAN.md, docs/07_SECURITY_PRIVACY_RESPONSIBLE_AI.md, artifacts/reports and artifacts/ml.
+Proje kaynakları: docs/03_ARCHITECTURE_DECISIONS.md, docs/08_DELIVERY_PLAN.md, docs/07_SECURITY_PRIVACY_RESPONSIBLE_AI.md, artifacts/reports ve artifacts/ml.

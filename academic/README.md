@@ -1,4 +1,4 @@
-# GrowthPilot academic submission package
+# GrowthPilot Türkçe akademik teslim paketi
 
 This directory contains new project deliverables created from the untouched instructor
 references in `references/instructor/`. The originals are never modified.
@@ -12,10 +12,11 @@ references in `references/instructor/`. The originals are never modified.
 - `submissions/05_Weekly_Progress_Report_2026-09-09.docx` and `.pdf`
 - `presentation/GrowthPilot_AI_Final_Presentation.pptx` and `.pdf`
 
-The Markdown files beside the reports are human-readable source copies. Every reported
-metric is reproduced from committed project artifacts. External-source claims are cited.
-AI-assisted drafting is disclosed in each deliverable. The presentation is a final,
-evidence-based replacement for the earlier concept-only instructor reference deck.
+Raporların yanındaki Markdown dosyaları Türkçe, okunabilir ve yeniden üretimde kullanılan
+asıl metinlerdir. Raporlanan her ölçüt commit edilmiş proje eserlerinden yeniden
+üretilmiştir. Dış kaynak iddiaları kaynaklandırılmış, yapay zekâ desteği her teslimde
+açıklanmıştır. Sunum, önceki yalnız kavram odaklı eğitmen referansının kanıta dayalı nihai
+karşılığıdır.
 
 Regenerate the written package and synchronized `ödevler/` DOCX/PDF copies with:
 
@@ -26,7 +27,8 @@ uv run python scripts/generate_academic_deliverables.py
 LibreOffice (`soffice`) must be available on `PATH` for deterministic PDF export. The
 generator fails visibly if a PDF cannot be produced; it never leaves a silent stale copy.
 
-The PPTX is the editable presentation source. It was generated with the required
-`@oai/artifact-tool` presentation workflow and independently rendered through
-LibreOffice. The generation workspace is retained outside the repository as QA scratch;
-it is intentionally not a project runtime dependency.
+PPTX düzenlenebilir sunum kaynağıdır. İlk tasarım gerekli `@oai/artifact-tool` sunum
+iş akışıyla üretilmiş, Türkçe metin düzeltmesi tasarımı koruyan OOXML dönüşümüyle
+uygulanmış ve sistemde önceden kurulu LibreOffice ile bağımsız PDF olarak işlenmiştir.
+Sunum üretim çalışma alanı kalite kontrolü amacıyla depo dışında tutulur ve proje çalışma
+zamanı bağımlılığı değildir.

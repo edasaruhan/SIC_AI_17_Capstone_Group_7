@@ -5,6 +5,10 @@ teslim sırasına göre içerir. Her yazılı ödev için düzenlenebilir DOCX v
 edilebilir PDF; final sunumu için düzenlenebilir PPTX ve teslim edilebilir PDF
 birlikte tutulur.
 
+Teslimlerin anlatım dili Türkçedir. Kaynakça eser adları, kod parçaları, ürün ve
+kütüphane adları, standart ölçüt kısaltmaları ve kanıt grafiklerindeki teknik
+eksen/özellik adları doğruluğu ve kaynak izini korumak için özgün biçimdedir.
+
 ## Teslim sırası
 
 1. `01_Literatur_Veri_Teknoloji/`

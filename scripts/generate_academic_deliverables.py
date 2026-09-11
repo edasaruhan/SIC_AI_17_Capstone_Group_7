@@ -8,6 +8,7 @@ external claims are explicitly cited. The selected DOCX preset is
 from __future__ import annotations
 
 import json
+import re
 import shutil
 import subprocess
 import tempfile
@@ -172,9 +173,9 @@ def add_field(paragraph: Any, instruction: str) -> None:
 
 
 def add_page_number(paragraph: Any) -> None:
-    paragraph.add_run("Page ")
+    paragraph.add_run("Sayfa ")
     add_field(paragraph, "PAGE")
-    paragraph.add_run(" of ")
+    paragraph.add_run(" / ")
     add_field(paragraph, "NUMPAGES")
 
 
@@ -318,7 +319,7 @@ def set_header_footer(doc: Document, label: str) -> None:
 
 
 def add_masthead(
-    doc: Document, title: str, subtitle: str, status: str = "Final local academic package"
+    doc: Document, title: str, subtitle: str, status: str = "Nihai yerel akademik paket"
 ) -> None:
     spacer = doc.add_paragraph()
     spacer.paragraph_format.space_after = Pt(12)
@@ -331,12 +332,12 @@ def add_masthead(
     r = p.add_run(subtitle)
     set_run_font(r, size=13.5, color=MUTED)
     for label, value in (
-        ("Course", "Samsung Innovation Campus — AI in Marketing Capstone"),
-        ("Team", "Group 7"),
-        ("Project", "GrowthPilot AI"),
-        ("Prepared by", "Şahin Başcı"),
-        ("Date", "9 September 2026"),
-        ("Status", status),
+        ("Ders", "Samsung Innovation Campus — Pazarlamada Yapay Zekâ Bitirme Projesi"),
+        ("Ekip", "Grup 7"),
+        ("Proje", "GrowthPilot AI"),
+        ("Hazırlayan", "Şahin Başcı"),
+        ("Tarih", "9 Eylül 2026"),
+        ("Durum", status),
     ):
         p = doc.add_paragraph()
         p.paragraph_format.space_after = Pt(3)
@@ -354,9 +355,9 @@ def add_masthead(
     p.paragraph_format.space_before = Pt(4)
     p.paragraph_format.space_after = Pt(8)
     r = p.add_run(
-        "AI AUTHORSHIP DISCLOSURE — This document was drafted with OpenAI Codex/ChatGPT "
-        "assistance and checked against repository evidence. Reported project metrics come "
-        "from executed, versioned artifacts; external claims are cited. Human review remains required."
+        "YAPAY ZEKA KULLANIM BEYANI — Bu belge OpenAI Codex/ChatGPT desteğiyle "
+        "hazırlanmış ve depo kanıtlarıyla kontrol edilmiştir. Proje ölçütleri yürütülmüş, "
+        "sürümlenmiş eserlerden gelir; dış iddialar kaynaklandırılmıştır. İnsan incelemesi gereklidir."
     )
     set_run_font(r, size=9.5, color=INK, bold=True)
     doc.add_paragraph()
@@ -453,7 +454,7 @@ def markdown_for(submission: Submission) -> str:
         "",
         submission.subtitle,
         "",
-        "**AI AUTHORSHIP DISCLOSURE:** This document was drafted with OpenAI Codex/ChatGPT assistance and checked against repository evidence. Human review remains required.",
+        "**YAPAY ZEKA KULLANIM BEYANI:** Bu belge OpenAI Codex/ChatGPT desteğiyle hazırlanmış ve depo kanıtlarıyla kontrol edilmiştir. İnsan incelemesi gereklidir.",
         "",
     ]
     for block in submission.blocks:
@@ -484,6 +485,70 @@ def markdown_for(submission: Submission) -> str:
         elif block.kind == "break":
             lines.extend(["---", ""])
     return "\n".join(lines).rstrip() + "\n"
+
+
+def submission_from_markdown(stem: str) -> Submission:
+    """Parse the repository's deliberately small academic Markdown subset."""
+    path = OUT / f"{stem}.md"
+    lines = path.read_text(encoding="utf-8").splitlines()
+    title = lines[0].removeprefix("# ").strip()
+    cursor = 1
+    while cursor < len(lines) and not lines[cursor].strip():
+        cursor += 1
+    subtitle = lines[cursor].strip()
+    cursor += 1
+    blocks: list[Block] = []
+    while cursor < len(lines):
+        line = lines[cursor].strip()
+        if not line or line.startswith("**YAPAY ZEKA KULLANIM BEYANI:"):
+            cursor += 1
+            continue
+        if line.startswith("#### "):
+            blocks.append(Block("h3", line[5:]))
+        elif line.startswith("### "):
+            blocks.append(Block("h2", line[4:]))
+        elif line.startswith("## "):
+            blocks.append(Block("h1", line[3:]))
+        elif line.startswith("- "):
+            blocks.append(Block("bullet", line[2:]))
+        elif re.match(r"^\d+\. ", line):
+            blocks.append(Block("number", re.sub(r"^\d+\. ", "", line)))
+        elif line.startswith("```"):
+            code_lines: list[str] = []
+            cursor += 1
+            while cursor < len(lines) and not lines[cursor].strip().startswith("```"):
+                code_lines.append(lines[cursor])
+                cursor += 1
+            blocks.append(Block("code", "\n".join(code_lines)))
+        elif line.startswith("| "):
+            table_lines: list[str] = []
+            while cursor < len(lines) and lines[cursor].strip().startswith("| "):
+                table_lines.append(lines[cursor].strip())
+                cursor += 1
+            cursor -= 1
+            cells = [[cell.strip() for cell in row.strip("|").split("|")] for row in table_lines]
+            headers = cells[0]
+            rows = cells[2:]
+            width = 9360 // len(headers)
+            blocks.append(Block("table", (headers, rows, [width] * len(headers))))
+        elif line.startswith("!["):
+            match = re.match(r"!\[(.+)]\(\.\./\.\./(.+)\)", line)
+            if not match:
+                raise ValueError(f"Desteklenmeyen görsel satırı: {line}")
+            caption, relative_path = match.groups()
+            blocks.append(Block("figure", (relative_path, caption, 6.35)))
+            # markdown_for tarafından yinelenen italik şekil açıklamasını atla.
+            lookahead = cursor + 1
+            while lookahead < len(lines) and not lines[lookahead].strip():
+                lookahead += 1
+            if lookahead < len(lines) and lines[lookahead].strip() == f"*{caption}*":
+                cursor = lookahead
+        elif line.startswith("*") and line.endswith("*"):
+            pass
+        else:
+            blocks.append(Block("p", line))
+        cursor += 1
+    return Submission(stem=stem, title=title, subtitle=subtitle, blocks=blocks)
 
 
 def build_submission(submission: Submission) -> None:
@@ -1706,54 +1771,54 @@ def weekly_report() -> None:
     section.bottom_margin = Inches(0.5)
     section.header_distance = Inches(0.25)
     section.footer_distance = Inches(0.25)
-    set_header_footer(doc, "Weekly Progress Report")
+    set_header_footer(doc, "Kısa Haftalık İlerleme Raporu")
     p = doc.add_paragraph()
     p.paragraph_format.space_after = Pt(2)
-    set_run_font(p.add_run("SHORT WEEKLY PROGRESS REPORT"), size=18, color=INK, bold=True)
+    set_run_font(p.add_run("KISA HAFTALIK İLERLEME RAPORU"), size=18, color=INK, bold=True)
     p = doc.add_paragraph()
     p.paragraph_format.space_after = Pt(6)
     set_run_font(
-        p.add_run("Samsung Innovation Campus · Group 7 · GrowthPilot AI"),
+        p.add_run("Samsung Innovation Campus · Grup 7 · GrowthPilot AI"),
         size=10.5,
         color=MUTED,
         bold=True,
     )
     add_table(
         doc,
-        ["Date", "Reporter", "Overall status"],
+        ["Tarih", "Raporlayan", "Genel durum"],
         [
             [
-                "9 September 2026",
+                "9 Eylül 2026",
                 "Şahin Başcı",
-                "GREEN — local scope complete; external validation open",
+                "YEŞİL — yerel kapsam tamamlandı; dış doğrulama bekliyor",
             ]
         ],
         [2500, 2500, 4360],
     )
     entries = [
         (
-            "1. Progress since the previous report",
-            "Completed the production-oriented local application, temporal churn-proxy data/ML pipeline, frozen final evaluation, model registry/inference, integrations, attribution, audiences/campaign approval, security boundaries and all academic submission artifacts. No fabricated business result or live provider result is included.",
+            "1. Önceki rapordan bu yana ilerleme",
+            "Üretime yönelik yerel uygulama; zamansal müşteri kaybı vekil veri/ML hattı; dondurulmuş nihai değerlendirme; model kaydı/çıkarım; entegrasyon, atıf, kitle/kampanya onayı, güvenlik sınırları ve akademik teslimler tamamlandı. Uydurma iş veya canlı sağlayıcı sonucu yoktur.",
         ),
         (
-            "2. Current focus",
-            "Final audit: rendered document/slide QA, clean full test suite, dependency/secret scans, evidence mapping and Phase 22–24 readiness documentation.",
+            "2. Güncel odak",
+            "Nihai denetim: belge/slayt görsel kalite kontrolü, temiz test paketi, bağımlılık/sır taraması, kanıt eşlemesi ve Faz 22–24 hazırlık belgeleri.",
         ),
         (
-            "3. Status and evidence",
-            "Green for authorized local delivery. Backend: 83 tests passing before final package audit; frontend typecheck/lint/Vitest/webpack build passing. Final test: PR-AUC 0.647525, ROC-AUC 0.765878, Brier 0.199854; model SHA-256 942d705d…52ad.",
+            "3. Durum ve kanıt",
+            "Yetkili yerel teslim yeşildir. Arka uçta 83 test; ön yüzde tür denetimi, lint, Vitest ve webpack derlemesi geçmiştir. Nihai test: PR-AUC 0.647525, ROC-AUC 0.765878, Brier 0.199854; model SHA-256 942d705d…52ad.",
         ),
         (
-            "4. Problems and risks",
-            "No live Meta, Google Ads, LLM, OIDC or cloud credentials; automated desktop/mobile Chromium and Axe checks pass, but manual multi-browser and assistive-technology review is outstanding; production backup/restore and load tests were not performed. Dataset is historical, single-retailer, UK-based; inactivity is a proxy, not contractual churn; predictive results are noncausal.",
+            "4. Sorunlar ve riskler",
+            "Canlı Meta, Google Ads, LLM, OIDC veya bulut kimlik bilgileri yoktur. Otomatik Chromium/Axe kontrolleri geçer; manuel çoklu tarayıcı/yardımcı teknoloji, üretim geri yükleme ve yük testleri bekler. Veri tarihsel, tek perakendecili ve Birleşik Krallık kökenlidir; hareketsizlik vekildir, sonuçlar nedensel değildir.",
         ),
         (
-            "5. Support or decision needed",
-            "Project Lead should audit deliverables and decide whether to authorize final squash/publication. Founder must provide sandbox credentials and approve any deployment or real campaign. Submission dates in instructor files have elapsed and require instructor confirmation.",
+            "5. Gereken destek veya karar",
+            "Proje Lideri teslimleri denetleyip nihai yayın kararını vermelidir. Kurucu, dağıtım veya gerçek kampanya öncesi test ortamı kimlik bilgilerini sağlamalı ve onay vermelidir. Eğitmen dosyalarındaki geçmiş teslim tarihleri için eğitmen teyidi gerekir.",
         ),
         (
-            "6. Tasks before next report",
-            "Address audit findings; run credentialed sandbox and manual browser/assistive-technology validation; rehearse backup/restore; define pilot eligibility and randomized holdout; only then request separate deployment/publication authorization.",
+            "6. Sonraki rapora kadar görevler",
+            "Denetim bulgularını gider; kimlik bilgili test ortamı ve manuel tarayıcı/yardımcı teknoloji doğrulamasını yürüt; geri yükleme provası yap; pilot uygunluğu ile rastgele kontrol grubunu tanımla; sonra ayrı dağıtım/yayın onayı iste.",
         ),
     ]
     for title, body in entries:
@@ -1772,20 +1837,20 @@ def weekly_report() -> None:
     shade_paragraph(p, GREEN_LIGHT)
     set_run_font(
         p.add_run(
-            "AI disclosure: drafted with OpenAI Codex/ChatGPT assistance and verified against repository evidence; human review required."
+            "Yapay zekâ kullanım beyanı: OpenAI Codex/ChatGPT desteğiyle hazırlanmış ve depo kanıtlarıyla doğrulanmıştır; insan incelemesi gereklidir."
         ),
         size=8.2,
         color=INK,
         bold=True,
     )
     stem = "05_Weekly_Progress_Report_2026-09-09"
-    doc.core_properties.title = "GrowthPilot AI Weekly Progress Report — 2026-09-09"
-    doc.core_properties.author = "Şahin Başcı; AI-assisted drafting disclosed"
+    doc.core_properties.title = "GrowthPilot AI Kısa Haftalık İlerleme Raporu — 2026-09-09"
+    doc.core_properties.author = "Şahin Başcı; yapay zekâ desteği açıklanmıştır"
     doc.save(OUT / f"{stem}.docx")
-    md = "# Short Weekly Progress Report\n\n**Team:** Group 7\n**Project:** GrowthPilot AI\n**Date:** 9 September 2026\n**Reporter:** Şahin Başcı\n**Status:** GREEN — local scope complete; external validation open\n\n"
+    md = "# Kısa Haftalık İlerleme Raporu\n\n**Ekip:** Grup 7\n**Proje:** GrowthPilot AI\n**Tarih:** 9 Eylül 2026\n**Raporlayan:** Şahin Başcı\n**Durum:** YEŞİL — yerel kapsam tamamlandı; dış doğrulama bekliyor\n\n"
     for title, body in entries:
         md += f"## {title}\n\n{body}\n\n"
-    md += "**AI disclosure:** drafted with OpenAI Codex/ChatGPT assistance and verified against repository evidence; human review required.\n"
+    md += "**Yapay zekâ kullanım beyanı:** OpenAI Codex/ChatGPT desteğiyle hazırlanmış ve depo kanıtlarıyla doğrulanmıştır; insan incelemesi gereklidir.\n"
     (OUT / f"{stem}.md").write_text(md, encoding="utf-8")
 
 
@@ -1861,17 +1926,13 @@ def sync_assignment_package() -> None:
 
 def main() -> None:
     OUT.mkdir(parents=True, exist_ok=True)
-    profile = load_json(REPORTS / "dataset_profile.json")
-    prep = load_json(REPORTS / "data_preparation.json")
-    exploration = load_json(ML / "model_exploration.json")
-    candidate = load_json(ML / "final_candidate.json")
-    final = load_json(ML / "final_evaluation.json")
-    for submission in (
-        literature_submission(profile),
-        concept_submission(),
-        data_model_submission(prep, exploration),
-        refinement_submission(candidate, final),
-    ):
+    stems = (
+        "01_Literature_Data_Technology_Submission",
+        "02_Concept_Note_and_Implementation_Plan",
+        "03_Data_Preparation_Feature_Engineering_Model_Exploration",
+        "04_Model_Refinement_and_Test_Submission",
+    )
+    for submission in (submission_from_markdown(stem) for stem in stems):
         build_submission(submission)
     weekly_report()
     render_pdfs()
