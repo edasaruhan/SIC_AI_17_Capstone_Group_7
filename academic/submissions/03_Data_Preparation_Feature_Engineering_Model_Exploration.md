@@ -111,7 +111,7 @@ Adaylar test öncesi yedi kesimde eğitilir. Aile, yalnız 2011-03-01 doğrulama
 
 
 
-Seçim ölçütü doğrulama PR-AUC; ilk kazanan lojistik regresyondur.
+Seçim ölçütü doğrulama PR-AUC; ilk kazanan lojistik regresyondur. Nihai test matrisi ve eğrileri sızıntıyı önlemek için keşifte üretilmemiş, test açıldıktan sonra Rapor 04'te sunulmuştur.
 
 ### 3. Değerlendirme yorumu
 

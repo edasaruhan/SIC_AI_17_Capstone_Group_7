@@ -2,7 +2,7 @@
 
 **Status:** COMPLETE — Turkish deliverables ready for human submission review and repository publication
 
-**Audit date:** 2026-09-11
+**Audit date:** 2026-09-13
 
 **Scope:** Five written assignments, the final presentation, their organized delivery copies,
 the six preserved instructor references, and the repository evidence cited by the submissions.
@@ -15,7 +15,7 @@ acceptance of an elapsed deadline.
 
 | Deliverable | Instructor requirement coverage | Final format | Audit verdict |
 |---|---|---|---|
-| 01 — Literature, data and technology | Thematic literature synthesis; comparison and gap; dataset selection, provenance, licence, profile, quality/privacy, EDA; technology comparison, real-world marketing products/use cases, limitations and project application | DOCX + PDF; Markdown source | PASS. External product examples were added for Salesforce Einstein Lead Scoring and Google Ads Smart Bidding, with official references and no vendor-outcome claim. |
+| 01 — Literature, data and technology | Thematic literature synthesis; comparison and gap; dataset selection, provenance, licence, profile, quality/privacy, EDA; technology comparison, real-world marketing products/use cases and reported outcomes, limitations and project application | DOCX + PDF; Markdown source | PASS. Salesforce/Grammarly and Google/Aritaum outcomes are attributed to official vendor case studies and explicitly labelled external-source, vendor-reported evidence rather than independent or GrowthPilot results. |
 | 02 — Concept note and implementation plan | Problem, users, objectives/KPIs, method, data, literature, workflow diagram, stack, actual timeline/ownership, milestones, risks/fallbacks, ethics/responsible AI, references and AI disclosure | DOCX + PDF; Markdown source | PASS. Planned outcomes remain explicitly separate from measured project evidence. |
 | 03 — Data preparation, feature engineering and model exploration | Collection/provenance, cleaning, missingness/outliers, temporal leakage controls, EDA, feature rationale, transforms/encoding, code excerpt, model candidates and validation metrics | DOCX + PDF; Markdown source | PASS. Values and model-selection claims match versioned repository artifacts. |
 | 04 — Model refinement and test | Initial weaknesses, tuning, calibration, chronological validation, feature decision, explainability, frozen-test integrity, application code excerpt, metrics/intervals, confusion matrix, curves, deployment truth, conclusion and references | DOCX + PDF; Markdown source | PASS. Frozen-threshold and top-10% metrics are correctly distinguished. |
@@ -76,11 +76,11 @@ format completion and remain explicitly unclaimed.
 
 ## Repository publication gate
 
-- Ruff and formatting passed for 123 Python files; strict mypy passed for 74 source files.
+- Ruff and formatting passed for 124 Python files; strict mypy passed for 74 source files.
 - Backend tests: 83 / 83 passed.
 - Frontend: TypeScript, ESLint, 2 / 2 Vitest tests and the Next.js production build passed.
 - Browser/accessibility: 26 / 26 desktop/mobile Chromium-Axe route checks passed.
 - Python and Node third-party dependency audits reported no known vulnerabilities. The local
   editable `growthpilot` package is correctly excluded from the PyPI vulnerability lookup.
 - Strong secret-pattern, tracked-junk and sensitive-filename scans returned zero findings;
-  all 75 project-internal Markdown links resolve.
+  all 82 project-internal Markdown links resolve.

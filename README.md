@@ -198,7 +198,7 @@ pnpm --filter @growthpilot/web exec playwright install chromium
 pnpm test:e2e
 ```
 
-Son doğrulanmış yerel sonuç: Ruff geçti, 121 Python dosyası formatlı, strict mypy 74
+Son doğrulanmış yerel sonuç: Ruff geçti, 124 Python dosyası formatlı, strict mypy 74
 kaynakta geçti, pytest **83/83**, Vitest **2/2** ve Playwright/Axe **26/26** geçti.
 Next.js production build tamamlandı; Python ve Node dependency audit'lerinde bilinen açık
 bulunmadı. Güncel ve sınırlamalarıyla birlikte kanıt için

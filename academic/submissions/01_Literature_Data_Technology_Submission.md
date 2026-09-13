@@ -139,14 +139,14 @@ Performans ve maliyet değerlendirmeleri kıyaslama iddiası değildir; canlı s
 
 ### 3. Sektör örnekleri ve kullanım alanları
 
-| Harici ürün | Pazarlama kullanımı | GrowthPilot için ders |
+| Harici örnek | Uygulama ve yayımlanan vaka sonucu | GrowthPilot için ders |
 | --- | --- | --- |
-| Salesforce Einstein Lead Scoring | Geçmiş dönüşüm örüntüleriyle adayları önceliklendirir ve etkili alanları CRM'de gösterir | Puan açıklamayla iş akışında olmalıdır; sağlayıcı yeteneği GrowthPilot sonucu değildir |
-| Google Ads Smart Bidding | Dönüşüm/değer için açık artırma anında Google AI kullanır; ölçüme dayanır | Optimizasyon ölçüm ve sağlayıcı verisine bağlıdır; yürütme karar yönetişiminden ayrılmalıdır |
+| Salesforce / Grammarly | Account Engagement ve Einstein puanlaması satışa hazır adayları önceliklendirir. Salesforce müşteri hikâyesinde Grammarly, MQL dönüşümünde %30 artış ve satış döngüsünün 60–90 günden 30 güne kısaldığını bildirmiştir | Puan açıklamayla iş akışında olmalıdır; sonuç, sağlayıcının yayımladığı tek müşteri vakasıdır ve GrowthPilot kanıtı değildir |
+| Google Ads / Aritaum | Aritaum'un Kore'deki 30 günlük deneyinde aynı ürün akışıyla Smart Shopping'in dönüşüm değeri optimizasyonu standart eCPC kampanyasıyla karşılaştırılmıştır. Think with Google vakası 2,2 kat ROAS ve %400 daha fazla dönüşüm bildirmiştir | Optimizasyon ölçüm ve sağlayıcı verisine bağlıdır; yayımlanan vaka bağımsız doğrulama veya GrowthPilot sonucu değildir |
 
 
 
-Dış kaynak yetenek örnekleridir; sağlayıcı performansı veya GrowthPilot iş sonucu iddia edilmez.
+Rakamlar sağlayıcıların yayımladığı dış kaynak müşteri/vaka anlatılarıdır; bağımsız olarak yeniden üretilmiş sonuçlar, genellenebilir etki tahminleri veya GrowthPilot iş sonucu değildir.
 
 #### GrowthPilot uygulaması
 
@@ -182,6 +182,10 @@ Saito, T., & Rehmsmeier, M. (2015). The precision-recall plot is more informativ
 
 Salesforce. (t.y.). Einstein Lead Scoring. Salesforce Help. https://help.salesforce.com/s/articleView?id=einstein_sales_lead_insights.htm&language=en_US. Erişim: 11 Eylül 2026.
 
+Salesforce. (t.y.). Grammarly increases plan upgrades by 80% with sales and marketing AI. https://www.salesforce.com/customer-stories/grammarly-lead-scoring-ai/. Erişim: 13 Eylül 2026.
+
 Google Ads Help. (t.y.). About Smart Bidding. https://support.google.com/google-ads/answer/7065882?hl=en. Erişim: 11 Eylül 2026.
+
+Think with Google. (t.y.). Experiment: How Aritaum lifted conversions with Smart Shopping campaigns. https://www.thinkwithgoogle.com/_qs/documents/11638/Experiment_-_How_Aritaum_lifted_conversions_with_Smart_Shopping_campaigns.pdf. Erişim: 13 Eylül 2026.
 
 Teknoloji belgeleri: PostgreSQL satır güvenliği; scikit-learn değerlendirme/kalibrasyon; LightGBM Python API; SHAP; MLflow; FastAPI güvenliği; Next.js App Router. URL'ler depo ADR'lerinde ve araştırma notlarında kayıtlıdır.

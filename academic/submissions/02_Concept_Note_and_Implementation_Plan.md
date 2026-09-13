@@ -85,7 +85,7 @@ Jerath, Fader ve Hardie (2011), Batislam ve diğerleri (2007), Platzer ve Reutte
 | 2026-09-08 | Veri araştırması, hazırlık, özellik ve model keşfi | Codex / ML-AI Lideri | Profil, bölme, MLflow — tamamlandı |
 | 2026-09-08 | İyileştirme, dondurulmuş test, açıklama | Codex / ML-AI Lideri | Nihai eser ve sağlama toplamı — tamamlandı |
 | 2026-09-09 | Çıkarım, arayüz, entegrasyon, atıf, kitle ve üretim | Codex / Proje Lideri | Yerel kod/test — tamam; canlı kimlik bilgisi yok |
-| 2026-09-09 | Güvenlik, akademik paket, sürüm hazırlığı | Codex / Kurucu | Yerel doğrulama — nihai incelemede |
+| 2026-09-09–13 | Güvenlik, akademik paket, sürüm hazırlığı | Codex / Kurucu | Yerel doğrulama ve kapsamlı teslim denetimi — tamamlandı |
 | Onay sonrası | Kimlik bilgili test ortamı, dağıtım, pilot, nedensel test | Kurucu / Proje Lideri | Dış doğrulama — başlamadı |
 
 

@@ -92,37 +92,40 @@ academic result or runtime behavior changed.
 
 **Status:** COMPLETE
 
-**Completed:** 2026-09-11
+**Completed:** 2026-09-13
 
 **Owner:** Codex
 
 **Goal:** Check every organized assignment against the exact instructor references,
 repository evidence and final rendered output before authorized GitHub publication.
 
-**Files changed:** Report 01 source/output and its organized copy were completed with
-official external-product examples; all written outputs were deterministically regenerated;
-`ASSIGNMENT_FINAL_AUDIT.md`, the academic map and repository navigation were updated.
+**Files changed:** Reports 01–03 source/output and their organized copies were completed with
+official external-product outcomes, current delivery status and an explicit test-leakage
+boundary; all written outputs were deterministically regenerated; `ASSIGNMENT_FINAL_AUDIT.md`,
+the academic map and repository readiness/navigation records were updated.
 
 **Implementation summary:** The combined literature/data/technology assignment now includes
-Salesforce Einstein Lead Scoring and Google Ads Smart Bidding as clearly labeled
-external-source capability examples, with lessons for GrowthPilot and no claimed vendor or
-project outcome. The complete six-deliverable package was checked against instructor wording.
+official Salesforce/Grammarly and Google/Aritaum case outcomes, clearly attributed as
+vendor-reported external-source evidence rather than independently reproduced or GrowthPilot
+results. Report 02 reflects the completed audit, and Report 03 explains why frozen-test
+visuals belong only to Report 04. The six-deliverable package was checked against instructor wording.
 
-**Tests / commands run:** Five DOCX and six PDF files were rendered; 33 pages/slides were
-visually inspected. Source/delivery equality, Office/PDF integrity, DOCX accessibility,
+**Tests / commands run:** Five DOCX reports (23 pages) and the eight-slide presentation were
+rendered and visually inspected. Source/delivery equality, Office/PDF integrity, DOCX accessibility,
 tracked changes, comments/macros, PDF geometry/encryption and written DOCX-to-PDF pixel
 identity were checked. Repository quality, dependency, secret and junk-file checks are the
 publication gate recorded with this task.
 
 **Results:** Requirement coverage passed for all known assignments. Twelve source/delivery
-files match byte-for-byte; all 25 written pages match fresh DOCX renders; accessibility,
+files match byte-for-byte; all 23 written pages match fresh DOCX renders; accessibility,
 tracked-change, comment and macro scans have zero findings. One real content gap was fixed.
 
 **Publication gate results:** Ruff/format, strict mypy, 83/83 pytest, TypeScript, ESLint,
 2/2 Vitest, Next.js production build and 26/26 desktop/mobile Chromium-Axe E2E checks
 passed. Python and Node third-party dependency audits reported no known vulnerabilities;
 strong secret-pattern, tracked-junk and sensitive-filename scans returned zero findings.
-All 75 project-internal Markdown links resolve.
+All 82 project-internal Markdown links resolve. Terraform format/validate and Alembic
+`0011 (head)` checks also pass.
 
 **Known limitations:** The 9 September 2026 weekly report is truthfully dated Wednesday while
 the template requests Tuesday reporting. Deadline/submission-channel acceptance, human
