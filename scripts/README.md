@@ -40,3 +40,12 @@ uv run python scripts/generate_academic_deliverables.py
 ```
 
 Eğitmen orijinalleri okunur ancak hiçbir zaman değiştirilmez.
+
+`generate_deployment_submission.py`, `references/instructor/Deployment Submission.docx`
+şablonunun A4 ve Times New Roman düzeninden model dağıtımı raporunu türetir, iki mimari
+şekli üretir ve DOCX'i `ödevler/07_Deployment/` ile eşitler. Script production dağıtımı
+yapılmış gibi kanıt üretmez:
+
+```sh
+uv run python scripts/generate_deployment_submission.py
+```

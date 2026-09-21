@@ -11,6 +11,7 @@ references in `references/instructor/`. The originals are never modified.
 - `submissions/04_Model_Refinement_and_Test_Submission.docx` and `.pdf`
 - `submissions/05_Weekly_Progress_Report_2026-09-09.docx` and `.pdf`
 - `presentation/GrowthPilot_AI_Final_Presentation.pptx` and `.pdf`
+- `submissions/07_Deployment_Submission.md`, `.docx` and `.pdf`
 
 Raporların yanındaki Markdown dosyaları Türkçe, okunabilir ve yeniden üretimde kullanılan
 asıl metinlerdir. Raporlanan her ölçüt commit edilmiş proje eserlerinden yeniden
@@ -26,6 +27,17 @@ uv run python scripts/generate_academic_deliverables.py
 
 LibreOffice (`soffice`) must be available on `PATH` for deterministic PDF export. The
 generator fails visibly if a PDF cannot be produced; it never leaves a silent stale copy.
+
+Deployment submission 07 has a separate deterministic generator because it is derived from
+the retained instructor template `references/instructor/Deployment Submission.docx`:
+
+```bash
+uv run python scripts/generate_deployment_submission.py
+```
+
+The script starts from the retained template, preserves its A4/Times New Roman visual system,
+generates the Markdown-aligned figures and DOCX, and synchronizes the organized DOCX copy.
+PDF export is performed with LibreOffice and retained only after render/visual QA.
 
 PPTX düzenlenebilir sunum kaynağıdır. İlk tasarım gerekli `@oai/artifact-tool` sunum
 iş akışıyla üretilmiş, Türkçe metin düzeltmesi tasarımı koruyan OOXML dönüşümüyle

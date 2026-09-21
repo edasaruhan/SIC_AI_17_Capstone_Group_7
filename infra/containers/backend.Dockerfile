@@ -1,3 +1,4 @@
+# syntax=docker/dockerfile:1.7
 FROM python:3.12.11-slim-bookworm AS builder
 
 ARG UV_VERSION=0.11.26
@@ -10,13 +11,20 @@ FROM python:3.12.11-slim-bookworm AS runtime
 ENV PATH="/app/.venv/bin:${PATH}" \
     PYTHONPATH=/app/backend \
     PYTHONDONTWRITEBYTECODE=1 \
-    PYTHONUNBUFFERED=1
+    PYTHONUNBUFFERED=1 \
+    GP_MODEL_PATH=/app/models/final_candidate.joblib \
+    GP_MODEL_MANIFEST_PATH=/app/artifacts/ml/final_candidate.json
 WORKDIR /app
 RUN groupadd --system growthpilot && useradd --system --gid growthpilot growthpilot
 COPY --from=builder /app/.venv /app/.venv
 COPY backend /app/backend
 COPY alembic.ini /app/alembic.ini
 COPY artifacts/ml/final_candidate.json /app/artifacts/ml/final_candidate.json
+RUN --mount=type=secret,id=growthpilot_model,target=/run/secrets/growthpilot_model,required=true \
+    python -m app.platform.model_artifact \
+      --model /run/secrets/growthpilot_model \
+      --manifest /app/artifacts/ml/final_candidate.json \
+      --destination /app/models/final_candidate.joblib
 USER growthpilot
 EXPOSE 8000
 CMD ["uvicorn", "app.main:create_app", "--factory", "--host", "0.0.0.0", "--port", "8000", "--proxy-headers", "--forwarded-allow-ips", "*"]

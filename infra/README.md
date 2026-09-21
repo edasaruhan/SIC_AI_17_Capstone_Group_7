@@ -11,9 +11,20 @@ authorized or performed.
 - `.dockerignore` excludes secrets, local data, model binaries, caches and instructor
   references from build contexts.
 
-The approved model binary is intentionally not embedded from ignored `.local/` state.
-A release pipeline must fetch it from the private artifact store, verify the checksum in
-`artifacts/ml/final_candidate.json`, and place it at `GP_MODEL_PATH` before scoring.
+The approved model binary is intentionally not copied from ignored `.local/` state. A
+release pipeline must fetch it from a private artifact store and provide it to BuildKit as
+the `growthpilot_model` build secret. The backend image verifies the manifest SHA-256
+before installing the file at the fixed `GP_MODEL_PATH`; a missing or mismatched artifact
+fails the image build before any `joblib` deserialization. For example:
+
+```sh
+docker buildx build --secret id=growthpilot_model,src=/trusted/final_candidate.joblib \
+  -f infra/containers/backend.Dockerfile .
+```
+
+The private artifact store, signed promotion policy and image publication target remain
+release decisions. The Terraform worker starts `app.platform.worker`, where the Dramatiq
+actor and Redis broker are defined.
 
 ## AWS Terraform reference
 

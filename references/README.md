@@ -1,6 +1,6 @@
 # Reference sources
 
-`instructor/` altında Samsung Innovation Campus tarafından sağlanan altı özgün proje/ödev
+`instructor/` altında Samsung Innovation Campus tarafından sağlanan yedi özgün proje/ödev
 dosyası bulunur. Bunlar görev kapsamı ve şablonların birincil kaynağıdır.
 
 Kurallar:

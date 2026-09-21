@@ -131,3 +131,38 @@ All 82 project-internal Markdown links resolve. Terraform format/validate and Al
 the template requests Tuesday reporting. Deadline/submission-channel acceptance, human
 academic review and any undisclosed final-presentation rubric remain external. No instructor
 grade or submission receipt is claimed.
+
+## TASK-DEPLOY-001 — Model deployment submission and contract audit
+
+**Status:** COMPLETE WITH EXTERNAL PRODUCTION GATES
+
+**Completed:** 2026-09-21
+
+**Owner:** Codex
+
+**Goal:** Produce a repository-backed Turkish model deployment submission and repair bounded
+deployment-contract defects without claiming or performing a production release.
+
+**Implementation summary:** The backend image previously had no valid path for the ignored
+model binary, and the Terraform worker targeted the wrong module. A required BuildKit-secret
+artifact path now verifies SHA-256 before installing the binary read-only, and the worker
+starts `app.platform.worker`. Three deployment-contract tests cover valid installation,
+checksum refusal and Docker/Terraform wiring. A 13-page Markdown/DOCX/PDF report records the
+serving, API, security and monitoring design together with honest production gaps.
+
+**Validation:** Ruff/format passed for 127 files, strict mypy for 75 sources, pytest 86/86,
+and Terraform format/validate passed. After the instructor template was supplied, it was
+distilled and the report was rebuilt from the retained source. All 13 A4 pages were rendered
+and visually inspected; accessibility findings were 0, Office/PDF integrity passed, and
+organized copies are byte-identical. The A4 geometry, Times New Roman hierarchy and six
+required sections match the template; storage size, platform choice and API input coverage
+were strengthened during the critical review.
+
+**Known limitations:** Docker build/scan/sign, AWS apply, production OIDC, managed telemetry,
+RDS TLS enforcement, restore/load/failure tests, external pentest and representative tenant
+model validation remain external release gates. Operational inference currently supplies
+`country="__missing__"` for every row although training used country variation; reliable
+country data, a country-free candidate or an all-missing sensitivity test is required before
+production use. No post-test tuning was performed.
+
+Full task contract and completion record: `docs/tasks/TASK-DEPLOY-001.md`.

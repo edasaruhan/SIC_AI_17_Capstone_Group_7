@@ -6,3 +6,7 @@ do not prevent independent local delivery. No push, final squash or paid deploym
 
 Each phase record states goal, scope, exclusions, dependencies, acceptance,
 validation, risks and review. Completion requires executed evidence, not file presence.
+
+Post-roadmap, bounded submission and audit work is recorded as `TASK-*` files in this
+directory and summarized in `docs/10_TASK_LOG.md`. These tasks do not silently expand
+authority to cloud apply, paid services, live advertising or repository publication.

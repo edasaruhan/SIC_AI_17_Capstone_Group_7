@@ -1,10 +1,10 @@
 # Capstone Requirements
 
-Status: Source files inventoried on 2026-09-08; known deliverables completed and synchronized on 2026-09-09. Instructor submission-channel/date confirmation remains external.
+Status: Source files inventoried on 2026-09-08 and deployment template added/audited on 2026-09-21; known deliverables are complete and synchronized. Instructor submission-channel/date confirmation remains external.
 
 ## Source inventory and precedence
 
-All six known reference files are present under `references/instructor/`. Originals are read-only project evidence and must not be edited. Exact wording in those files outranks this summary.
+All seven known reference files are present under `references/instructor/`. Originals are read-only project evidence and must not be edited. Exact wording in those files outranks this summary.
 
 | Source file | Confirmed contents | Important timing/status |
 |---|---|---|
@@ -14,6 +14,7 @@ All six known reference files are present under `references/instructor/`. Origin
 | `Model Refinement_Template.docx` | Model Refinement and Test Submission sections, conclusion, references | No deadline or explicit output format found in file |
 | `GrowthPilot_AI_Sunum_8slayt.pdf` | Eight-slide original GrowthPilot concept presentation | Project reference; not evidence that implementation or models exist |
 | `Samsung Innovation Campus_Capstone Projesi  Kısa İlerleme Raporu Şablonu.docx (2).pdf` | Weekly short-report instructions plus a completed Group 10 example | Says every Tuesday and maximum one page, but supplied PDF is a two-page, pre-filled report for another team |
+| `Deployment Submission.docx` | Deployment overview, model serialization, model serving, API integration, security, monitoring and logging | One-page A4/Times New Roman guidance template; no deadline or output-length limit stated |
 
 ## Requirement matrix
 
@@ -37,6 +38,7 @@ All six known reference files are present under `references/instructor/`. Origin
 | Prepare untouched test data, apply the selected model, compare train/validation/test metrics, discuss deployment if applicable, and provide code | Model Refinement template | Test Submission | Frozen split, final evaluation outputs, deployment evidence only if real | Complete — report 04 |
 | Report weekly, concisely, with concrete progress, current focus/status, blockers/support, and next work | Weekly report PDF | Weekly Progress Report | Current repository evidence; maximum one page | Complete — Group 7 report 05, one page |
 | Provide final presentation/deliverable | Original concept deck; no separate final instructions present | Final deliverable | Reproducible product/demo and ML evidence | Complete to known scope — eight-slide PPTX/PDF; final channel requirements unknown |
+| Document model deployment, serialization, serving platform, API inputs/outputs, security and monitoring/logging | Deployment Submission template | Model Deployment | Repository-backed local implementation, reference architecture and explicit unvalidated production gates | Complete — report 07, template-derived DOCX/PDF |
 
 ## Confirmed special instructions
 

@@ -198,8 +198,8 @@ pnpm --filter @growthpilot/web exec playwright install chromium
 pnpm test:e2e
 ```
 
-Son doğrulanmış yerel sonuç: Ruff geçti, 124 Python dosyası formatlı, strict mypy 74
-kaynakta geçti, pytest **83/83**, Vitest **2/2** ve Playwright/Axe **26/26** geçti.
+Son doğrulanmış yerel sonuç: Ruff geçti, 127 Python dosyası formatlı, strict mypy 75
+kaynakta geçti, pytest **86/86**, Vitest **2/2** ve Playwright/Axe **26/26** geçti.
 Next.js production build tamamlandı; Python ve Node dependency audit'lerinde bilinen açık
 bulunmadı. Güncel ve sınırlamalarıyla birlikte kanıt için
 [Production Readiness Report](docs/PRODUCTION_READINESS_REPORT.md) esas alınmalıdır.
@@ -231,10 +231,13 @@ Teslim edilecek sade paket doğrudan [`ödevler/`](ödevler/README.md) altındad
 4. Model iyileştirme ve test — DOCX + PDF
 5. Haftalık ilerleme raporu — DOCX + tek sayfa PDF
 6. Final sunumu — PPTX + sekiz slayt PDF
+7. Model dağıtımı — Markdown + DOCX + 13 sayfa PDF
 
 `academic/` üretim/kaynak paketidir; `ödevler/` teslim için düzenlenmiş eş kopyalardır.
-Altı eğitmen dosyasının orijinalleri [`references/instructor/`](references/README.md)
-altında değiştirilmeden korunur. Ayrıntılı eşleme:
+Yedi eğitmen dosyasının orijinalleri [`references/instructor/`](references/README.md)
+altında değiştirilmeden korunur. Model dağıtımı raporu `Deployment Submission.docx`
+şablonunun A4 sayfa sistemi, Times New Roman tipografisi ve altı bölüm sırasından
+türetilmiştir. Ayrıntılı eşleme:
 [Academic Deliverables Map](docs/11_ACADEMIC_DELIVERABLES_MAP.md). Eğitmen kaynaklarına
 karşı içerik, biçim, render, erişilebilirlik ve kanıt kontrollerinin sonucu
 [Assignment Final Audit](docs/ASSIGNMENT_FINAL_AUDIT.md) içinde kayıtlıdır.

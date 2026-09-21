@@ -1,6 +1,6 @@
 # Academic Deliverables Map
 
-Status: Final-audited completion map, 2026-09-13. All known deliverables are complete for human submission review; no instructor submission receipt or grade is claimed. See `ASSIGNMENT_FINAL_AUDIT.md`.
+Status: Final-audited completion map, 2026-09-21. All known deliverables are complete for human submission review; no instructor submission receipt or grade is claimed. See `ASSIGNMENT_FINAL_AUDIT.md`.
 
 | Assignment | Source template/guideline | Expected output format | Required evidence | Dependencies | Current status | Next action |
 |---|---|---|---|---|---|---|
@@ -15,6 +15,7 @@ Status: Final-audited completion map, 2026-09-13. All known deliverables are com
 | Test Submission | Instructor refinement DOCX | Included in report 04 | Test integrity, metrics, confusion matrix/curves, deployment truth | Untouched holdout | Complete | Review final numbers/checksums |
 | Weekly Progress Report | Instructor weekly-report PDF | Markdown + DOCX + one-page PDF report 05 | Six required questions and current evidence | Current readiness audit | Content/format audit passed; truthfully dated Wednesday 2026-09-09 | Confirm Tuesday/submission process |
 | Final presentation | Original eight-slide concept PDF | Editable eight-slide PPTX + PDF | Actual product/ML evidence, sources, limitations, AI disclosure | All completed phases | Final audit passed to known requirements | Confirm any additional instructor rubric |
+| Model Deployment | Instructor `Deployment Submission.docx` | Markdown + DOCX + 13-page A4 PDF report 07 | Serialization/storage, serving/platform choice, API inputs/outputs, security, monitoring, repository-backed deployment truth | Frozen model, inference path, container/Terraform audit | Template, content, render and accessibility audit passed; no production deployment claimed | Human academic review and submission-channel confirmation |
 
 ## Evidence package convention used
 

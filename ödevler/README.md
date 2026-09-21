@@ -29,6 +29,9 @@ eksen/özellik adları doğruluğu ve kaynak izini korumak için özgün biçimd
 6. `06_Final_Sunumu/`
    - `Odev_06_GrowthPilot_Final_Sunumu.pptx`
    - `Odev_06_GrowthPilot_Final_Sunumu.pdf`
+7. `07_Deployment/`
+   - `Odev_07_Model_Dagitimi_Deployment.docx`
+   - `Odev_07_Model_Dagitimi_Deployment.pdf`
 
 ## Teslim notu
 
@@ -36,6 +39,8 @@ eksen/özellik adları doğruluğu ve kaynak izini korumak için özgün biçimd
 - Düzenlenebilir kaynak isteniyorsa DOCX veya PPTX dosyasını da yükleyin.
 - Beşinci ödevin PDF sürümü tek sayfadır.
 - Final sunumu sekiz slayttır.
+- Yedinci ödevin deployment raporu 13 A4 sayfadır. Eğitmen DOCX şablonunun sayfa sistemi,
+  Times New Roman tipografisi ve altı zorunlu bölüm sırası korunmuştur.
 - Belgelerde gerçek proje çıktıları kullanılmış ve AI destekli hazırlama beyanı
   açıkça belirtilmiştir.
 - `references/instructor/` altındaki eğitmen dosyaları orijinal ve değiştirilmemiş
