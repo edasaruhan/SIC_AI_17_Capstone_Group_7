@@ -1,5 +1,27 @@
 # Task Log
 
+## TASK-GITHUB-001 — Reviewer-facing repository navigation
+
+**Status:** COMPLETE — LOCAL DOCUMENTATION ONLY
+
+**Completed:** 2026-09-22
+
+**Owner:** Codex
+
+**Goal:** Give instructors a short, direct route from the repository home page to all
+seven deliverables, the implementation, tests and honest evidence boundaries.
+
+**Implementation summary:** Reorganized the root README, added an instructor review
+guide, linked the academic/delivery/documentation indices, corrected the seven-original
+count and clarified local-versus-remote quality and production status.
+
+**Validation:** Relative links and anchors, frozen metrics, file paths, diff whitespace
+and documentation claims were checked. Full contract and result:
+[`TASK-GITHUB-001.md`](tasks/TASK-GITHUB-001.md).
+
+**Known limitations:** The new landing page is local until an authorized push and a
+GitHub-rendered visual check. This task did not modify product behavior.
+
 ## TASK-000 — Official Repository Initialization and Context Audit
 
 **Status:** COMPLETE

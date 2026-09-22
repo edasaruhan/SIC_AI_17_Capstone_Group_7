@@ -1,90 +1,100 @@
 # GrowthPilot AI
 
-> Samsung Innovation Campus — AI in Marketing Capstone · Group 7 — Production-oriented,
-> tenant-safe customer operations and marketing intelligence platform.
+Samsung Innovation Campus · Pazarlamada Yapay Zekâ Bitirme Projesi · Grup 7
 
-GrowthPilot AI; müşteri, satış, ürün, stok ve reklam verisini tek bir çalışma alanında
-buluşturan, açıklanabilir makine öğrenmesiyle karar desteği sağlayan ve pazarlama
-aksiyonlarını onay/güvenlik sınırları içinde yöneten bir SaaS referans uygulamasıdır.
-
-Bu repository iki amacı birlikte taşır:
-
-1. Gerçek bir ürüne dönüştürülebilecek güvenli ve test edilmiş uygulama temeli sunmak.
-2. Samsung Innovation Campus bitirme projesi için dürüst, izlenebilir ve yeniden
-   üretilebilir akademik kanıt sağlamak.
+GrowthPilot AI; müşteri, satış, ürün, stok ve reklam verisini tek çalışma alanında
+buluşturan bir uygulamadır. Açıklanabilir makine öğrenmesi karar desteği sağlar;
+pazarlama eylemleri ise insan onayı, güncel rıza, bütçe ve güvenlik denetimlerine bağlıdır.
+Bu depo hem çalışan yerel ürünü hem de bitirme projesinin kaynağı izlenebilir teslimlerini
+içerir.
 
 > [!IMPORTANT]
-> **Durum: yerel yapı tamamlandı; production deployment onayı yoktur.** Uygulama,
-> testler, akademik teslimler ve altyapı tanımları yerelde hazırdır. Canlı kimlik
-> sağlayıcıları, Meta/Google/LLM hesapları, bulut uygulaması ve gerçek reklam harcaması
-> kullanılmamıştır. Ayrıntılı karar: [Production Readiness Report](docs/PRODUCTION_READINESS_REPORT.md).
+> **Akademik paket hazır; canlı üretim dağıtımı yapılmadı.** Uygulama ve testler yerelde
+> çalıştırıldı. AWS tanımı bir referans mimaridir; gerçek müşteri verisinde model
+> doğrulaması, üretim kimlik sağlayıcısı, canlı Meta/Google/LLM entegrasyonları ve
+> reklam harcaması yoktur. Ayrıntılar: [üretime hazırlık raporu](docs/PRODUCTION_READINESS_REPORT.md).
+
+## Eğitmenler için hızlı inceleme
+
+| Adım | Ne açılmalı? | Ne gösterir? |
+| --- | --- | --- |
+| İlk bakış | [Final sunumu PDF](ödevler/06_Final_Sunumu/Odev_06_GrowthPilot_Final_Sunumu.pdf) | Sekiz slaytta problem, ürün, veri, ML sonucu ve sınırlar |
+| Sonuçları denetleme | [Model iyileştirme ve test PDF](ödevler/04_Model_Iyilestirme_ve_Test/Odev_04_Model_Iyilestirme_ve_Test.pdf) | Dondurulmuş zamansal test, kalibrasyon ve hata analizi |
+| Çalışma zamanı | [Model dağıtımı PDF](ödevler/07_Deployment/Odev_07_Model_Dagitimi_Deployment.pdf) | API, güvenlik, izleme, kod düzeltmeleri ve canlıya geçiş eksikleri |
+| Ayrıntılı doğrulama | [Eğitmen inceleme rehberi](docs/INSTRUCTOR_REVIEW_GUIDE.md) | Her önemli iddia için belge, kod, test ve kanıt yolu |
+
+Teslime hazır tüm dosyalar aşağıdaki [akademik teslimler](#akademik-teslimler)
+tablosunda doğrudan açılabilir. Kaynak dosyalar ve yeniden üretim adımları
+[`academic/`](academic/README.md) altında açıklanır.
 
 ## İçindekiler
 
 - [Ürün ne yapıyor?](#ürün-ne-yapıyor)
 - [Sistem nasıl çalışıyor?](#sistem-nasıl-çalışıyor)
-- [Repository haritası](#repository-haritası)
+- [Depo haritası](#depo-haritası)
 - [Nereden başlamalıyım?](#nereden-başlamalıyım)
 - [Yerel kurulum](#yerel-kurulum)
 - [Test ve kalite](#test-ve-kalite)
 - [Makine öğrenmesi kanıtı](#makine-öğrenmesi-kanıtı)
 - [Akademik teslimler](#akademik-teslimler)
 - [Güvenlik ve kanıt ilkeleri](#güvenlik-ve-kanıt-ilkeleri)
-- [Production öncesi kalan doğrulamalar](#production-öncesi-kalan-doğrulamalar)
+- [Canlıya geçiş öncesi eksikler](#canlıya-geçiş-öncesi-eksikler)
+- [Proje kayıtları](#proje-kayıtları)
 
 ## Ürün ne yapıyor?
 
-| Alan | Yerel yapıda bulunan yetenekler |
-|---|---|
-| Müşteri operasyonları | CRM kayıtları, Customer 360, üyelik/rol denetimi ve tenant kapsamı |
-| Ticaret ve stok | Ürün, sipariş, iade ve stok hareketleri |
-| Veri alımı | Güvenli CSV/XLSX önizleme, eşleme, doğrulama, hata dosyası ve provenance |
-| Analitik | Tek merkezden KPI, RFM/değer görünümü ve açık boş/veri-yok durumları |
-| ML karar desteği | Sürümlü özellikler, kalibre churn olasılığı, açıklamalar ve model registry |
-| Pazarlama | Attribution, izin kontrollü audience snapshot, kampanya onayı, bütçe ve kill-switch |
-| Entegrasyonlar | Provider-neutral Meta/Google adaptörleri; credential-free contract testleri |
-| Üretken AI | Doğrulanmış gerçeklere dayalı içerik bağlamı ve desteklenmeyen iddia reddi |
-| Operasyon | Sağlık/metric uçları, audit kayıtları, Redis/Dramatiq işler ve recovery runbook |
-| Arayüz | Next.js tabanlı, desktop/mobile ve Axe ile denetlenmiş yönetim ekranları |
+| Alan | Yerelde uygulanmış işlev | Kod ve açıklama |
+| --- | --- | --- |
+| Müşteri ve erişim | CRM, Customer 360, üyelik ve rol denetimi | [`crm/`](backend/app/crm/), [`identity/`](backend/app/identity/) |
+| Ticaret ve stok | Ürün, sipariş, iade, stok kayıtları | [`catalog/`](backend/app/catalog/), [`commerce/`](backend/app/commerce/) |
+| Veri alımı | CSV/XLSX önizleme, eşleme, doğrulama ve satır bazlı hata kaydı | [`imports/`](backend/app/imports/), [iş akışı](docs/IMPORTS_AND_JOBS.md) |
+| Analitik | Ortak KPI tanımları, RFM/değer görünümü ve açık veri-yok durumları | [`analytics/`](backend/app/analytics/), [KPI sözleşmesi](docs/ANALYTICS_CONTRACT.md) |
+| ML karar desteği | Sürümlü özellikler, kalibre olasılık, açıklama ve insan incelemesi | [`intelligence/`](backend/app/intelligence/), [model kanıtı](docs/MODEL_EVALUATION.md) |
+| Pazarlama | Atıf kaydı, rızaya bağlı hedef kitle anlık görüntüsü, kampanya onayı ve durdurma denetimi | [`marketing/`](backend/app/marketing/), [güvenlik sınırı](docs/INTEGRATIONS_MARKETING_SAFETY.md) |
+| Harici servisler | Meta/Google uyarlayıcıları ve sözleşme testleri; canlı kimlik bilgileriyle sınanmadı | [`integrations/`](backend/app/integrations/) |
+| Üretken AI | Doğrulanmış olgulara bağlı içerik bağlamı ve desteklenmeyen iddia reddi; canlı sağlayıcı yok | [`generation/`](backend/app/generation/) |
+| Operasyon | Sağlık/ölçüt uçları, denetim kayıtları, kalıcı iş durumu ve kurtarma yönergesi | [`platform/`](backend/app/platform/), [operasyon rehberi](docs/OPERATIONS_SECURITY_RECOVERY.md) |
+| Arayüz | Gerçek API durumlarını gösteren Next.js yönetim ekranları | [`apps/web/`](apps/web/README.md) |
 
 İlk sürümün akademik ML problemi **90 günlük gelecekte işlem yapmama olasılığıdır**.
-Bu churn sınıflandırması ürünün tamamı değil, karar destek katmanının ilk kanıtlanmış
-kullanım senaryosudur. Kapsam ayrıntısı için [Product Scope](docs/01_PRODUCT_SCOPE.md).
+Bu müşteri kaybı (churn) sınıflandırması ürünün tamamı değil, karar destek katmanının
+ilk kanıtlanmış kullanım senaryosudur. Kapsam ayrıntısı için
+[ürün kapsamına](docs/01_PRODUCT_SCOPE.md) bakın.
 
 ## Sistem nasıl çalışıyor?
 
 ```mermaid
 flowchart LR
-    U[Next.js yönetim arayüzü] -->|server-side API çağrısı| A[FastAPI modüler monolit]
+    U[Next.js yönetim arayüzü] -->|Sunucu üzerinden API çağrısı| A[FastAPI modüler monolit]
     A --> D[(PostgreSQL 17 + RLS)]
-    A --> O[Özel object storage]
-    A --> Q[Outbox]
+    A --> O[Özel nesne depolama]
+    A --> Q[İşlem kuyruğu çıkışı]
     Q --> R[(Redis)]
-    R --> W[Dramatiq worker]
-    A --> M[ML registry ve açıklama katmanı]
-    A --> I[Meta / Google / LLM adaptörleri]
+    R --> W[Dramatiq işçisi]
+    A --> M[Model kaydı ve açıklama katmanı]
+    A --> I[Meta / Google / LLM uyarlayıcıları]
     I -. canlı erişim kapalı .-> X[Harici sağlayıcılar]
 ```
 
-- Tenant kimliği istemci gövdesinden güvenilir kabul edilmez; üyelik çözümleme ve RLS
+- Organizasyon kimliği istemci gövdesinden güvenilir kabul edilmez; üyelik çözümleme ve RLS
   sunucu tarafında uygulanır.
-- İş kuralları UI veya notebook içinde çoğaltılmaz; domain servislerinde merkezileştirilir.
-- Kampanya oluşturmak ile kampanya çalıştırmak ayrıdır. Onay, güncel consent, bütçe ve
-  kill-switch kontrolleri geçmeden dış aksiyon oluşmaz.
-- ML skoru nedensel etki veya gelir garantisi değildir; model/snapshot sürümüyle birlikte
-  karar desteği olarak saklanır.
+- İş kuralları arayüz veya not defteri içinde çoğaltılmaz; alan servislerinde merkezileştirilir.
+- Kampanya oluşturmak ile kampanya çalıştırmak ayrıdır. Onay, güncel rıza, bütçe ve
+  durdurma anahtarı denetimleri geçmeden dış eylem oluşmaz.
+- ML skoru nedensel etki veya gelir garantisi değildir; model ve veri anlık görüntüsü
+  sürümüyle birlikte karar desteği olarak saklanır.
 
-Onaylı kararların tamamı için [Architecture Decisions](docs/03_ARCHITECTURE_DECISIONS.md)
+Onaylı kararların tamamı için [mimari kararlar](docs/03_ARCHITECTURE_DECISIONS.md)
 ve [ADR dizini](docs/adr/README.md) okunmalıdır.
 
-## Repository haritası
+## Depo haritası
 
 ```text
 .
 ├── apps/web/                 # Next.js kullanıcı arayüzü ve E2E testleri
 ├── backend/
-│   ├── app/                  # FastAPI domain modülleri ve platform altyapısı
-│   ├── migrations/           # Alembic + PostgreSQL/RLS migration'ları
+│   ├── app/                  # FastAPI alan modülleri ve platform altyapısı
+│   ├── migrations/           # Alembic + PostgreSQL/RLS şema geçişleri
 │   └── tests/                # Birim, entegrasyon ve güvenlik sınırı testleri
 ├── academic/
 │   ├── submissions/          # Akademik Markdown, DOCX ve PDF kaynak paketi
@@ -96,38 +106,38 @@ ve [ADR dizini](docs/adr/README.md) okunmalıdır.
 │   └── reports/              # Veri profili ve hazırlama raporları
 ├── data/                     # Yerel veri katmanları; hassas/büyük veri Git dışında
 ├── docs/
-│   ├── adr/                  # Kabul edilmiş Architecture Decision Records
-│   └── tasks/                # PHASE-01…PHASE-24 teslim kayıtları
+│   ├── adr/                  # Kabul edilmiş mimari karar kayıtları
+│   └── tasks/                # PHASE-01…24 ve ek TASK-* kayıtları
 ├── infra/                    # Container ve doğrulanmış AWS Terraform referansı
-├── references/instructor/    # Değiştirilmemiş altı eğitmen kaynak dosyası
+├── references/instructor/    # Değiştirilmemiş yedi eğitmen kaynak dosyası
 ├── scripts/                  # Kurulum, veri, ML, kalite ve teslim otomasyonu
 ├── ödevler/                  # Teslime hazır, düzenli DOCX/PDF/PPTX paketi
-├── .env.example              # Sadece örnek değişkenler; gerçek secret içermez
+├── .env.example              # Yalnız örnek değişkenler; gerçek gizli bilgi içermez
 ├── pyproject.toml            # Python bağımlılık ve kalite ayarları
 ├── package.json              # pnpm workspace komutları
 └── uv.lock / pnpm-lock.yaml  # Tekrarlanabilir bağımlılık kilitleri
 ```
 
 Yerelde üretilen `.env`, `.local/`, `data/raw/`, `data/processed/`, `mlruns/`,
-`node_modules/`, `.next/`, test raporları ve cache dizinleri bilinçli olarak Git dışında
-tutulur. İzlenen artifact dosyaları ise raporlanan sonuçları yeniden incelemek için küçük,
-anonimleştirilmiş/özet proje kanıtlarıdır.
+`node_modules/`, `.next/`, test raporları ve önbellek dizinleri bilinçli olarak Git dışında
+tutulur. İzlenen `artifacts/` dosyaları raporlanan sonuçları incelemek için sürümlenmiş
+proje çıktılarıdır; ham veri veya çalışma zamanı model dosyası değildir.
 
 ## Nereden başlamalıyım?
 
 | Amacınız | İlk okunacak dosya |
 |---|---|
-| Projeyi 5 dakikada anlamak | Bu README ve [Project Charter](docs/00_PROJECT_CHARTER.md) |
-| Ürün kapsamını incelemek | [Product Scope](docs/01_PRODUCT_SCOPE.md) |
-| Sistemi yerelde çalıştırmak | [Local Development](docs/LOCAL_DEVELOPMENT.md) |
-| Mimariyi değerlendirmek | [Architecture Decisions](docs/03_ARCHITECTURE_DECISIONS.md) |
-| Veri/ML yöntemini denetlemek | [Data and ML Plan](docs/05_DATA_AND_ML_PLAN.md) ve [Model Evaluation](docs/MODEL_EVALUATION.md) |
-| Güvenlik sınırlarını görmek | [Security, Privacy & Responsible AI](docs/07_SECURITY_PRIVACY_RESPONSIBLE_AI.md) |
-| 24 aşamanın durumunu görmek | [Task Index](docs/tasks/README.md) ve [Task Log](docs/10_TASK_LOG.md) |
-| Demoyu yürütmek | [Demo Guide](docs/DEMO_GUIDE.md) |
-| Ödevleri teslim etmek | [Ödev Teslim Rehberi](ödevler/README.md) |
-| Nihai ödev denetimini görmek | [Assignment Final Audit](docs/ASSIGNMENT_FINAL_AUDIT.md) |
-| Tüm belgeler arasında gezinmek | [Documentation Index](docs/README.md) |
+| Projeyi beş dakikada anlamak | [Eğitmen inceleme rehberi](docs/INSTRUCTOR_REVIEW_GUIDE.md) ve [proje tanımı](docs/00_PROJECT_CHARTER.md) |
+| Ürün kapsamını incelemek | [Ürün kapsamı](docs/01_PRODUCT_SCOPE.md) |
+| Sistemi yerelde çalıştırmak | [Yerel geliştirme rehberi](docs/LOCAL_DEVELOPMENT.md) |
+| Mimariyi değerlendirmek | [Mimari kararlar](docs/03_ARCHITECTURE_DECISIONS.md) |
+| Veri/ML yöntemini denetlemek | [Veri ve ML planı](docs/05_DATA_AND_ML_PLAN.md) ile [model değerlendirmesi](docs/MODEL_EVALUATION.md) |
+| Güvenlik sınırlarını görmek | [Güvenlik, gizlilik ve sorumlu AI](docs/07_SECURITY_PRIVACY_RESPONSIBLE_AI.md) |
+| Uygulama aşamalarının durumunu görmek | [Görev dizini](docs/tasks/README.md) ve [görev günlüğü](docs/10_TASK_LOG.md) |
+| Demoyu yürütmek | [Demo rehberi](docs/DEMO_GUIDE.md) |
+| Ödevleri teslim etmek | [Ödev teslim rehberi](ödevler/README.md) |
+| Nihai ödev denetimini görmek | [Nihai ödev denetimi](docs/ASSIGNMENT_FINAL_AUDIT.md) |
+| Tüm belgeler arasında gezinmek | [Belge dizini](docs/README.md) |
 
 ## Yerel kurulum
 
@@ -142,7 +152,7 @@ anonimleştirilmiş/özet proje kanıtlarıdır.
 | Node.js | 22 |
 | pnpm | 11.20.0 |
 
-macOS/Linux üzerinde repository kökünden:
+macOS/Linux üzerinde depo kökünden:
 
 ```sh
 uv sync --frozen
@@ -154,8 +164,9 @@ uv run python scripts/local_redis.py
 ```
 
 `local_setup.py`, izole PostgreSQL kümesini `.local/postgres/` altında kurar ve ilk
-çalıştırmada mode-600 `.env` dosyasına rastgele yerel secret'lar yazar. Var olan `.env`
-ve veri durumu korunur. Bu dosyayı paylaşmayın veya commit etmeyin.
+çalıştırmada yalnız kullanıcı tarafından okunabilen `.env` dosyasına rastgele yerel
+gizli bilgiler yazar. Var olan `.env` ve veri durumu korunur. Bu dosyayı paylaşmayın
+veya Git'e eklemeyin.
 
 API'yi başlatın:
 
@@ -173,21 +184,22 @@ pnpm dev
 - OpenAPI arayüzü: `http://127.0.0.1:8000/docs`
 - Web arayüzü: `http://127.0.0.1:3000`
 
-Web uygulamasının gerçek tenant verisi göstermesi için Next.js sunucu ortamında ayrıca
-`GP_API_URL`, `GP_SERVER_TOKEN` ve `GP_ORGANIZATION_ID` provision edilmelidir. Bunlar
-yoksa UI sahte veri göstermek yerine açık bir **unconfigured** durumu sunar. Ayrıntılı
-kurulum ve worker komutları: [Local Development](docs/LOCAL_DEVELOPMENT.md) ve
-[Imports & Jobs](docs/IMPORTS_AND_JOBS.md).
+Web uygulamasının gerçek organizasyon verisi göstermesi için Next.js sunucu ortamında
+ayrıca `GP_API_URL`, `GP_SERVER_TOKEN` ve `GP_ORGANIZATION_ID` ayarlanmalıdır. Bunlar
+yoksa arayüz sahte veri göstermek yerine açık bir **yapılandırılmamış** durum sunar.
+Yerel kurulum otomatik olarak demo kullanıcıları veya arayüz kimlik bilgileri oluşturmaz.
+Ayrıntılı adımlar: [yerel geliştirme](docs/LOCAL_DEVELOPMENT.md),
+[demo rehberi](docs/DEMO_GUIDE.md) ve [veri alımı/işler](docs/IMPORTS_AND_JOBS.md).
 
 ## Test ve kalite
 
-Backend kalite kapısı:
+Arka uç kalite kapısı:
 
 ```sh
 sh scripts/quality.sh
 ```
 
-Frontend kapıları:
+Arayüz kalite kapıları:
 
 ```sh
 pnpm typecheck
@@ -198,11 +210,13 @@ pnpm --filter @growthpilot/web exec playwright install chromium
 pnpm test:e2e
 ```
 
-Son doğrulanmış yerel sonuç: Ruff geçti, 127 Python dosyası formatlı, strict mypy 75
-kaynakta geçti, pytest **86/86**, Vitest **2/2** ve Playwright/Axe **26/26** geçti.
-Next.js production build tamamlandı; Python ve Node dependency audit'lerinde bilinen açık
-bulunmadı. Güncel ve sınırlamalarıyla birlikte kanıt için
-[Production Readiness Report](docs/PRODUCTION_READINESS_REPORT.md) esas alınmalıdır.
+22 Eylül 2026 yerel arka uç tekrarında Ruff geçti, 127 Python dosyasının biçimi
+doğrulandı, sıkı mypy 75 kaynak dosyasında geçti ve pytest **86/86** testi geçti.
+Önceki tam arayüz kapısında Vitest **2/2**, Playwright/Axe **26/26** ve Next.js üretim
+derlemesi geçti; bağımlılık denetimleri o kapıda bilinen açık bildirmedi. Bunlar
+**yerel çalıştırma sonuçlarıdır**, GitHub Actions veya canlı dağıtım sonucu değildir.
+Kapsam, tarih ve kalan kapılar için [üretime hazırlık raporuna](docs/PRODUCTION_READINESS_REPORT.md)
+bakın.
 
 ## Makine öğrenmesi kanıtı
 
@@ -216,65 +230,73 @@ bulunmadı. Güncel ve sınırlamalarıyla birlikte kanıt için
 
 Hedef `future-inactivity-v1`: uygun bir müşterinin takip eden 90 günde yeni alışveriş
 yapmaması. Bu sonuçlar tek bir tarihsel perakendeci veri kümesinde proje tarafından
-yeniden üretilmiştir; production, nedensel etki veya gelir sonucu değildir. Nihai test
-sonrası tuning yasaktır. Kanıtlar: [Model Evaluation](docs/MODEL_EVALUATION.md),
+yeniden üretilmiştir; canlı müşteri performansı, nedensel etki veya gelir sonucu değildir.
+Nihai test sonrası model ayarı seçimi yasaktır. Çalışma zamanında ülke alanının tüm
+kayıtlarda `__missing__` olması, eğitim verisiyle uyumsuzluk yaratır ve canlı kullanım
+öncesi çözülmelidir. Kanıtlar: [model değerlendirmesi](docs/MODEL_EVALUATION.md),
 [`final_evaluation.json`](artifacts/ml/final_evaluation.json) ve
 [`model_registry.json`](artifacts/ml/model_registry.json).
 
 ## Akademik teslimler
 
-Teslim edilecek sade paket doğrudan [`ödevler/`](ödevler/README.md) altındadır:
+Teslim kopyaları [`ödevler/`](ödevler/README.md) altında numara sırasıyla bulunur.
+PDF hızlı okumak, DOCX/PPTX ise düzenlenebilir dosyayı incelemek içindir.
 
-1. Literatür, veri ve teknoloji incelemesi — DOCX + PDF
-2. Kavram notu ve uygulama planı — DOCX + PDF
-3. Veri hazırlama, özellik mühendisliği ve model keşfi — DOCX + PDF
-4. Model iyileştirme ve test — DOCX + PDF
-5. Haftalık ilerleme raporu — DOCX + tek sayfa PDF
-6. Final sunumu — PPTX + sekiz slayt PDF
-7. Model dağıtımı — Markdown + DOCX + 13 sayfa PDF
+| No | Teslim | PDF | Düzenlenebilir dosya |
+| --- | --- | --- | --- |
+| 01 | Literatür, veri ve teknoloji incelemesi | [PDF](ödevler/01_Literatur_Veri_Teknoloji/Odev_01_Literatur_Veri_Teknoloji.pdf) | [DOCX](ödevler/01_Literatur_Veri_Teknoloji/Odev_01_Literatur_Veri_Teknoloji.docx) |
+| 02 | Kavram notu ve uygulama planı | [PDF](ödevler/02_Kavram_Notu_Uygulama_Plani/Odev_02_Kavram_Notu_Uygulama_Plani.pdf) | [DOCX](ödevler/02_Kavram_Notu_Uygulama_Plani/Odev_02_Kavram_Notu_Uygulama_Plani.docx) |
+| 03 | Veri hazırlama, özellik mühendisliği ve model keşfi | [PDF](ödevler/03_Veri_Hazirlama_Ozellik_Muhendisligi_Model_Kesfi/Odev_03_Veri_Hazirlama_Ozellik_Muhendisligi_Model_Kesfi.pdf) | [DOCX](ödevler/03_Veri_Hazirlama_Ozellik_Muhendisligi_Model_Kesfi/Odev_03_Veri_Hazirlama_Ozellik_Muhendisligi_Model_Kesfi.docx) |
+| 04 | Model iyileştirme ve test | [PDF](ödevler/04_Model_Iyilestirme_ve_Test/Odev_04_Model_Iyilestirme_ve_Test.pdf) | [DOCX](ödevler/04_Model_Iyilestirme_ve_Test/Odev_04_Model_Iyilestirme_ve_Test.docx) |
+| 05 | Haftalık ilerleme raporu | [Tek sayfa PDF](ödevler/05_Haftalik_Ilerleme_Raporu/Odev_05_Haftalik_Ilerleme_Raporu.pdf) | [DOCX](ödevler/05_Haftalik_Ilerleme_Raporu/Odev_05_Haftalik_Ilerleme_Raporu.docx) |
+| 06 | Final sunumu | [Sekiz slayt PDF](ödevler/06_Final_Sunumu/Odev_06_GrowthPilot_Final_Sunumu.pdf) | [PPTX](ödevler/06_Final_Sunumu/Odev_06_GrowthPilot_Final_Sunumu.pptx) |
+| 07 | Model dağıtımı | [13 sayfa PDF](ödevler/07_Deployment/Odev_07_Model_Dagitimi_Deployment.pdf) | [DOCX](ödevler/07_Deployment/Odev_07_Model_Dagitimi_Deployment.docx) |
 
-`academic/` üretim/kaynak paketidir; `ödevler/` teslim için düzenlenmiş eş kopyalardır.
-Yedi eğitmen dosyasının orijinalleri [`references/instructor/`](references/README.md)
-altında değiştirilmeden korunur. Model dağıtımı raporu `Deployment Submission.docx`
-şablonunun A4 sayfa sistemi, Times New Roman tipografisi ve altı bölüm sırasından
-türetilmiştir. Ayrıntılı eşleme:
-[Academic Deliverables Map](docs/11_ACADEMIC_DELIVERABLES_MAP.md). Eğitmen kaynaklarına
-karşı içerik, biçim, render, erişilebilirlik ve kanıt kontrollerinin sonucu
-[Assignment Final Audit](docs/ASSIGNMENT_FINAL_AUDIT.md) içinde kayıtlıdır.
+`academic/` Türkçe Markdown kaynakları ile üretilen belge/sunum paketini, `ödevler/`
+ise dosya adı ve sırası düzenlenmiş eş kopyaları içerir. Yedi özgün eğitmen dosyası
+[`references/instructor/`](references/README.md) altında değiştirilmeden korunur.
+Model dağıtımı raporu, eğitmen DOCX şablonunun A4 sayfa sistemi, Times New Roman
+tipografisi ve altı bölüm sırasını temel alır. Gereksinim ve dosya eşlemesi
+[akademik teslim haritasında](docs/11_ACADEMIC_DELIVERABLES_MAP.md), içerik/biçim/kanıt
+denetimi ise [nihai ödev denetiminde](docs/ASSIGNMENT_FINAL_AUDIT.md) kayıtlıdır.
+Bu iç denetimler öğretim üyesi kabulü, not veya teslim alındı belgesi değildir.
 
 ## Güvenlik ve kanıt ilkeleri
 
-- Her business sorgusu ve mutasyonu tenant kapsamında çalışır; tenant sızıntısı kritik hatadır.
-- Secret, authorization header, parola, anahtar ve gereksiz PII loglanmaz/commit edilmez.
-- Upload ve harici girdiler doğrulanır; önemli hatalar sessizce atılmaz.
-- Consent, rol, onay, bütçe ve kill-switch sunucu tarafında yeniden kontrol edilir.
-- Akademik metrikler yalnız commit edilmiş artifact'lardan gelir; sonuç uydurulmaz.
+- Her iş sorgusu ve değişikliği organizasyon kapsamında çalışır; organizasyonlar arası
+  veri sızıntısı kritik hatadır.
+- Gizli bilgiler, yetkilendirme başlıkları, parolalar, anahtarlar ve gereksiz kişisel
+  veri günlüklenmez veya Git'e eklenmez.
+- Dosya yüklemeleri ve harici girdiler doğrulanır; önemli hatalar sessizce atılmaz.
+- Rıza, rol, onay, bütçe ve durdurma anahtarı sunucu tarafında yeniden kontrol edilir.
+- Akademik metrikler sürümlenmiş proje çıktılarından gelir; sonuç uydurulmaz.
 - Kanıtlar **PROJECT-GENERATED / REPRODUCED**, **EXTERNAL-SOURCE** veya
   **PLANNED / FORECAST** olarak ayrılır.
-- Demo fixture'ları gerçek müşteri, gelir veya kampanya sonucu değildir.
+- Demo verileri gerçek müşteri, gelir veya kampanya sonucu değildir.
 
 Güvenlik modeli ve operasyon sınırları için
-[Security, Privacy & Responsible AI](docs/07_SECURITY_PRIVACY_RESPONSIBLE_AI.md) ile
-[Operations, Security & Recovery](docs/OPERATIONS_SECURITY_RECOVERY.md) birlikte okunmalıdır.
+[güvenlik, gizlilik ve sorumlu AI](docs/07_SECURITY_PRIVACY_RESPONSIBLE_AI.md) ile
+[operasyon ve kurtarma](docs/OPERATIONS_SECURITY_RECOVERY.md) birlikte okunmalıdır.
 
-## Production öncesi kalan doğrulamalar
+## Canlıya geçiş öncesi eksikler
 
-- Production OIDC, tenant mapping ve yetkilendirme doğrulaması
-- Gerçek Meta/Google/LLM sandbox kimlik bilgileriyle contract/live testleri
+- Üretim OIDC, organizasyon eşlemesi ve yetkilendirme doğrulaması
+- Gerçek Meta/Google/LLM test ortamı kimlik bilgileriyle canlı sözleşme testleri
 - Chrome dışı tarayıcı ve yardımcı teknolojiyle manuel erişilebilirlik incelemesi
-- Production-benzeri yük, retry, hata enjeksiyonu ve dış güvenlik testi
-- Container build/scan/sign ve kontrollü cloud apply
-- Yönetilen backup/restore tatbikatı
-- Güncel tenant verisinde drift, kalibrasyon, subgroup ve hukuki kullanım değerlendirmesi
-- Rastgele holdout içeren onaylı kampanya etki deneyi
+- Üretim benzeri yük, yeniden deneme, hata enjeksiyonu ve dış güvenlik testi
+- Konteyner imajı oluşturma/tarama/imzalama ve kontrollü bulut kurulumu
+- Yönetilen yedekleme ve geri yükleme tatbikatı
+- Güncel organizasyon verisinde veri kayması, kalibrasyon, alt grup ve hukuki kullanım değerlendirmesi
+- Rastgele kontrol grubu içeren onaylı kampanya etki deneyi
 
-Bu kapılar tamamlanmadan sistem production-ready veya kampanya etkisi kanıtlanmış olarak
-sunulmamalıdır.
+Bu kapılar tamamlanmadan sistem canlı kullanıma hazır veya kampanya etkisi kanıtlanmış
+olarak sunulmamalıdır.
 
 ## Proje kayıtları
 
-- Resmî repository: <https://github.com/edasaruhan/SIC_AI_17_Capstone_Group_7>
+- Resmî depo: <https://github.com/edasaruhan/SIC_AI_17_Capstone_Group_7>
 - Product Owner / Founder: **Şahin Başcı**
-- Teslim durumu: **Yerel build ve akademik denetim tamamlandı; production dış doğrulama kapıları bekliyor**
-- Lisans: Repository henüz açık kaynak lisansı beyan etmez; özellikle eğitmen kaynakları
+- Teslim durumu: **Yerel derleme ve akademik denetim tamamlandı; canlı kullanım için
+  dış doğrulama kapıları bekliyor.**
+- Lisans: Depo henüz açık kaynak lisansı beyan etmez; özellikle eğitmen kaynakları
   yeniden kullanım izni varmış gibi değerlendirilmemelidir.

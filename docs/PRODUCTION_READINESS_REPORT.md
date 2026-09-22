@@ -1,6 +1,6 @@
 # Production-readiness report
 
-Date: 2026-09-21
+Date: 2026-09-22
 Status: **LOCAL BUILD COMPLETE — NOT APPROVED FOR PRODUCTION DEPLOYMENT**
 
 ## Executive decision
@@ -35,7 +35,9 @@ and no spend was performed.
 
 ## Executed quality evidence
 
-The final local quality gate was re-executed on 2026-09-20 and produced:
+The backend and Terraform local quality gates were re-executed on 2026-09-22; the
+frontend, dependency, migration and document results below are from the earlier full
+publication audit unless separately dated. The combined local evidence is:
 
 - Ruff lint passed and all 127 checked Python files were already formatted.
 - Strict mypy passed for 75 backend application source files.
@@ -54,12 +56,15 @@ The final local quality gate was re-executed on 2026-09-20 and produced:
   configuration.
 - The eight-slide canvas overflow test passed. All six DOCX accessibility audits reported zero
   high/medium/low findings; LibreOffice/Poppler rendering and ZIP/PDF container checks passed.
+  The 13-page deployment DOCX/PDF was separately regenerated and visually inspected on
+  2026-09-22, with zero accessibility findings.
 - Secret-pattern scanning found no credential token/private key. The three generic assignment
   candidates were reviewed and contain runtime secret generation or secret references, not values.
   All seven instructor originals remain byte-unchanged and present.
 
-CI configuration mirrors the backend and frontend gates, including Vitest, but GitHub-hosted
-execution cannot be claimed before publication.
+CI configuration mirrors the backend and frontend gates, including Vitest. A passing
+GitHub-hosted run for this local revision cannot be claimed before publication and
+verification.
 
 ## Frozen ML evidence
 
@@ -96,6 +101,7 @@ claims. No post-test tuning is permitted.
 Missing live credentials are not local-development blockers but are production blockers for those
 capabilities. The elapsed instructor deadlines are submission-process blockers, not evidence-quality
 blockers. There is no known critical local defect. The previously audited baseline exists on
-`origin/main`; the final deployment-submission revision is synchronized through normal repository
-history. Paid deployment, production infrastructure mutation and live advertising spend remain
-separately unauthorized.
+`origin/main`. Later local commits and working-tree documentation changes are not a claim
+that GitHub already displays this revision; publication must be verified separately. Paid
+deployment, production infrastructure mutation and live advertising spend remain separately
+unauthorized.

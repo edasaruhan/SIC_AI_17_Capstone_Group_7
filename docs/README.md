@@ -1,21 +1,25 @@
-# GrowthPilot documentation index
+# GrowthPilot AI Belge Dizini
 
 Bu dizin ürün, mimari, veri/ML, güvenlik, teslim ve operasyon kararlarının kalıcı kayıt
-merkezidir. İlk kez inceleyenler aşağıdaki sırayı izleyebilir.
+merkezidir. Öğretim üyesi ilk kez bakıyorsa önce
+[eğitmen inceleme rehberini](INSTRUCTOR_REVIEW_GUIDE.md) açabilir; bu rehber her önemli
+iddiayı teslim, kod, test ve kanıt dosyasına bağlar.
 
 ## Hızlı okuma yolu
 
-1. [`00_PROJECT_CHARTER.md`](00_PROJECT_CHARTER.md) — amaç, roller ve başarı tanımı
-2. [`01_PRODUCT_SCOPE.md`](01_PRODUCT_SCOPE.md) — Release 1 kapsamı ve kapsam dışı alanlar
-3. [`03_ARCHITECTURE_DECISIONS.md`](03_ARCHITECTURE_DECISIONS.md) — onaylı sistem yapısı
-4. [`05_DATA_AND_ML_PLAN.md`](05_DATA_AND_ML_PLAN.md) — veri ve ML yöntemi
-5. [`07_SECURITY_PRIVACY_RESPONSIBLE_AI.md`](07_SECURITY_PRIVACY_RESPONSIBLE_AI.md) — güvenlik sınırları
-6. [`PRODUCTION_READINESS_REPORT.md`](PRODUCTION_READINESS_REPORT.md) — son yerel kanıt ve dış kapılar
+1. [Eğitmen inceleme rehberi](INSTRUCTOR_REVIEW_GUIDE.md) — doğrudan teslim ve kanıt yolu
+2. [Proje çerçevesi](00_PROJECT_CHARTER.md) — amaç, roller ve başarı tanımı
+3. [Ürün kapsamı](01_PRODUCT_SCOPE.md) — ilk sürüm ve kapsam dışı alanlar
+4. [Mimari kararlar](03_ARCHITECTURE_DECISIONS.md) — onaylı sistem yapısı
+5. [Veri ve ML planı](05_DATA_AND_ML_PLAN.md) — yöntem ve değerlendirme sınırları
+6. [Güvenlik ve sorumlu AI](07_SECURITY_PRIVACY_RESPONSIBLE_AI.md) — sunucu tarafı kontroller
+7. [Üretime hazırlık raporu](PRODUCTION_READINESS_REPORT.md) — geçen yerel kapılar ve eksikler
 
 ## Ürün ve yönetişim
 
 | Belge | Amaç |
 |---|---|
+| [Eğitmen inceleme rehberi](INSTRUCTOR_REVIEW_GUIDE.md) | Teslim, kod, test ve kanıt arasında kısa gezinme |
 | [`00_PROJECT_CHARTER.md`](00_PROJECT_CHARTER.md) | Misyon, paydaşlar ve çalışma ilkeleri |
 | [`01_PRODUCT_SCOPE.md`](01_PRODUCT_SCOPE.md) | Ürün kapsamı, kullanıcılar ve Release 1 sınırı |
 | [`02_CAPSTONE_REQUIREMENTS.md`](02_CAPSTONE_REQUIREMENTS.md) | Eğitmen gereksinimlerinin proje karşılığı |

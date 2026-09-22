@@ -10,3 +10,6 @@ validation, risks and review. Completion requires executed evidence, not file pr
 Post-roadmap, bounded submission and audit work is recorded as `TASK-*` files in this
 directory and summarized in `docs/10_TASK_LOG.md`. These tasks do not silently expand
 authority to cloud apply, paid services, live advertising or repository publication.
+
+Reviewer-facing documentation pass: [TASK-GITHUB-001](TASK-GITHUB-001.md). This task is
+local-only until publication is explicitly authorized and verified.
