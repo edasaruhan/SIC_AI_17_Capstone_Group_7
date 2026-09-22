@@ -166,3 +166,10 @@ country data, a country-free candidate or an all-missing sensitivity test is req
 production use. No post-test tuning was performed.
 
 Full task contract and completion record: `docs/tasks/TASK-DEPLOY-001.md`.
+
+**Readability revision (2026-09-22):** The report introduction and architecture trade-off
+were shortened without changing technical claims. The serving diagram labels no longer
+overlap, both figure captions stay with their images, and code examples use a larger font.
+The revised 13-page DOCX/PDF pair was rendered and visually inspected on every page;
+accessibility and package checks passed, both delivery copies match their academic source,
+and the backend quality gate again passed 86/86 tests.

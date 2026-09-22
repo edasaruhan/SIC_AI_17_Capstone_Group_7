@@ -1,6 +1,6 @@
 # Makine Öğrenmesi Proje Dokümantasyonu Model Dağıtımı
 
-GrowthPilot AI Açıklanabilir Müşteri Hareketsizliği Modelinin Güvenli ve İzlenebilir Sunum Mimarisi
+GrowthPilot AI Müşteri Hareketsizliği Modelinin Güvenli ve İzlenebilir Sunumu
 
 **Hazırlayan:** Şahin Başcı
 **Program:** Samsung Innovation Campus Pazarlamada Yapay Zekâ Bitirme Projesi
@@ -12,13 +12,13 @@ GrowthPilot AI Açıklanabilir Müşteri Hareketsizliği Modelinin Güvenli ve �
 
 ## 1 Genel Bakış
 
-GrowthPilot AI, müşteri ve sipariş geçmişinden gelecekteki satın alma hareketsizliği olasılığını hesaplayan modeli CRM akışına bağlar. Bu rapor; model serileştirme (model serialization), çalışma anında yükleme, API ile çıkarım, güvenlik ve izleme sınırlarını inceler. Çıkarım kodu, API, kalıcı tahmin kayıtları, iş kuyruğu, güvenlik kontrolleri, container tanımı ve AWS Terraform referansı proje deposunda bulunur ve yerel testlerle doğrulanır. Canlı bulut dağıtımı, üretim kimlik sağlayıcısı, yönetilen alarm sistemi ve gerçek müşteri verisiyle model doğrulaması ise henüz yapılmamıştır.
+GrowthPilot AI, müşteri ve sipariş geçmişinden gelecekteki satın alma hareketsizliği olasılığını hesaplayan modeli CRM akışına bağlar. Bu rapor modelin kaydedilmesini, çalışma anında yüklenmesini, API üzerinden tahmin üretmesini, güvenliğini ve izlenmesini inceler. Çıkarım kodu, kalıcı tahmin kayıtları, iş kuyruğu ve güvenlik kontrolleri proje deposunda bulunur; yerel testlerden geçmiştir. Konteyner tanımı ve AWS Terraform kodu da depodadır. Ancak canlı bulut dağıtımı, üretim kimlik sağlayıcısı, yönetilen alarmlar ve gerçek müşteri verisiyle model doğrulaması henüz yapılmamıştır.
 
 Model, internete açılan ayrı bir makine öğrenmesi servisi değildir. FastAPI tabanlı modüler uygulamanın `intelligence` alanı, organizasyon kapsamındaki veriden özellikleri üretir, SHA-256 değeri doğrulanmış modeli çağırır, karar katmanını uygular ve sonucu PostgreSQL'e eklemeli kayıt olarak yazar. Böylece yetkilendirme, organizasyon bağlamı, veri modeli ve denetim kaydı aynı işlem sınırında kalır. Bunun bedeli, modelin tek başına ölçeklenememesi ve model değişikliğinin arka uç sürümüne bağlı olmasıdır.
 
 ### 1.1 Dağıtım durum matrisi
 
-| Yetenek | Durum | Repository kanıtı |
+| Yetenek | Durum | Depodaki kanıt |
 | --- | --- | --- |
 | Dondurulmuş `joblib` model eseri | Uygulandı ve yerelde doğrulandı | `.local/models/final_candidate.joblib`; SHA-256 yeniden hesaplandı |
 | Manifest ve sürüm soyu | Uygulandı ve yerelde doğrulandı | `artifacts/ml/final_candidate.json`, `final_evaluation.json`, `model_registry.json` |
@@ -89,7 +89,7 @@ Kod parçası `backend/app/intelligence/service.py` içindeki gerçek uygulamad�
 
 Denetim başlangıcında `Settings.model_path` varsayılanı `.local/models/final_candidate.joblib` iken arka uç Dockerfile'ı yalnız manifesti container'a kopyalıyordu. `.dockerignore` ise `.local` dizinini dışlıyordu. Dolayısıyla Dockerfile tek başına çalışan bir çıkarım container'ı üretemiyordu.
 
-Arka uç container oluşturma sözleşmesi, onaylı model dosyasının oluşturma sırasında BuildKit secret olarak `growthpilot_model` kimliğiyle sağlanmasını gerektirir. `backend/app/platform/model_artifact.py`, dosyayı nesneye dönüştürmeden SHA-256 değerini doğrular. Eksik veya uyumsuz dosya container oluşturmayı durdurur. Doğrulanan dosya salt okunur olarak `/app/models/final_candidate.joblib` yoluna kurulur. Dockerfile'daki `GP_MODEL_PATH` bu yolu, `GP_MODEL_MANIFEST_PATH` ise `/app/artifacts/ml/final_candidate.json` yolunu gösterir; bunlar `Settings` alan adlarıyla eşleşir. Uygulama yükleme sırasında SHA-256 kontrolünü tekrarlar ve uyumsuzlukta başlatmayı reddeder. Bu davranış kod ve test düzeyinde bir sözleşmedir; bu ortamda gerçek container oluşturulmamıştır. Özel model deposu, imzalı terfi süreci, sürüm yayınlama işlem hattı ve container kayıt deposu henüz uygulanmamıştır.
+Arka uç Dockerfile'ı, onaylı model dosyasının BuildKit `growthpilot_model` gizli girdisiyle sağlanmasını zorunlu kılar. `backend/app/platform/model_artifact.py` dosyayı yüklemeden önce SHA-256 değerini manifestle karşılaştırır; eksik veya uyumsuz dosya imaj oluşturmayı durdurur. Doğrulanan dosya `/app/models/final_candidate.joblib` konumuna salt okunur kurulur. `GP_MODEL_PATH` bu dosyayı, `GP_MODEL_MANIFEST_PATH` ise `/app/artifacts/ml/final_candidate.json` manifestini gösterir. Uygulama yükleme öncesinde hash'i yeniden denetler. Bunlar kod ve test düzeyinde doğrulanmıştır; Docker motoru bulunmadığından gerçek imaj oluşturulmamıştır. Özel model deposu, imzalı terfi ve imaj yayımlama süreci de henüz uygulanmamıştır.
 
 ## 3 Model Sunumu
 
@@ -117,13 +117,15 @@ Yerel geliştirme bileşenleri Python 3.12/FastAPI API, PostgreSQL, Redis/Dramat
 
 Terraform; iki kullanılabilirlik bölgesine yayılan ağı, açık ve özel alt ağları, NAT gateway'i, güvenlik gruplarını, HTTPS dinleyicili Application Load Balancer'ı, özel ECS/Fargate API, web ve arka plan çalışanı servislerini, şifreli RDS PostgreSQL'i, aktarımda ve depolamada şifreli ElastiCache Redis'i, SSE-KMS korumalı S3 alanını ve CloudWatch günlük grubunu tanımlar. Gizli değerler HCL kaynak koduna sabit yazılmaz. `database_password` ve `redis_auth_token` hassas Terraform girdileridir ve güvenli CI secret kaynaklarından sağlanmalıdır. Hassas değerler Terraform durum dosyasında bulunabilir. Bu nedenle canlı kullanımda uzaktan ve şifreli state, sıkı state erişim kontrolü ve secret rotation ayrıca yapılandırılmalıdır. Depoda uzaktan Terraform backend yapılandırması yoktur.
 
-Platform seçimi iki ayrı ihtiyeti karşılar. Yerel PostgreSQL, Redis ve model dosyası geliştirme ile tekrar üretilebilir testler için ücretli bulut bağımlılığı oluşturmadan çalışır. AWS referansı ise container iş yükü, yönetilen veri servisleri, özel ağ ve şifreleme ihtiyaçlarını kodla ifade eder. Repository’de on-premises production topolojisi veya sağlayıcılar arası maliyet ve gecikme karşılaştırması yoktur; bu nedenle AWS tasarımı ölçülmüş üstünlük sonucu değil, kabul edilmiş operasyon ADR’sinin denetlenebilir referansıdır.
+Yerel PostgreSQL, Redis ve model dosyası, geliştirme ve tekrarlanabilir testler için ücretli bulut hizmeti gerektirmez. AWS referansı ise konteyner iş yükünü, yönetilen veri servislerini, özel ağı ve şifrelemeyi kodla tanımlar. Depoda kurum içi üretim ortamı tasarımı veya bulut sağlayıcıları arasında ölçülmüş maliyet ve gecikme karşılaştırması yoktur. Bu nedenle AWS seçimi kanıtlanmış bir üstünlük iddiası değil, onaylanmış mimari kararın denetlenebilir örneğidir.
 
 Bu liste çalışır durumdaki AWS ortamını anlatmaz. `terraform fmt -check` ve `terraform validate`, HCL sözdizimi ile sağlayıcı şemasına karşı statik doğrulamadır; hesapta kaynak oluşturmaz, ağ yolunu çalıştırmaz ve gizli değerlerin doğruluğunu kanıtlamaz. Depoda `terraform apply`, container yayını, DNS/TLS alan adı kurulumu veya ücretli servis oluşturma kanıtı yoktur. ALB tarafında HTTPS tasarlanmış olsa da RDS istemci bağlantısında TLS'i zorlayan parameter group veya doğrulanmış `sslmode` ayarı yoktur; bu, canlıya geçiş öncesi güvenlik kapısıdır.
 
 ### 3.4 Mimari kazanımlar ve bedeller
 
-Modüler monolit yaklaşımı tenant bağlamının model servisine aktarılmasını gereksiz kılar; aynı SQLAlchemy session, RLS, domain kuralları ve audit yordamı çıkarımda kullanılabilir. Özellik üretimi ile operasyonel tablolar aynı sürümde tutulur ve küçük hacimli istek üzerine puanlama için ek ağ sıçraması oluşmaz. Buna karşılık API replikası başına model belleği tüketilir, yalnız model katmanını bağımsız ölçeklemek mümkün değildir ve model değişikliği backend image release’ine bağlanır. Gecikme, throughput, ekip sahipliği veya bağımsız release ihtiyacı büyürse, mevcut `Predictor` protokolü arkasında ayrı bir servis değerlendirilebilir; tenant kimliği, yetkilendirme ve provenance sözleşmesi korunmadan yapılacak ayrıştırma kabul edilemez.
+Modüler monolitte tahmin kodu, uygulamanın mevcut organizasyon kapsamını kullanır. Aynı SQLAlchemy oturumu, satır düzeyinde güvenlik kuralları (RLS), alan kuralları ve denetim kayıtları geçerlidir. Özellik üretimi ile iş tabloları aynı sürümde kalır; küçük hacimli tahminlerde ayrı bir servise ağ çağrısı yapılmaz.
+
+Bu yapının bedeli, her API kopyasının modeli belleğe yüklemesi ve model katmanının tek başına ölçeklenememesidir. Model değişikliği de yeni arka uç imajı yayımlamayı gerektirir. Gecikme, işlem hacmi veya bağımsız sürüm ihtiyacı artarsa `Predictor` arayüzü arkasında ayrı bir servis değerlendirilebilir. Böyle bir ayrımda organizasyon kimliği, yetkilendirme ve model soyu korunmalıdır.
 
 ## 4 API Entegrasyonu
 
@@ -135,13 +137,13 @@ Modüler monolit yaklaşımı tenant bağlamının model servisine aktarılması
 | `GET /api/v1/intelligence/customers/{customer_id}/predictions` | Müşterinin son 100 tahminini yeni tarihten eskiye döndürür | `workspace:read` | 200; `PredictionRead[]` |
 | `POST /api/v1/intelligence/batch-scores` | Organizasyon için kalıcı toplu puanlama işini kuyruğa alır | `intelligence:score` | 202; `ScoringJobRead` |
 | `GET /api/v1/intelligence/batch-scores/{job_id}` | İş durumu ve sayaçlarını döndürür | `workspace:read` | 200; `ScoringJobRead` |
-| `GET /health/live` | Process’in HTTP yanıtı verebildiğini gösteren yüzeysel canlılık kontrolü | Genel | `{"status":"ok"}` |
+| `GET /health/live` | Uygulama işleminin HTTP yanıtı verebildiğini gösteren yüzeysel canlılık kontrolü | Genel | `{"status":"ok"}` |
 | `GET /health/ready` | Veritabanı bağlantısını ve runtime rolünün RLS’yi bypass etmediğini denetler | Genel | 200 `ready` veya 503 `unavailable` |
 | `GET /api/v1/metrics` | Prometheus metin formatında uygulama ölçütlerini sunar | `audit:read` | HTTP istek sayacı |
 
 ### 4.2 İstek biçimleri
 
-| Endpoint grubu | Yol girdisi | Header girdisi | İstek gövdesi |
+| Uç nokta grubu | Yol girdisi | Başlık girdisi | İstek gövdesi |
 | --- | --- | --- | --- |
 | Tek müşteri skoru ve geçmişi | `customer_id`, UUID | Bearer token ve `X-Organization-ID` | Yok |
 | Toplu iş oluşturma | Yok | Bearer token ve `X-Organization-ID` | Yok |
@@ -202,7 +204,7 @@ Veritabanı katmanında `customer_predictions` ve `scoring_jobs` dahil organizas
 
 ### 5.3 Model ve karar güvenliği
 
-Model dosyası kullanıcı yüklemesinden veya genel bir URL'den alınmaz. Container oluşturma sözleşmesi, dosyanın BuildKit secret olarak sağlanmasını ve SHA-256 değerinin manifestle eşleşmesini zorunlu kılar. Uygulama ilk yüklemede aynı kontrolü yeniden yapar ve ancak sonra `joblib.load` çağır. SHA-256 bütünlük kanıtıdır; kaynağın yetkili olduğunu tek başına kanıtlamaz. Özel model deposu, imzalı terfi, container kaynağı ve yayın süreci henüz uygulanmamıştır.
+Model dosyası kullanıcı yüklemesinden veya genel bir URL'den alınmaz. Konteyner oluşturulurken dosya BuildKit gizli girdisi olarak sağlanmalı ve SHA-256 değeri manifestle eşleşmelidir. Uygulama ilk yüklemede aynı kontrolü yeniden yapar; ancak ardından `joblib.load` çağırır. SHA-256 dosya bütünlüğünü gösterir, kaynağın yetkili olduğunu tek başına kanıtlamaz. Özel model deposu, imzalı terfi ve imaj yayımlama süreci henüz uygulanmamıştır.
 
 Model, tek tarihsel dış veri kümesinden geliştirildiği için varsayılan olarak yalnız demo organizasyonlarında çalışır. Uygunluk penceresi dışında tahmin yapılmaz ve başka modele sessiz geçiş yoktur. Her sonuç hedef, özellik, veri bölümü, çalıştırma ve SHA-256 bilgisini taşır. Karar katmanı rıza dışı kanal üretmez; nedensellik veya temas yetkisi iddia etmez ve `action_authorized=false` döndürür.
 

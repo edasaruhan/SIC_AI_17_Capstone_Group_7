@@ -6,6 +6,8 @@
 
 **Completed:** 2026-09-21
 
+**Readability revision:** 2026-09-22
+
 **Owner:** Codex
 
 ## Goal
@@ -127,6 +129,11 @@ test is required before production use.
   and six-section order were carried into the final report.
 - Model SHA-256 independently confirmed as
   `942d705d66a9469d57494626a99da83c91a9a895a3a2b2d7e977ff3ba56952ad`.
+- The 2026-09-22 readability pass shortened dense prose, removed mixed-language labels,
+  enlarged code examples and diagram text, fixed a diagram-label overlap, and kept the
+  second figure with its caption. The 13-page report was regenerated and each page
+  visually inspected; DOCX accessibility remained at zero findings. Ruff/format, mypy
+  and all 86 backend tests passed again.
 
 ### Known limitations
 

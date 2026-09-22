@@ -122,7 +122,7 @@ def configure(doc: Document) -> None:
     )
     code.base_style = normal
     code.font.name = "Menlo"
-    code.font.size = Pt(7.4)
+    code.font.size = Pt(8.0)
     code.font.color.rgb = RGBColor.from_string(NAVY)
     code._element.get_or_add_rPr().rFonts.set(qn("w:ascii"), "Menlo")
     code._element.get_or_add_rPr().rFonts.set(qn("w:hAnsi"), "Menlo")
@@ -285,9 +285,11 @@ def add_cover(doc: Document, title: str, subtitle: str, preface: list[str]) -> N
 def add_figure(doc: Document, path: Path, caption: str) -> None:
     p = doc.add_paragraph()
     p.alignment = WD_ALIGN_PARAGRAPH.CENTER
-    p.paragraph_format.space_before = Pt(5)
+    p.paragraph_format.space_before = Pt(2)
     p.paragraph_format.space_after = Pt(3)
-    inline = p.add_run().add_picture(str(path), width=Inches(6.15))._inline
+    p.paragraph_format.keep_with_next = True
+    width = 5.7 if path.name == "deployment_monitoring_flow.png" else 6.15
+    inline = p.add_run().add_picture(str(path), width=Inches(width))._inline
     inline.docPr.set("title", caption.split(".", 1)[0])
     inline.docPr.set("descr", caption)
 
@@ -314,7 +316,7 @@ def render_markdown(doc: Document, lines: list[str], start: int) -> None:
                 index += 1
             p = doc.add_paragraph(style="Deployment Code")
             p.paragraph_format.keep_together = True
-            set_font(p.add_run("\n".join(code_lines)), name="Menlo", size=7.4, color=NAVY)
+            set_font(p.add_run("\n".join(code_lines)), name="Menlo", size=8.0, color=NAVY)
         elif stripped.startswith("| "):
             table_lines: list[str] = []
             while index < len(lines) and lines[index].strip().startswith("| "):
@@ -336,7 +338,7 @@ def render_markdown(doc: Document, lines: list[str], start: int) -> None:
             if lookahead < len(lines) and lines[lookahead].strip().startswith("*Şekil"):
                 caption_p = doc.add_paragraph()
                 caption_p.alignment = WD_ALIGN_PARAGRAPH.CENTER
-                caption_p.paragraph_format.space_after = Pt(7)
+                caption_p.paragraph_format.space_after = Pt(5)
                 set_font(
                     caption_p.add_run(lines[lookahead].strip().strip("*")),
                     size=8.5,
@@ -375,14 +377,14 @@ def box(ax: Any, x: float, y: float, w: float, h: float, title: str, detail: str
         linewidth=1.3,
     )
     ax.add_patch(patch)
-    ax.text(x + w / 2, y + h * 0.62, title, ha="center", va="center", fontsize=10, weight="bold")
+    ax.text(x + w / 2, y + h * 0.62, title, ha="center", va="center", fontsize=15, weight="bold")
     ax.text(
         x + w / 2,
         y + h * 0.30,
         detail,
         ha="center",
         va="center",
-        fontsize=7.5,
+        fontsize=12,
         color="#47545B",
     )
 
@@ -399,13 +401,13 @@ def serving_figure(path: Path) -> None:
     ax.set_ylim(0, 1)
     ax.axis("off")
     nodes = [
-        (0.03, 0.61, 0.15, 0.18, "İstemci", "Arayüz veya API çağrısı"),
-        (0.22, 0.61, 0.15, 0.18, "FastAPI", "İstek kimliği ve şema"),
-        (0.41, 0.61, 0.16, 0.18, "Kimlik ve Kapsam", "JWT RBAC RLS"),
-        (0.61, 0.61, 0.16, 0.18, "Özellik Üretimi", "Organizasyon verisi ve kesim"),
-        (0.81, 0.61, 0.16, 0.18, "Dondurulmuş Model", "Manifest ve SHA-256"),
-        (0.60, 0.18, 0.17, 0.18, "Karar Katmanı", "Eşik rıza insan onayı"),
-        (0.80, 0.18, 0.17, 0.18, "PostgreSQL", "Tahmin denetim outbox"),
+        (0.03, 0.61, 0.15, 0.18, "İstemci", "Arayüz veya API"),
+        (0.22, 0.61, 0.15, 0.18, "FastAPI", "İstek ve şema"),
+        (0.41, 0.61, 0.16, 0.18, "Kimlik", "JWT, rol, RLS"),
+        (0.61, 0.61, 0.16, 0.18, "Özellik Üretimi", "Veri ve kesim"),
+        (0.81, 0.61, 0.16, 0.18, "Model", "Manifest, SHA-256"),
+        (0.60, 0.18, 0.17, 0.18, "Karar Katmanı", "Eşik ve rıza"),
+        (0.80, 0.18, 0.17, 0.18, "PostgreSQL", "Tahmin, denetim"),
     ]
     for node in nodes:
         box(ax, *node)
@@ -413,13 +415,13 @@ def serving_figure(path: Path) -> None:
         arrow(ax, (a, 0.70), (b, 0.70))
     arrow(ax, (0.89, 0.60), (0.69, 0.37))
     arrow(ax, (0.77, 0.27), (0.80, 0.27))
-    ax.text(0.5, 0.93, "GrowthPilot model sunum akışı", ha="center", fontsize=16, weight="bold")
+    ax.text(0.5, 0.93, "GrowthPilot model sunum akışı", ha="center", fontsize=22, weight="bold")
     ax.text(
         0.5,
         0.06,
         "Model skoru pazarlama eylemi değildir  •  action_authorized = false",
         ha="center",
-        fontsize=10,
+        fontsize=14,
         color="#173B52",
         weight="bold",
     )
@@ -434,13 +436,13 @@ def monitoring_figure(path: Path) -> None:
     ax.set_ylim(0, 1)
     ax.axis("off")
     box(ax, 0.04, 0.64, 0.20, 0.18, "API ve Çalışan", "İstekler ve toplu işler")
-    box(ax, 0.31, 0.64, 0.20, 0.18, "Uygulanan Sinyaller", "Sağlık günlük sayaç iz denetim")
+    box(ax, 0.31, 0.64, 0.20, 0.18, "Uygulanan Sinyaller", "Sağlık, günlük, sayaç")
     box(ax, 0.58, 0.64, 0.18, 0.18, "Toplama Sınırı", "Yetkili ölçüt uç noktası")
-    box(ax, 0.80, 0.64, 0.16, 0.18, "Yerel Kanıt", "Testler ve kayıtlar")
+    box(ax, 0.80, 0.64, 0.16, 0.18, "Yerel Kanıt", "Test ve kayıtlar")
     for a, b in ((0.24, 0.31), (0.51, 0.58), (0.76, 0.80)):
         arrow(ax, (a, 0.73), (b, 0.73))
-    box(ax, 0.18, 0.20, 0.25, 0.18, "Üretim Sistem İzleme", "Hedef pano alarm nöbet")
-    box(ax, 0.57, 0.20, 0.25, 0.18, "Üretim Model İzleme", "Kayma kalibrasyon gecikmeli etiket")
+    box(ax, 0.18, 0.20, 0.25, 0.18, "Üretim Sistem İzleme", "Pano, alarm, nöbet")
+    box(ax, 0.57, 0.20, 0.25, 0.18, "Üretim Model İzleme", "Kayma, kalibrasyon, etiket")
     arrow(ax, (0.67, 0.63), (0.33, 0.39))
     arrow(ax, (0.67, 0.63), (0.69, 0.39))
     ax.text(
@@ -448,7 +450,7 @@ def monitoring_figure(path: Path) -> None:
         0.93,
         "İzleme ve üretim doğrulama sınırı",
         ha="center",
-        fontsize=16,
+        fontsize=22,
         weight="bold",
     )
     ax.text(
@@ -456,7 +458,7 @@ def monitoring_figure(path: Path) -> None:
         0.07,
         "Alt katman uygulanmadı  •  eşikler ve sorumlular canlıya geçiş öncesi tanımlanmalı",
         ha="center",
-        fontsize=9.5,
+        fontsize=14,
         color="#8A4A24",
         weight="bold",
     )
